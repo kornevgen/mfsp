@@ -1,0 +1,231 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\title{Лекция 1. Основные определения}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+
+\begin{document}
+
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}{<<Картина мира>>}
+		\begin{block}{Реальный мир}
+			программа -- соответствует -- требования
+		\end{block}
+
+		\begin{block}{Формальный (математический) мир}
+			матем. модель программы -- матем. отношение соответствия -- матем. модель требований
+		\end{block}
+
+        <<Аксиома Шуры-Буры>>: отношение неформального к формальному сугубо неформально!
+	\end{frame}
+
+	\section{Математический аппарат}
+
+	\begin{frame}{Переменные и домены}
+	\begin{itemize}
+	\item $\bar{x} = (~x_1,~x_2,~\ldots~,~x_n~)$ -- вектор входных переменных.
+	\item $\bar{y} = (~y_1,~y_2,~\ldots~,~y_m~)$ -- вектор промежуточных переменных.
+	\item $\bar{z} = (~z_1,~z_2,~\ldots~,~z_k~)$ -- вектор выходных переменных.
+	\item $D_v$ -- домен (область значений) переменной $v$.
+	\item $D_{\bar{x}}~=~D_{x_1}~\times~D_{x_2}~\times~\ldots~D_{x_n}$ -- домен входных переменных.
+	\item $D_{\bar{y}}~=~D_{y_1}~\times~D_{y_2}~\times~\ldots~D_{y_m}$ -- домен промежуточных переменных.
+	\item $D_{\bar{z}}~=~D_{z_1}~\times~D_{z_2}~\times~\ldots~D_{z_k}$ -- домен выходных переменных.
+	\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Специальные значения}
+	\begin{itemize}
+	\item $D = \bigcup_{v} D_v$ -- универсальный домен.
+	\item $T, F \in D$ -- специальные значения <<истина>> и <<ложь>>.
+	\item \emph{Предикат} -- функция, область значений которой равна ${T, F}$.
+	\item $\omega \notin D$ -- специальное обозначение <<отсутствия значения>>.
+	\item $D^{+} = D ~\cup~ \{\omega\}$ -- расширенный домен.
+    \item $f:~A~\rightarrow~B$ -- функция, отображающая единственным образом каждый элемент множества $A$ в элемент множества $B$.
+	\end{itemize}
+	\end{frame}
+
+	\section{Математическая модель программы}
+
+	\begin{frame}{Операторы блок-схемы}
+	\begin{itemize}
+	\item Оператор START : инициализирует все промежуточные переменные : $\bar{y} \leftarrow f(\bar{x})$ ($f:~D_{\bar{x}}~\rightarrow~D_{\bar{y}}$)
+	\item Оператор ASSIGN : заменяет значения всех промежуточных переменных : $\bar{y} \leftarrow g(\bar{x},~\bar{y})$ ($g:~D_{\bar{x}}~\times~D_{\bar{y}}~\rightarrow~D_{\bar{y}}$)
+	\item Оператор TEST : тестирует значения входных и промежуточных переменных : $t(\bar{x},~\bar{y})$ ($t:~D_{\bar{x}}~\times~D_{\bar{y}}~\rightarrow~\{T,~F\}$)
+	\item Оператор JOIN
+	\item Оператор HALT : вычисляет все выходные переменные : $\bar{z} \leftarrow h(\bar{x},~\bar{y})$ ($h:~D_{\bar{x}}~\times~D_{\bar{y}}~\rightarrow~D_{\bar{z}}$)
+	\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Блок-схема}
+	\begin{itemize}
+	\item $O$ -- множество операторов.
+	\item $\Lambda_{P}$ -- множество меток операторов.
+	\item Блок-схема $P$ -- это тройка $(V,~N,~E)$, где
+		\begin{itemize}
+		\item $V = (\bar{x},~\bar{y},~\bar{z})$ -- переменные,
+		\item $N~\subseteq~O~\times~\Lambda_{P}$ -- операторы блок-схемы, снабженные метками для различения одинаковых операторов.
+		\item $E~\subseteq~N~\times~\{T,~F,~\varepsilon\}~\times~N$ -- ориентированные дуги-связки блок-схемы (начало дуги, метка дуги, конец дуги).
+		\end{itemize}
+	\end{itemize}
+	\end{frame}
+
+	\begin{frame}{Корректно-определенная блок-схема}
+	Блок-схема $P$ называется \emph{корректно-определенной}, если:
+		\begin{enumerate}
+		\item В ней есть единственный оператор START.
+		\item Любой оператор находится на ориентированном пути от START к одному из HALT.
+		\item Число и метки входящих и исходящих дуг для операторов соответствуют их типам: у START 0 входящих, 1 исходящая (помечена $\varepsilon$); у ASSIGN 1 входящая и 1 исходящая (помечена $\varepsilon$); у TEST 1 входящая и 2 исходящие (одна помечена $T$, другая -- $F$); у JOIN не менее 1 входящей и 1 исходящая (помечена $\varepsilon$); у HALT 1 входящая и 0 исходящих.
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}{Семантика блок-схемы}
+	\emph{Конфигурация} -- пара $(\ell,~\sigma)$, где $\ell \in \Lambda_P$, $\sigma \in D_{\bar{x}} \times D_{\bar{y}}$.
+
+	\emph{Вычисление} -- конечная или бесконечная последовательность конфигураций $C_i$, $i~=~1,2,~\ldots$ такая, что:
+		\begin{enumerate}
+		\item метка в $C_1$ помечает оператор, следующий за оператором START;
+		\item значения $y_i$ в $C_1$ равны $f(\bar{x})$, где $\bar{x}$ --- это значения входных переменных, а функция $f$ приписана оператору START;
+		\item любые соседние элементы $C_i$ и $C_{i+1}$ корректны относительно оператора, помеченного меткой в $C_i$ (см. следующий слайд)
+        \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Соседние конфигурации вычисления}
+    \begin{itemize}
+    \item если $\ell_i$ помечает оператор ASSIGN, которому приписана функция $g$, то $\ell_{i+1}$ помечает следующий за ним оператор, $\sigma_{i+1}~=~\sigma_i~[~\bar{y}~\leftarrow~g(\sigma_i[\bar{x}],~\sigma_i[\bar{y}])~]$.
+    \item если $\ell_i$ помечает оператор TEST, которому приписана функция $t$, то $\ell_{i+1}$ помечает следующий за ним оператор по дуге с меткой, равной $t(\sigma_i[\bar{x},~\bar{y}])$, $\sigma_{i+1}~=~\sigma_i$.
+    \item если $\ell_i$ помечает оператор HALT, которому приписана функция $h$, то это последняя конфигурация вычисления.
+    \item если $\ell_i$ помечает оператор JOIN, то $\ell_{i+1}$ помечает следующий за ним оператор, $\sigma_{i+1}~=~\sigma_i$.
+    \end{itemize}
+    \end{frame}
+
+	\begin{frame}[fragile]{Пример блок-схемы и вычисления}
+	\setlength{\columnsep}{8cm}
+	
+	\begin{multicols}{2}
+	
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+		
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=3, texlbl="$\begin{matrix}START:\\ (y_1,~y_2) \leftarrow (0,~x_1)\end{matrix}$"];
+		COND[style=rounded, label="$y_2 \\geq x_2$"];
+		INCR[label="$(y_1, y_2) \\leftarrow (y_1 + 1,~y_2 - x_2)$"];
+		HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\  (z_1,~z_2) \leftarrow (y_1,~y_2)\end{matrix}$"];
+				
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> p2 [arrowhead=none]; p2 -> COND [weight=8];
+		{ rank=same; p1 -> p2; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+	}
+	\end{dot2tex}
+	
+	\large
+	
+	(3,~2,~0,~3)
+	
+	(3,~2,~0,~3)
+	
+	(3,~2,~0,~3)
+	
+	(3,~2,~1,~1)
+	
+	(3,~2,~1,~1)
+	
+	(3,~2,~1,~1)
+	
+	
+	\end{multicols}
+
+	\end{frame}
+
+
+	\begin{frame}{Функция, вычисляемая блок-схемой}
+	\emph{Лемма}: Для любой корректно-определенной блок-схемы $P$ и значений входных переменных $\bar{x}$
+	существует и единственно вычисление, в котором значения входных переменных равны значениям $\bar{x}$.
+
+	$M[P] : D_{\bar{x}} \rightarrow D_{\bar{z}}^{+}$ -- функция, вычисляемая блок-схемой.
+
+	Если вычисление конечно на $\bar{x}$, то $M[P](\bar{x})~=~h(\sigma)$, где $h$ -- функция, приписанная
+	оператору HALT в последней конфигурации вычисления, а $\sigma$ -- значения переменных в последней конфигурации вычисления.
+
+	Иначе (вычисление бесконечно на $\bar{x}$) $M[P](\bar{x}) = \omega$.
+	\end{frame}
+
+
+	\section{Математическая модель требований}
+
+	\begin{frame}{Математическая модель требований}
+	\emph{Спецификация} $\Phi$ над переменными $V$ -- это пара функций $(\varphi,~\psi)$, где
+		$\varphi : D_{\bar{x}} \rightarrow \{T,~F\}$, а
+		$\psi : D_{\bar{x}}~\times~D_{\bar{z}} \rightarrow \{T,~F\}$.
+
+	$\varphi$ -- предусловие
+
+	$\psi$ -- постусловие
+	\end{frame}
+
+	\begin{frame}{Примеры моделей требований}
+	\begin{itemize}
+		\item $\varphi \equiv T,~\psi \equiv (x_1 = x_2 \cdot z_1 + z_2)$
+		\item $\varphi \equiv (x_2 > 0),~\psi \equiv (x_1 = x_2 \cdot z_1 + z_2)$
+		\item $\varphi \equiv (x_1 > 0 \wedge x_2 > 0),~\psi \equiv (x_1 = x_2 \cdot z_1 + z_2 \wedge 0 \leq z_2 < x_2)$
+	\end{itemize}
+	\end{frame}
+
+	\section{Математические отношения соответствия}
+
+	\begin{frame}{Математические отношения соответствия}
+
+	\begin{itemize}
+	\item Блок-схема $P$ \emph{частично корректна} относительно спецификации $(\varphi,~\psi)$
+	(обозначается как $\{\varphi\}~P~\{\psi\}$), если $\forall \bar{x} \in D_{\bar{x}} \cdot
+		\varphi(\bar{x}) \wedge M[P](\bar{x}) \neq \omega
+		\Rightarrow
+		\psi(\bar{x},~M[P](\bar{x}))$.
+
+	\item Блок-схема $P$ \emph{полностью корректна} относительно спецификации $(\varphi,~\psi)$
+	(обозначается как $\langle\phi\rangle~P~\langle\psi\rangle$), если $\forall \bar{x} \in D_{\bar{x}} \cdot
+		\varphi(\bar{x})
+		\Rightarrow
+		M[P](\bar{x}) \neq \omega \wedge \psi(\bar{x},~M[P](\bar{x}))$.
+
+	\item \emph{Лемма}: $\forall P, \varphi, \psi \cdot
+				\langle\varphi\rangle P \langle\psi\rangle
+				\Leftrightarrow
+				\{\varphi\} P \{\psi\} \wedge \langle\varphi\rangle P \langle T \rangle$.
+
+	\end{itemize}
+	\end{frame}
+
+\end{document}
+

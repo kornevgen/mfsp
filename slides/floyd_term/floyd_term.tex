@@ -1,0 +1,195 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 3. Метод фундированных множеств Флойда}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Определить метод доказательства завершимости.
+    \end{frame}
+
+    \section{Доказательство на примере}
+
+    \begin{frame}[fragile]{Пример для доказательства}
+$D_x = D_y = D_z = \mathbb{Z}$. Доказать, что блок-схема завершается при всех значениях входных переменных таких, что выполнено $\varphi(x) \equiv x \geq 0$. Метод доказательства должен быть автоматизируемым.
+
+\begin{center}
+\huge
+\begin{dot2tex}[options=-traw]
+
+digraph G{
+	d2tgraphstyle="scale=0.3, transform shape";
+
+	/* nodes by levels */
+	node[shape=rectangle, height=1];
+	START[style=rounded, width=3,texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
+    JOIN;
+	COND[style=rounded, label="$y = x$"];
+	INCR[label="$y \\leftarrow y + 1$"];
+	HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
+
+
+	/* edges */
+	node [shape=point, width=0];
+	START:s -> JOIN:n;
+    JOIN:s -> COND:n;
+	COND:w -> HALT:n [label="T"];
+    COND:e -> INCR:n [label="F"];
+	{ rank=same; INCR; HALT; }
+	INCR:s -> JOIN:e;
+}
+
+\end{dot2tex}
+\end{center}
+    \end{frame}
+
+    \begin{frame}{Поиск доказательства}
+    Надо доказать, что все вычисления из входных переменных таких, что $\varphi(x)$, завершаются, т.е. не являются бесконечными.
+
+    Попробуем добавить еще одну промежуточную переменную $u$ из ограниченного домена ($u \in \{0,1,2,...\}$), чтобы на каждой итерации эта переменная уменьшалась (надо доказать, что эта переменная не выходит за границы домена). Получится, что вычисление не может быть бесконечным, так как иначе переменная выйдет за границы домена.
+
+    \end{frame}
+    \begin{frame}[fragile]{Поиск доказательства}
+
+\begin{center}
+\huge
+\begin{dot2tex}[options=-traw]
+
+digraph G{
+	d2tgraphstyle="scale=0.4, transform shape";
+
+	/* nodes by levels */
+	node[shape=rectangle, height=1];
+	START[style=rounded, width=3,texlbl="$\begin{matrix}START:\\(y, u) \leftarrow (0, |x|)\end{matrix}$"];
+    JOIN;
+	COND[style=rounded, label="$y = x$"];
+	INCR[width=5, label="$(y, u) \\leftarrow (y + 1, |x - (y + 1)|)$"];
+	HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\z \leftarrow y\end{matrix}$"];
+
+	/* edges */
+	node [shape=point, width=0];
+	START:s -> JOIN:n;
+    JOIN:s -> COND:n;
+	COND:w -> HALT:n [label="T"];
+    COND:e -> INCR:n [label="F"];
+	{ rank=same; INCR; HALT; }
+	INCR:s -> JOIN:e;
+}
+
+\end{dot2tex}
+\end{center}
+
+    \end{frame}
+
+    \begin{frame}{Доказательство примера}
+    Попробуем доказать по индукции, что переменная $u$ уменьшается на каждой итерации цикла. То есть мы хотим доказать, что на всех вычислениях из $x$ таких, что $x \geq 0$, в любых соседних конфигурациях связки между JOIN и TEST $u_{n+1} < u_n$.
+
+    \emph{База индукции}. Самые первые вхождения: $u_0 = |x|$ (из START), $u_1 = |x - 1|$ (после ASSIGN), причем $x \neq 0$. Получается: $\forall x \in \mathbb{Z} \cdot x \geq 0 \land x \neq 0 \Rightarrow |x - 1| < |x|$. Доказано.
+
+    \emph{Индуктивный переход}. Пусть $u_n = |x - y_n|$, $u_{n+1} = |x - y_{n+1}|$, $y_{n+1} = y_n + 1$, $y_n \neq x$, тогда $u_{n+1} < u_n$. Тогда надо доказать, что если $y_{n+1} \neq x$, то $|x - (y_{n+1} + 1)| < |x - y_{n+1}|$. Когда истинно $|x - (y_n + 1)| < |x - y_n|$? Тогда и только тогда, когда $x \geq y_n + 1$. Но $x \neq y_n + 1$. Значит $x \geq y_n + 2$. Значит $|x - (y_n + 2)| < |x - (y_n + 1)|$. Доказано.
+
+    Значит, не может быть бесконечного вычисления, т.к. иначе переменная $u$ выйдет за свой домен.
+    \end{frame}
+
+    \begin{frame}{Упрощение доказательства}
+    \begin{itemize}
+    \item Можно не добавлять $u$ во все операторы START и ASSIGN, а ввести функцию от конфигурации, дающую те же значения переменной $u$.
+    \item Можно ввести индуктивное утверждение и доказывать убывание $u$ из этого индуктивного утверждения.
+    \item Можно использовать другое множество значений переменной $u$. Главное - чтобы в нем не было бесконечно убывающей последовательности значений.
+    \item Можно вместо этого домена переменной $u$ рассматривать надмножество этого домена. Это упростит выкладки.
+    \end{itemize}
+    \end{frame}
+
+	\section{Метод фундированных множеств}
+
+    \begin{frame}{Предварительные определения}
+	\emph{Отношение строгого частичного порядка} -- это бинарное отношение $\prec$ на некотором множестве $W$, обладающее следующими свойствами:
+    \begin{enumerate}
+    \item антирефлексивность: $\forall x \in W \cdot \neg (x \prec x)$.
+    \item транзитивность: $\forall x, y, z \in W \cdot x \prec y \land y \prec z \Rightarrow x \prec z$.
+    \end{enumerate}
+
+    \emph{Фундированное множество} -- множество, снабженное отношением строгого частичного порядка, в котором не существует бесконечно убывающей последовательности элементов.
+    \end{frame}
+
+	\begin{frame}{Метод фундированных множеств}
+
+    \begin{block}{Шаг 1}
+	Выбор множества т.с. (все циклические пути имеют т.с.) и фундированного множества $(W,~\prec)$.
+	\end{block}
+	\begin{block}{Шаг 2}
+	Выбор индуктивного утверждения для каждой т.с., выписывание условий верификации для каждого
+	базового пути между точками сечения и псевдосвязкой у START.
+	\end{block}
+	\begin{block}{Шаг 3}
+	Выбор оценочной функции для каждой точки сечения ($u_A~:~D_{\bar{x}}~\times~D_{\bar{y}}~\rightarrow~W'$, $W \subseteq W'$).
+	\end{block}
+	\end{frame}
+
+	\begin{frame}{Метод фундированных множеств (продолжение)}
+
+	\begin{block}{Шаг 4}
+	Выписывание условия корректности оценочной функции для каждой точки сечения:
+	$\forall \bar{x} \in D_{\bar{x}} ~\forall \bar{y} \in D_{\bar{y}} ~\cdot~
+	\varphi(\bar{x}) \land p_A(\bar{x},~\bar{y}) \Rightarrow u_A(\bar{x},~\bar{y}) \in W$.
+	\end{block}
+	\begin{block}{Шаг 5}
+	Выписывание условия завершимости для каждого базового пути между точками сечения (из А в В):
+	$\forall \bar{x} \in D_{\bar{x}} ~ \forall \bar{y} \in D_{\bar{y}} ~\cdot~
+	\varphi(\bar{x}) \land p_A(\bar{x},~\bar{y})~\land~R_\alpha(\bar{x},~\bar{y}) \Rightarrow
+	u_B(\bar{x},~r_\alpha(\bar{x},~\bar{y})) ~\prec~ u_A(\bar{x},~\bar{y})$.
+	\end{block}
+	\end{frame}
+
+	\begin{frame}{Корректность метода фундированных множеств}
+
+	\begin{block}{Теорема}
+	Дана блок-схема $P$, спецификация $(\varphi,~\psi)$. Если все составленные условия верификации, корректности и завершимости истинны, то $\langle\varphi\rangle~P~\langle T \rangle$, т.е. блок-схема завершима.
+	\end{block}
+
+    Схема доказательства: по индукции доказать выполнение индуктивных утверждений в точках сечения, из фундированности $W$ сделать вывод об отсутствии бесконечных вычислений.
+	\end{frame}
+
+	\begin{frame}{Примеры фундированных множеств}
+	\begin{block}{Натуральные числа}
+	$W~\equiv~\{0,~1,~2,~\ldots\}$ -- множество целых неотрицательных чисел
+
+	$x~\prec~y~\equiv~x~<~y$ -- с естественным порядком на нем
+	\end{block}
+	\begin{block}{Кортежи}
+	$W~\equiv~W_1~\times~W_2$ -- пара двух фундированных множеств $(W_1,~\prec_1)$ и $(W_2,~\prec_2)$.
+
+	$(x_1,~x_2)~\prec~(y_1,~y_2) ~\equiv~ x_1~\prec_1~y_1~\lor~x_1~=~y_1 \land x_2~\prec_2~y_2$ -- лексикографический порядок.
+	\end{block}
+	\end{frame}
+
+\end{document}
+

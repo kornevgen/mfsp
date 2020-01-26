@@ -1,0 +1,17 @@
+*.aux
+*.log
+*.nav
+*.out
+*.dvi
+*.snm
+*.toc
+*.pyc
+*.bin
+*.*~
+htmlcov/
+.coverage
+.pvscontext
+*.bak
+*.vrb
+*-fig*.tex
+*-fig*.dot
