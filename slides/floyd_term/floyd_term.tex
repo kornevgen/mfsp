@@ -5,7 +5,6 @@
 \usepackage{multicol}
 
 \usepackage[pgf]{dot2texi}
-\usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{shapes, arrows}
 
@@ -38,77 +37,87 @@
 
     \section{Доказательство на примере}
 
-    \begin{frame}[fragile]{Пример для доказательства}
-$D_x = D_y = D_z = \mathbb{Z}$. Доказать, что блок-схема завершается при всех значениях входных переменных таких, что выполнено $\varphi(x) \equiv x \geq 0$. Метод доказательства должен быть автоматизируемым.
+	\begin{frame}[fragile]{Пример для доказательства}
+	\begin{multicols}{2}
+	
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+		
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=2, texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
+		JOIN;
+        COND[style=rounded, width=2, label="$y = x$"];
+		INCR[width=2, texlbl="$y \leftarrow y + 1$"];
+        HALT[style=rounded, width=2, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
+				
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN [arrowhead=none]; JOIN -> COND [weight=8];
+		{ rank=same; p1 -> JOIN; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+	}
+	\end{dot2tex}
+	
+	\normalsize
+	
+    $\begin{matrix}
+    D_x = \mathbb{Z}\\
+    D_y = \mathbb{Z}\\
+    D_z = \mathbb{Z}\\
+    \varphi(x) \geq 0\\
+    \end{matrix}$
 
-\begin{center}
-\huge
-\begin{dot2tex}[options=-traw]
+    Доказать, что блок-схема завершается при всех значениях входных переменных из указанного предусловия. Метод доказательства должен быть <<автоматизируемым>>.
+	\end{multicols}
 
-digraph G{
-	d2tgraphstyle="scale=0.3, transform shape";
-
-	/* nodes by levels */
-	node[shape=rectangle, height=1];
-	START[style=rounded, width=3,texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
-    JOIN;
-	COND[style=rounded, label="$y = x$"];
-	INCR[label="$y \\leftarrow y + 1$"];
-	HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
-
-
-	/* edges */
-	node [shape=point, width=0];
-	START:s -> JOIN:n;
-    JOIN:s -> COND:n;
-	COND:w -> HALT:n [label="T"];
-    COND:e -> INCR:n [label="F"];
-	{ rank=same; INCR; HALT; }
-	INCR:s -> JOIN:e;
-}
-
-\end{dot2tex}
-\end{center}
-    \end{frame}
-
+	\end{frame}
+   
+    
     \begin{frame}{Поиск доказательства}
     Надо доказать, что все вычисления из входных переменных таких, что $\varphi(x)$, завершаются, т.е. не являются бесконечными.
 
-    Попробуем добавить еще одну промежуточную переменную $u$ из ограниченного домена ($u \in \{0,1,2,...\}$), чтобы на каждой итерации эта переменная уменьшалась (надо доказать, что эта переменная не выходит за границы домена). Получится, что вычисление не может быть бесконечным, так как иначе переменная выйдет за границы домена.
+    Попробуем добавить еще одну промежуточную переменную $u$ из ограниченного домена ($u \in \{0,1,2,...\}$), чтобы на каждой итерации эта переменная уменьшалась (надо доказать, что эта переменная не выходит за границы домена), не влияющую на вычисление. Получится, что вычисление не может быть бесконечным, так как иначе переменная выйдет за границы домена.
 
     \end{frame}
-    \begin{frame}[fragile]{Поиск доказательства}
-
-\begin{center}
-\huge
-\begin{dot2tex}[options=-traw]
-
-digraph G{
-	d2tgraphstyle="scale=0.4, transform shape";
-
-	/* nodes by levels */
-	node[shape=rectangle, height=1];
-	START[style=rounded, width=3,texlbl="$\begin{matrix}START:\\(y, u) \leftarrow (0, |x|)\end{matrix}$"];
-    JOIN;
-	COND[style=rounded, label="$y = x$"];
-	INCR[width=5, label="$(y, u) \\leftarrow (y + 1, |x - (y + 1)|)$"];
-	HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\z \leftarrow y\end{matrix}$"];
-
-	/* edges */
-	node [shape=point, width=0];
-	START:s -> JOIN:n;
-    JOIN:s -> COND:n;
-	COND:w -> HALT:n [label="T"];
-    COND:e -> INCR:n [label="F"];
-	{ rank=same; INCR; HALT; }
-	INCR:s -> JOIN:e;
-}
-
-\end{dot2tex}
-\end{center}
-
-    \end{frame}
-
+   
+  	\begin{frame}[fragile]{Добавление убывающей переменной}
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+		
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=3, texlbl="$\begin{matrix}START:\\ (y, u) \leftarrow (0, |x|)\end{matrix}$"];
+		JOIN;
+        COND[style=rounded, width=2, label="$y = x$"];
+		INCR[width=5, texlbl="$(y, u) \leftarrow (y + 1, |x - (y + 1)|)$"];
+        HALT[style=rounded, width=2, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
+				
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN [arrowhead=none]; JOIN -> COND [weight=8];
+		{ rank=same; p1 -> JOIN; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+	}
+	\end{dot2tex}
+	\end{frame}
+   
     \begin{frame}{Доказательство примера}
     Попробуем доказать по индукции, что переменная $u$ уменьшается на каждой итерации цикла. То есть мы хотим доказать, что на всех вычислениях из $x$ таких, что $x \geq 0$, в любых соседних конфигурациях связки между JOIN и TEST $u_{n+1} < u_n$.
 

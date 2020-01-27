@@ -5,7 +5,6 @@
 \usepackage{multicol}
 
 \usepackage[pgf]{dot2texi}
-\usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{shapes, arrows}
 
@@ -38,39 +37,53 @@
 
     \section{Доказательство на примере}
 
-    \begin{frame}[fragile]{Пример для доказательства}
-$D_x = D_y = D_z = \mathbb{Z}$, $\varphi(x) \equiv T$, $\psi(x, z) \equiv 2 * z \geq x$
+	\begin{frame}[fragile]{Пример для доказательства}
+	\setlength{\columnsep}{4cm}
+	
+	\begin{multicols}{2}
+	
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+		
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=3, texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
+		JOIN;
+        COND[style=rounded, width=2, label="$y = x$"];
+		INCR[width=3.5, texlbl="$y \leftarrow y + 1$"];
+        HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
+				
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN [arrowhead=none]; JOIN -> COND [weight=8];
+		{ rank=same; p1 -> JOIN; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+	}
+	\end{dot2tex}
+	
+	\large
+	
+    $\begin{matrix}
+    D_x = \mathbb{Z}\\
+    D_y = \mathbb{Z}\\
+    D_z = \mathbb{Z}\\
+    \varphi(x) \equiv T\\
+    \psi(x, z) \equiv 2 * z \geq x\\
+    \end{matrix}$\\
 
-\begin{center}
-\huge
-\begin{dot2tex}[options=-traw]
+    Доказать, что $\{\varphi\}~P~\{\psi\}$.
+	\end{multicols}
 
-digraph G{
-	d2tgraphstyle="scale=0.4, transform shape";
-
-	/* nodes by levels */
-	node[shape=rectangle, height=1];
-	START[style=rounded, width=3,texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
-    JOIN;
-	COND[style=rounded, label="$y =  x$"];
-	INCR[label="$y \\leftarrow y + 1$"];
-	HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
-
-
-	/* edges */
-	node [shape=point, width=0];
-	START:s -> JOIN:n;
-    JOIN:s -> COND:n;
-	COND:w -> HALT:n [label="T"];
-    COND:e -> INCR:n [label="F"];
-	{ rank=same; INCR; HALT; }
-	INCR:s -> JOIN:e;
-}
-
-\end{dot2tex}
-\end{center}
-    \end{frame}
-
+	\end{frame}
+    
     \begin{frame}{Поиск доказательства}
     Нельзя составить $M[P]$ в виде формулы, не прибегая к <<знанию принципа работы блок-схемы>> (иначе формулу для $M[P]$ можно было бы подставить в определение частичной корректности и свести задачу доказательства частичной корректности к задаче доказательства истинности формулы частичной корректности). Задача составления $M[P]$ алгоритмически неразрешима.
     \end{frame}
