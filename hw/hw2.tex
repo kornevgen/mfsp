@@ -1,0 +1,51 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\title{Домашняя работа №2}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+Множество переменных $V = \{ x, y_1, y_2, y_3, z \}$ состоит из одной входной, трех промежуточных и одной выходной переменных. Доменом всех переменных является множество всех целых чисел. На рисунке представлена блок-схема программы над множеством переменных $V$, вычисляющая целую часть кубического корня. Доказать частичную корректность программы относительно входного предиката $\varphi(x)~\equiv~(x \geq 0)$ и выходного предиката $\psi(x,~z)~\equiv~( z^3 \leq x < (z + 1)^3 )$ при помощи методов Флойда.
+
+\hspace{2cm}
+
+\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.5";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=5, texlbl="$\begin{matrix}START:\\ (y_1,~y_2,~y_3) \leftarrow (0,~0,~1)\\\end{matrix}$"];
+		ASSIGN1[width=3, texlbl="$y_2 \leftarrow y_2 + y_3$"];
+        TEST[style=rounded, width=2, texlbl="$y_2 > x$"];
+		ASSIGN2[width=3, texlbl="$y_1 \leftarrow y_1 + 1$"];
+		ASSIGN3[width=3, texlbl="$y_3 \leftarrow y_3 + 6 \cdot y_1$"];
+		HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\ z \leftarrow y_1\end{matrix}$"];
+
+        /* edges */
+		node [shape=point, width=0, label=""];
+		START -> p2 [arrowhead=none]; p2 -> ASSIGN1 [weight=8];
+		{ rank=same; p1 -> p2; }
+		p1 -> p5 [weight=8, arrowhead=none];
+        ASSIGN1 -> TEST[weight=8];
+		{ rank=same; p3 -> TEST [label="F", arrowhead=none]; TEST -> p4 [label="T", arrowhead=none]; }
+		p3 -> ASSIGN2 [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; ASSIGN2; HALT; }
+        ASSIGN2 -> ASSIGN3 [weight=8];
+		ASSIGN3 -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+	}
+\end{dot2tex}
+
+\end{document}
+
