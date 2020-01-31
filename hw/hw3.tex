@@ -1,0 +1,63 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\title{Домашняя работа №3}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+Множество переменных $V = \{ x, y_1, y_2, y_3, z \}$ состоит из одной входной, трех промежуточных и одной выходной переменных. Доменом всех переменных является множество всех целых чисел. На рисунке представлена блок-схема программы над множеством переменных $V$. Доказать завершаемость программы относительно входного предиката $\varphi(x)~\equiv~(x > 1)$ при помощи методов Флойда.
+
+\hspace{2cm}
+
+\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.5";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=4, texlbl="$\begin{matrix}START:\\ (y_1,~y_2,~y_3) \leftarrow (x,~1,~x)\\\end{matrix}$"];
+        TEST1[style=rounded, width=2, texlbl="$y_2 < y_3$"];
+        ASSIGN1[width=4, texlbl="$(y_1,~y_2) \leftarrow (y_1 + x,~y_2 + 1)$"];
+        TEST2[style=rounded, width=2, texlbl="$y_3 = x$"];
+        ASSIGN2[width=2, texlbl="$y_3 \leftarrow y_1$"];
+		HALT[style=rounded, width=3, texlbl="$\begin{matrix}HALT:\\ z \leftarrow y_1\end{matrix}$"];
+
+        /* edges */
+		node [shape=point, width=0, label=""];
+		START -> p2 [weight=8, arrowhead=none]; p2 -> TEST1 [weight=8];
+        {rank = same; p1 -> p2; }
+        p1 -> p10 [weight=8, arrowhead=none];
+
+        {rank = same; p3 -> TEST1 [label="T", arrowhead=none]; TEST1 -> p4 [label="F", arrowhead=none]; }
+		p3 -> ASSIGN1 [weight=8];
+		p4 -> TEST2 [weight=8];
+
+        p10 -> ASSIGN1 [weight=8, style="invis"];
+        ASSIGN1 -> p5 [weight=8, style="invis"];
+        p5 -> TEST2 [label="T", arrowhead=none];
+        TEST2 -> p6 [label="F", arrowhead=none];
+        {rank = same; p10; ASSIGN1; p5; TEST2; p6; }
+        ASSIGN1 -> p8 [weight=8, arrowhead=none];
+		p5 -> ASSIGN2 [weight=8];
+		p6 -> HALT [weight=8];
+        p10 -> p7 [weight=8, arrowhead=none];
+
+		ASSIGN2 -> p9 [weight=8, arrowhead=none];
+
+        { rank=same; p7 -> p8 [arrowhead=none]; p8 -> p9 [arrowhead=none]; }
+	}
+\end{dot2tex}
+
+\end{document}
+

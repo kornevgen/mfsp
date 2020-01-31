@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenx}
 \usepackage[russian]{babel}
 
+\usepackage{amsmath}
+
 \usepackage[pgf]{dot2texi}
 \usepackage{tikz}
 \usetikzlibrary{shapes, arrows}
@@ -24,7 +26,7 @@
 
 		/* nodes by levels */
 		node[shape=rectangle, height=1];
-		START[style=rounded, width=5, texlbl="$\begin{matrix}START:\\ (y_1,~y_2,~y_3) \leftarrow (0,~0,~1)\\\end{matrix}$"];
+		START[style=rounded, width=4, texlbl="$\begin{matrix}START:\\ (y_1,~y_2,~y_3) \leftarrow (0,~0,~1)\\\end{matrix}$"];
 		ASSIGN1[width=3, texlbl="$y_2 \leftarrow y_2 + y_3$"];
         TEST[style=rounded, width=2, texlbl="$y_2 > x$"];
 		ASSIGN2[width=3, texlbl="$y_1 \leftarrow y_1 + 1$"];
