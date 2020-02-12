@@ -1,0 +1,22 @@
+digraph G{
+
+
+/* nodes by levels */
+node[shape=rectangle, height=1];
+START[style=rounded, width=3, label="START: (y1, y2) <- (x, 0)"];
+COND[style=rounded, width=2, label="y1 = 0"];
+INCR[width=3.5, label="(y1, y2) <- (y1 - 1, y2 + x)"];
+HALT[style=rounded, width=3, label="z <- y2"];
+
+/* edges */
+node [shape=point, width=0, label=""];
+START -> p2 [arrowhead=none]; p2 -> COND [weight=8];
+{ rank=same; p1 -> p2; }
+p1 -> p5 [weight=8, arrowhead=none];
+{ rank=same; p3 -> COND [label="F", arrowhead=none]; COND -> p4 [label="T", arrowhead=none]; }
+p3 -> INCR [weight=8];
+p4 -> HALT [weight=8];
+{ rank=same; INCR; HALT; }
+INCR -> p6 [weight=8, arrowhead=none];
+{ rank=same; p5 -> p6 [arrowhead=none]; }
+}
