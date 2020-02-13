@@ -3,10 +3,10 @@ digraph G{
 
 /* nodes by levels */
 node[shape=rectangle];
-START[style=rounded, label=<START: (y<sub>1</sub>, y<sub>2</sub>) &larr; (x, 0)>];
+START[style=rounded, label=<START:<br/>(y<sub>1</sub>, y<sub>2</sub>) &larr; (x, 0)>];
 COND[style=rounded, width=2, label=<y<sub>1</sub> = 0>];
 INCR[label=<(y<sub>1</sub>, y<sub>2</sub>) &larr; (y<sub>1</sub> - 1, y<sub>2</sub> + x)>];
-HALT[style=rounded, label=<HALT: z &larr; y<sub>2</sub>>];
+HALT[style=rounded, label=<HALT:<br/>z &larr; y<sub>2</sub>>];
 
 /* edges */
 node [shape=point, width=0, label=""];
