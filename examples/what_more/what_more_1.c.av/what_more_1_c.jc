@@ -1,0 +1,89 @@
+
+axiomatic Padding {
+
+  logic type padding
+  
+}
+
+tag voidP = {
+}
+
+type voidP = [voidP]
+
+tag charP = voidP with {
+  int8 charM: 8;
+}
+
+tag intP = {
+  int32 intM: 32;
+}
+
+type intP = [intP]
+
+axiomatic Count {
+
+  logic integer count{L}(intP[..] a, integer i, integer j, integer p)
+   
+  axiom base{L} :
+  (_C_1 : (\forall intP[..] a_0;
+            (\forall integer i_0;
+              (\forall integer j_0;
+                (\forall integer p_0;
+                  ((i_0 >= j_0) ==> (count{L}(a_0, i_0, j_0, p_0) == 0)))))))
+   
+  axiom split{L} :
+  (_C_2 : (\forall intP[..] a_1;
+            (\forall integer i_1;
+              (\forall integer k_1;
+                (\forall integer j_1;
+                  (\forall integer p_1;
+                    (((i_1 <= k_1) && (k_1 <= j_1)) ==>
+                      (count{L}(a_1, i_1, j_1, p_1) ==
+                        (count{L}(a_1, i_1, k_1, p_1) +
+                          count{L}(a_1, k_1, j_1, p_1))))))))))
+   
+  axiom one{L} :
+  (_C_3 : (\forall intP[..] a_2;
+            (\forall integer i_2;
+              (\forall integer p_2;
+                (((((a_2 + i_2).intM :> integer) == p_2) ==>
+                   (count{L}(a_2, i_2, (i_2 + 1), p_2) == 1)) &&
+                  ((! (((a_2 + i_2).intM :> integer) == p_2)) ==>
+                    (count{L}(a_2, i_2, (i_2 + 1), p_2) == 0)))))))
+  
+}
+
+int32 what_more(intP[..] a, int32 n_9, int32 x, int32 y)
+  requires ((_C_9 : (n_9 > (0 :> int32))) &&
+             (_C_10 : (\forall integer i_3;
+                        (((0 <= i_3) && (i_3 < (n_9 :> integer))) ==>
+                          \at((((\offset_min(\at(a,Here)) <= \at(i_3,Here)) &&
+                                 (\offset_max(\at(a,Here)) >= \at(i_3,Here))) &&
+                                (\forall integer __framac_tmp1;
+                                  (((\at(i_3,Here) <= __framac_tmp1) &&
+                                     (__framac_tmp1 <= \at(i_3,Here))) ==>
+                                    true))),Here)))));
+behavior default:
+  assigns a.intM;
+  ensures (_C_4 : ((_C_5 : ((count{Here}(\at(a,Old), 0,
+                                         (\at(n_9,Old) :> integer),
+                                         (\at(x,Old) :> integer)) >
+                              count{Here}(\at(a,Old), 0,
+                                          (\at(n_9,Old) :> integer),
+                                          (\at(y,Old) :> integer))) ==>
+                             (\result > (0 :> int32)))) &&
+                    ((_C_7 : ((count{Here}(\at(a,Old), 0,
+                                           (\at(n_9,Old) :> integer),
+                                           (\at(x,Old) :> integer)) ==
+                                count{Here}(\at(a,Old), 0,
+                                            (\at(n_9,Old) :> integer),
+                                            (\at(y,Old) :> integer))) ==>
+                               (\result == (0 :> int32)))) &&
+                      (_C_8 : ((count{Here}(\at(a,Old), 0,
+                                            (\at(n_9,Old) :> integer),
+                                            (\at(x,Old) :> integer)) <
+                                 count{Here}(\at(a,Old), 0,
+                                             (\at(n_9,Old) :> integer),
+                                             (\at(y,Old) :> integer))) ==>
+                                (\result < (0 :> int32)))))));
+;
