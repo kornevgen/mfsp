@@ -1,0 +1,171 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+%\usepackage{listings}
+%\usepackage{graphicx}
+
+%\usepackage{comment}
+
+\title{Лекция 4. Введение в ACSL}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Познакомиться с основами языка спецификации ACSL и с верификацией в
+    среде Frama-C.
+    \end{frame}
+
+    \section{Мат.логика в Why3}
+
+    \begin{frame}{Предикаты и функции}
+    В Why3 есть \texttt{predicate} и \texttt{function}. Они означают не предикаты и функции в смысле нашей лекции 1, а означают предикатные и функциональные символы в смысле курса <<математическая логика>>. Это удобный способ объявлять новые функции. Тем более, что работать с ними будут пруверы и солверы, для которых мат.логика естественна.
+    \end{frame}
+
+    \begin{frame}{Вспоминаем мат.логику}
+    \begin{itemize}
+    \item константы
+    \item функциональные символы
+    \item термы
+    \item предикатные символы
+    \item формулы
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Вспоминаем мат.логику}
+    \begin{itemize}
+    \item $\Gamma \models \Delta$
+    \item формулы-аксиомы, формулы-цели
+    \item модели (интерпретации) --- множества всех означиваний символов (функц.символов и предикат.символов функциями), выполняющих аксиомы
+    \item задача выполнимости
+    \item задача общезначимости (нам нужна она!) -- все модели аксиом
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Методы Флойда и мат.логика}
+    Раньше каждому оператору блок-схемы сопоставлялись функции. Теперь -- формулы. Условия верификации -- это формулы. Полная корректность --- когда из аксиом общезначимы все условия верификации.
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример аксиом}
+    Определяем деление при помощи функциональных символов:
+    \begin{verbatim}
+    function div (a b: int): int
+    function mod (a b: int): int
+    axiom def: forall a b: int.
+      a >= 0 /\ b > 0 ->
+        a == b * (div a b) + (mod a b) /\
+        0 <= (mod a b) < b
+    \end{verbatim}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример аксиом}
+    Определяем деление при помощи предикатного символа:
+    \begin{verbatim}
+    predicate is_div (a b d m: int)
+    axiom def: forall a b d m: int.
+      a >= 0 /\ b > 0 ->
+        (a == b * d + m /\
+        0 <= m < b <-> is_div a b d m)
+    \end{verbatim}
+    \end{frame}
+
+    \section{Основные конструкции ACSL}
+
+    \begin{frame}{ACSL, Frama-C, AstraVer}
+    \texttt{ACSL = ANSI/ISO Specification Language}
+
+    \texttt{Frama-C} --- фронтенд статического анализа Си.
+
+    \texttt{AstraVer} --- плагин к \texttt{Frama-C}, который строит условия верификации
+    \end{frame}
+
+    \begin{frame}{ACSL}
+    \begin{itemize}
+    \item Спецификация пишется в комментариях \texttt{/*@ ... */}.
+    \item Для функций (предусловия, постусловия) --- комментарий перед заголовком.
+    \item Для циклов (индуктивные утверждения, оценочные функции) --- комментарий перед циклом.
+    \item Содержимое комментария --- аннотации.
+    \item Аннотация --- ключевое слово + формула + точка с запятой.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Спецификация функции}
+    \begin{verbatim}
+    /*@ requires -128 <= x <= 127;
+          // requires - предусловие
+        ensures \result >= 0;
+        ensures \result == x || \result == -x;
+          // ensures - постусловие
+          // несколько аннотаций - конъюнкция
+          // \result
+    */
+    int short_abs(int x);
+    \end{verbatim}
+    \end{frame}
+
+    \begin{frame}[fragile]{Спецификация цикла}
+    Точка сечения -- перед условием. Фундированное множество -- натур.числа и сравнение <<строго меньше>>.
+
+    \begin{verbatim}
+    /*@ loop invariant /* индуктив.утв. */ ;
+        loop variant /* оценоч.функ. */ ;
+    */
+    \end{verbatim}
+    \end{frame}
+
+    \section{Первый пример Си}
+
+    \begin{frame}{Версии 1 и 2}
+    Нужно написать функцию, которая выполняет некоторое действие \texttt{N} раз.
+    \begin{itemize}
+    \item \texttt{i\_u\_loop\_1.c} --- пример ensures
+    \item \texttt{i\_u\_loop\_2.c} --- сначала доказываем завершаемость и отсутствие ошибок, не связанных с функциональными требованиями (\texttt{safety}), пример спецификации цикла
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Версии 3 и 4}
+    \begin{itemize}
+    \item \texttt{i\_u\_loop\_3.c} --- AstraVer генерирует условия верификации для доказательства отсутствия арифметических переполнений и преобразований чисел, меняющих значение, смотрим сгенерированную теорию Why3: значения Си-переменных типа \texttt{int} и \texttt{unsigned} <<конвертируются>> в неограниченные числовые значения, использование стратегий Split и Inline.
+    \item \texttt{i\_u\_loop\_4.c} --- исправляем реализацию, теперь все условия верификации доказываются
+    \end{itemize}
+    \end{frame}
+
+    \section{Второй пример на Си}
+    \begin{frame}{Читаем массив}
+    Нужно написать функцию, которая получает массив из чисел и 2 числа и возвращает положительное значение, ноль или отрицательное значение в зависимости от того, какое из чисел встречается больше в массиве.
+
+    \texttt{int who\_more(int *a, int n, int x, int y);}
+    \end{frame}
+
+    \begin{frame}{Спецификация функции}
+    \begin{itemize}
+    \item \texttt{\textbackslash valid(p)} -- истинно, если указатель \texttt{p} валидный (равен адресу корректно выделенного объекта памяти)
+    \item \texttt{who\_more\_1.c} -- спецификация функции, квантор всеобщности \texttt{\textbackslash forall}, использование блока \texttt{axiomatic} для описания синтаксиса и семантики функционального символа \texttt{count}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Верификация: инстанцирование аксиомы, assert}
+    \begin{itemize}
+    \item \texttt{who\_more\_2.c} -- спецификация цикла; некоторые условия верификации не доказываются, т.к. инструмент не может <<догадаться>>, какие нужно применять аксиомы
+    \item \texttt{who\_more\_3.c} -- аксиомы должны появиться в посылках условий верификации, как их добавить? Расширить индуктивное утверждение или расширить предикат пути. Чтобы расширить предикат пути, применяем аннотацию \texttt{assert} внутри спецификационного комментария просто в коде.
+    \end{itemize}
+    \end{frame}
+
+\end{document}
+
