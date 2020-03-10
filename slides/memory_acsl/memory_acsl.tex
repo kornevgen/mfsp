@@ -1,0 +1,71 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+%\usepackage{listings}
+%\usepackage{graphicx}
+
+%\usepackage{comment}
+
+\title{Лекция 5. Спецификация и верификация программ с указателями}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Узнать особенности спецификации и верификации функций, оперирующих с
+    указателями и массивами.
+    \end{frame}
+
+    \section{Спецификация сортировки}
+
+    \begin{frame}{Основные конструкции}
+    \begin{itemize}
+    \item Валидность диапазона указателей лучше специфицировать без квантора
+    всеобщности: \texttt{\textbackslash valid(array + (0 .. size - 1));}
+    \item Постусловие имеет дело с двумя состояниями памяти: до вызова функции
+    и после вызова функции: \emph{метки памяти} - \texttt{Pre} и \texttt{Post}
+    \item Чтобы разыменовать указатель, надо указать состояние памяти:
+    \texttt{\textbackslash at(expression, label)}
+    \item У предиката метку памяти можно указать явно: \texttt{p\{L\}(n)}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Пример: сортировка выбором}
+    \begin{itemize}
+    \item \texttt{sort\_1.c} - спецификация сортировки
+    \item \texttt{sort\_2.c} - реализация сортировки выбором
+    \item \texttt{sort\_3.c} - доказательство safety
+    \item \texttt{sort\_4.c} - доказательство упорядоченности
+    \item \texttt{sort\_5.c} - доказательство перестановочности
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Выводы из примера}
+    \begin{itemize}
+    \item Солверам надо подсказывать, как нужно инстанцировать аксиомы
+    \item Полезна бывает аксиома о том, что значение лоджика или предиката не
+    изменится, если такая-то часть памяти между двумя метками не менялась
+    \item Предикаты, аксиомы, леммы, лоджики могут иметь несколько меток памяти
+    \item Можно задавать имя дополнительной метке памяти при помощи ghost
+    \item В начале итерации цикла содержимое памяти надо вручную связывать с
+    содержимым памяти до цикла, если в цикле есть присваивание в эту память
+    \end{itemize}
+    \end{frame}
+\end{document}
+
