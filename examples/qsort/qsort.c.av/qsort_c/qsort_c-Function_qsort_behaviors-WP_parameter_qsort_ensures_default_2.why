@@ -1,0 +1,569 @@
+(* this is the prelude for Alt-Ergo, version >= 0.95.2 *)
+(* this is a prelude for Alt-Ergo integer arithmetic *)
+logic comp_div: int, int -> int
+axiom comp_div_def: forall x, y:int. x >= 0 and y > 0 -> comp_div(x,y) = x / y
+logic comp_mod: int, int -> int
+axiom comp_mod_def: forall x, y:int. x >= 0 and y > 0 -> comp_mod(x,y) = x % y
+logic match_bool : bool, 'a, 'a -> 'a
+
+axiom match_bool_True :
+  (forall z:'a. forall z1:'a. (match_bool(true, z, z1) = z))
+
+axiom match_bool_False :
+  (forall z:'a. forall z1:'a. (match_bool(false, z, z1) = z1))
+
+axiom CompatOrderMult :
+  (forall x:int. forall y:int. forall z:int. ((x <= y) -> ((0 <= z) ->
+  ((x * z) <= (y * z)))))
+
+predicate in_bounds(n: int) = (((-2147483648) <= n) and (n <= 2147483647))
+
+type t
+
+logic to_int : t -> int
+
+axiom To_int_in_bounds : (forall a:t [to_int(a)]. in_bounds(to_int(a)))
+
+logic of_int : int -> t
+
+axiom Of_int :
+  (forall a:int [of_int(a)]. (in_bounds(a) -> (to_int(of_int(a)) = a)))
+
+axiom Of_int_to_int : (forall a:t [to_int(a)]. (of_int(to_int(a)) = a))
+
+predicate infix_lseq(a: t, b: t) = (to_int(a) <= to_int(b))
+
+predicate infix_ls(a: t, b: t) = (to_int(a) <  to_int(b))
+
+predicate infix_gteq(a: t, b: t) = (to_int(a) >= to_int(b))
+
+predicate infix_gt(a: t, b: t) = (to_int(b) <  to_int(a))
+
+logic abs : int -> int
+
+axiom abs_def : (forall x:int. ((x >= 0) -> (abs(x) = x)))
+
+axiom abs_def1 : (forall x:int. ((not (x >= 0)) -> (abs(x) = (-x))))
+
+axiom Abs_le :
+  (forall x:int. forall y:int [abs(x), y]. ((abs(x) <= y) -> ((-y) <= x)))
+
+axiom Abs_le1 :
+  (forall x:int. forall y:int [abs(x), y]. ((abs(x) <= y) -> (x <= y)))
+
+axiom Abs_le2 :
+  (forall x:int. forall y:int [abs(x), y]. ((((-y) <= x) and (x <= y)) ->
+  (abs(x) <= y)))
+
+axiom Abs_pos : (forall x:int. (abs(x) >= 0))
+
+axiom Div_mod :
+  (forall x:int. forall y:int. ((not (y = 0)) ->
+  (x = ((y * comp_div(x,y)) + comp_mod(x,y)))))
+
+axiom Div_bound :
+  (forall x:int. forall y:int. (((x >= 0) and (0 <  y)) ->
+  (0 <= comp_div(x,y))))
+
+axiom Div_bound1 :
+  (forall x:int. forall y:int. (((x >= 0) and (0 <  y)) ->
+  (comp_div(x,y) <= x)))
+
+axiom Mod_bound :
+  (forall x:int. forall y:int. ((not (y = 0)) ->
+  ((-abs(y)) <  comp_mod(x,y))))
+
+axiom Mod_bound1 :
+  (forall x:int. forall y:int. ((not (y = 0)) -> (comp_mod(x,y) <  abs(y))))
+
+axiom Div_sign_pos :
+  (forall x:int. forall y:int. (((x >= 0) and (0 <  y)) ->
+  (comp_div(x,y) >= 0)))
+
+axiom Div_sign_neg :
+  (forall x:int. forall y:int. (((x <= 0) and (0 <  y)) ->
+  (comp_div(x,y) <= 0)))
+
+axiom Mod_sign_pos :
+  (forall x:int. forall y:int. (((x >= 0) and (not (y = 0))) ->
+  (comp_mod(x,y) >= 0)))
+
+axiom Mod_sign_neg :
+  (forall x:int. forall y:int. (((x <= 0) and (not (y = 0))) ->
+  (comp_mod(x,y) <= 0)))
+
+axiom Rounds_toward_zero :
+  (forall x:int. forall y:int. ((not (y = 0)) ->
+  (abs((comp_div(x,y) * y)) <= abs(x))))
+
+axiom Div_1 : (forall x:int. (comp_div(x,1) = x))
+
+axiom Mod_1 : (forall x:int. (comp_mod(x,1) = 0))
+
+axiom Div_inf :
+  (forall x:int. forall y:int. (((0 <= x) and (x <  y)) ->
+  (comp_div(x,y) = 0)))
+
+axiom Mod_inf :
+  (forall x:int. forall y:int. (((0 <= x) and (x <  y)) ->
+  (comp_mod(x,y) = x)))
+
+axiom Div_mult :
+  (forall x:int. forall y:int. forall z:int [comp_div(((x * y) + z),x)].
+  (((0 <  x) and ((y >= 0) and (z >= 0))) ->
+  (comp_div(((x * y) + z),x) = (y + comp_div(z,x)))))
+
+axiom Mod_mult :
+  (forall x:int. forall y:int. forall z:int [comp_mod(((x * y) + z),x)].
+  (((0 <  x) and ((y >= 0) and (z >= 0))) ->
+  (comp_mod(((x * y) + z),x) = comp_mod(z,x))))
+
+axiom Div_mult_simplest :
+  (forall x:int. forall y:int [comp_div((x * y),y)]. (((x >= 0) and
+  (0 <  y)) -> (comp_div((x * y),y) = x)))
+
+type intP
+
+type 'a ref = { contents : 'a
+}
+
+type 't1 pointer
+
+logic null : 't1 pointer
+
+logic sub_pointer : 't1 pointer, 't1 pointer -> int
+
+logic shift : 't1 pointer, int -> 't1 pointer
+
+logic same_block : 't1 pointer, 't1 pointer -> prop
+
+axiom Sub_pointer_def :
+  (forall a:'t1 pointer.
+  (forall i:int. forall j:int [shift(a, i), shift(a, j)].
+  (sub_pointer(shift(a, i), shift(a, j)) = (i - j))))
+
+axiom Shift_def1 :
+  (forall a:'t1 pointer.
+  (forall i:int [shift(a, i)].
+  (forall j:int [shift(shift(a, i), j)]. (shift(shift(a, i), j) = shift(a,
+  (i + j))))))
+
+axiom Shift_def2 : (forall a:'t1 pointer [shift(a, 0)]. (shift(a, 0) = a))
+
+axiom Same_block_def :
+  (forall a:'t1 pointer. forall b:'t1 pointer [same_block(a, b)].
+  (same_block(a, b) -> (exists i:int. (a = shift(b, i)))))
+
+axiom Same_block_def1 :
+  (forall a:'t1 pointer. forall b:'t1 pointer [same_block(a, b)].
+  ((exists i:int. (a = shift(b, i))) -> same_block(a, b)))
+
+axiom Sub_pointer_shift :
+  (forall p:'t1 pointer. forall q:'t1 pointer [same_block(p, q)|
+  sub_pointer(p, q)]. (same_block(p, q) -> (p = shift(q, sub_pointer(p,
+  q)))))
+
+axiom Sub_pointer_self :
+  (forall p:'t1 pointer [sub_pointer(p, p)]. (sub_pointer(p, p) = 0))
+
+axiom Sub_pointer_zero :
+  (forall p:'t1 pointer. forall q:'t1 pointer [sub_pointer(p, q)].
+  (same_block(p, q) -> ((sub_pointer(p, q) = 0) -> (p = q))))
+
+axiom Sub_pointer_shift_left :
+  (forall p:'t1 pointer. forall q:'t1 pointer. forall i:int
+  [sub_pointer(shift(p, i), q)]. (same_block(p, q) -> (sub_pointer(shift(p,
+  i), q) = (sub_pointer(p, q) + i))))
+
+axiom Sub_pointer_shift_right :
+  (forall p:'t1 pointer. forall q:'t1 pointer. forall i:int [sub_pointer(p,
+  shift(q, i))]. (same_block(p, q) -> (sub_pointer(p, shift(q,
+  i)) = (sub_pointer(p, q) - i))))
+
+axiom Sub_pointer_neg :
+  (forall p:'t1 pointer. forall q:'t1 pointer [sub_pointer(p, q)|
+  sub_pointer(q, p)]. (same_block(p, q) -> (sub_pointer(p,
+  q) = (-sub_pointer(q, p)))))
+
+axiom Shift_shift :
+  (forall p:'t1 pointer.
+  (forall i:int. forall j:int [shift(shift(p, i), j)]. (shift(shift(p, i),
+  j) = shift(p, (i + j)))))
+
+axiom Neq_shift :
+  (forall p:'t1 pointer.
+  (forall i:int.
+  (forall j:int [shift(p, i), shift(p, j)]. ((not (i = j)) -> (not (shift(p,
+  i) = shift(p, j)))))))
+
+axiom Same_block_refl : (forall p:'t1 pointer. same_block(p, p))
+
+axiom Same_block_shift :
+  (forall p:'t1 pointer.
+  (forall i:int [shift(p, i)]. same_block(p, shift(p, i))))
+
+axiom Same_block_symm :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [same_block(p, q)| same_block(q, p)]. (same_block(p,
+  q) -> same_block(q, p))))
+
+axiom Same_block_symm1 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [same_block(p, q)| same_block(q, p)]. (same_block(q,
+  p) -> same_block(p, q))))
+
+axiom Same_block_trans :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [same_block(p, q)| same_block(q, p)].
+  (forall r:'t1 pointer [same_block(p, r)]. ((same_block(p, q) and
+  same_block(q, r)) -> same_block(p, r)))))
+
+axiom Same_block_shift_right :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [same_block(p, q)| same_block(q, p)].
+  (forall i:int [same_block(p, shift(q, i))]. (same_block(p, q) ->
+  same_block(p, shift(q, i))))))
+
+axiom Same_block_shift_left :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [same_block(p, q)| same_block(q, p)].
+  (forall i:int [same_block(shift(q, i), p)]. (same_block(q, p) ->
+  same_block(shift(q, i), p)))))
+
+type 't1 pset
+
+logic pset_empty : 't1 pset
+
+logic pset_singleton : 't1 pointer -> 't1 pset
+
+logic in_pset : 't1 pointer, 't1 pset -> prop
+
+axiom In_pset_empty :
+  (forall p:'t1 pointer [in_pset(p, (pset_empty : 't1 pset))].
+  (not in_pset(p, (pset_empty : 't1 pset))))
+
+axiom In_pset_singleton :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [in_pset(p, pset_singleton(q))]. (in_pset(p,
+  pset_singleton(q)) -> (p = q))))
+
+axiom In_pset_singleton1 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer [in_pset(p, pset_singleton(q))]. ((p = q) ->
+  in_pset(p, pset_singleton(q)))))
+
+logic pset_range : 't1 pset, int, int -> 't1 pset
+
+axiom In_pset_range :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pset.
+  (forall a:int. forall b:int [in_pset(p, pset_range(q, a, b))]. (in_pset(p,
+  pset_range(q, a, b)) ->
+  (exists i:int.
+  (exists r:'t1 pointer. ((a <= i) and ((i <= b) and (in_pset(r, q) and
+  (p = shift(r, i)))))))))))
+
+axiom In_pset_range1 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pset.
+  (forall a:int. forall b:int [in_pset(p, pset_range(q, a, b))].
+  ((exists i:int.
+   (exists r:'t1 pointer. ((a <= i) and ((i <= b) and (in_pset(r, q) and
+   (p = shift(r, i))))))) ->
+  in_pset(p, pset_range(q, a, b))))))
+
+axiom In_pset_range_singleton :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer.
+  (forall a:int. forall b:int [in_pset(p, pset_range(pset_singleton(q), a,
+  b))]. (in_pset(p, pset_range(pset_singleton(q), a, b)) -> same_block(p,
+  q)))))
+
+axiom In_pset_range_singleton1 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer.
+  (forall a:int. forall b:int [in_pset(p, pset_range(pset_singleton(q), a,
+  b))]. (in_pset(p, pset_range(pset_singleton(q), a, b)) ->
+  (a <= sub_pointer(p, q))))))
+
+axiom In_pset_range_singleton2 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer.
+  (forall a:int. forall b:int [in_pset(p, pset_range(pset_singleton(q), a,
+  b))]. (in_pset(p, pset_range(pset_singleton(q), a, b)) -> (sub_pointer(p,
+  q) <= b)))))
+
+axiom In_pset_range_singleton3 :
+  (forall p:'t1 pointer.
+  (forall q:'t1 pointer.
+  (forall a:int. forall b:int [in_pset(p, pset_range(pset_singleton(q), a,
+  b))]. ((same_block(p, q) and ((a <= sub_pointer(p, q)) and (sub_pointer(p,
+  q) <= b))) -> in_pset(p, pset_range(pset_singleton(q), a, b))))))
+
+axiom Select_eq :
+  (forall m:('a,'b) farray.
+  (forall a1:'a. forall a2:'a.
+  (forall b1:'b [((m[a1 <- b1])[a2])]. ((a1 = a2) ->
+  (((m[a1 <- b1])[a2]) = b1)))))
+
+axiom Select_neq :
+  (forall m:('a,'b) farray.
+  (forall a1:'a. forall a2:'a.
+  (forall b1:'b [((m[a1 <- b1])[a2])]. ((not (a1 = a2)) ->
+  (((m[a1 <- b1])[a2]) = (m[a2]))))))
+
+predicate usSwap(a_7: intP pointer, i_1: int, j_0: int,
+  intP_intM_a_7_5_at_L2: (intP pointer,t) farray,
+  intP_intM_a_7_5_at_L1: (intP pointer,t) farray) =
+  (((intP_intM_a_7_5_at_L1[shift(a_7,
+  i_1)]) = (intP_intM_a_7_5_at_L2[shift(a_7, j_0)])) and
+  (((intP_intM_a_7_5_at_L1[shift(a_7,
+  j_0)]) = (intP_intM_a_7_5_at_L2[shift(a_7, i_1)])) and
+  (forall k_3:int. (((not (k_3 = i_1)) and (not (k_3 = j_0))) ->
+  ((intP_intM_a_7_5_at_L1[shift(a_7,
+  k_3)]) = (intP_intM_a_7_5_at_L2[shift(a_7, k_3)]))))))
+
+logic permutation : intP pointer, int, int, (intP pointer,t) farray,
+  (intP pointer,t) farray -> prop
+
+axiom usPermut_refl :
+  (forall intP_intM_a_2_4_at_L:(intP pointer,t) farray.
+  (forall a_3:intP pointer.
+  (forall l_0_1:int.
+  (forall h_0:int. permutation(a_3, l_0_1, h_0, intP_intM_a_2_4_at_L,
+  intP_intM_a_2_4_at_L)))))
+
+axiom usPermut_sym :
+  (forall intP_intM_a_2_4_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_2_4_at_L1:(intP pointer,t) farray.
+  (forall a_4:intP pointer.
+  (forall l_1:int.
+  (forall h_1:int. (permutation(a_4, l_1, h_1, intP_intM_a_2_4_at_L2,
+  intP_intM_a_2_4_at_L1) -> permutation(a_4, l_1, h_1, intP_intM_a_2_4_at_L1,
+  intP_intM_a_2_4_at_L2)))))))
+
+axiom usPermut_trans :
+  (forall intP_intM_a_2_4_at_L3:(intP pointer,t) farray.
+  (forall intP_intM_a_2_4_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_2_4_at_L1:(intP pointer,t) farray.
+  (forall a_5:intP pointer.
+  (forall l_2:int.
+  (forall h_2:int. ((permutation(a_5, l_2, h_2, intP_intM_a_2_4_at_L2,
+  intP_intM_a_2_4_at_L1) and permutation(a_5, l_2, h_2,
+  intP_intM_a_2_4_at_L3, intP_intM_a_2_4_at_L2)) -> permutation(a_5, l_2,
+  h_2, intP_intM_a_2_4_at_L3, intP_intM_a_2_4_at_L1))))))))
+
+axiom usPermut_swap :
+  (forall intP_intM_a_2_4_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_2_4_at_L1:(intP pointer,t) farray.
+  (forall a_6:intP pointer.
+  (forall l_3:int.
+  (forall h_3:int.
+  (forall i_0:int.
+  (forall j:int. (((l_3 <= i_0) and ((i_0 <= h_3) and ((l_3 <= j) and
+  ((j <= h_3) and usSwap(a_6, i_0, j, intP_intM_a_2_4_at_L2,
+  intP_intM_a_2_4_at_L1))))) -> permutation(a_6, l_3, h_3,
+  intP_intM_a_2_4_at_L2, intP_intM_a_2_4_at_L1)))))))))
+
+axiom permutation_inversion :
+  (forall z:intP pointer. forall z1:int. forall z2:int.
+  forall z3:(intP pointer,t) farray. forall z4:(intP pointer,t) farray.
+  (permutation(z, z1, z2, z3, z4) -> ((((z4 = z3) or permutation(z, z1, z2,
+  z4, z3)) or
+  (exists intP_intM_a_2_4_at_L2:(intP pointer,t) farray. (permutation(z, z1,
+  z2, intP_intM_a_2_4_at_L2, z4) and permutation(z, z1, z2, z3,
+  intP_intM_a_2_4_at_L2)))) or
+  (exists i_0:int.
+  (exists j:int. ((z1 <= i_0) and ((i_0 <= z2) and ((z1 <= j) and
+  ((j <= z2) and usSwap(z, i_0, j, z3, z4))))))))))
+
+predicate minimum(a_0: intP pointer, n_2: int, m_0: int, p: int,
+  intP_intM_a_0_3_at_L: (intP pointer,t) farray) =
+  (forall k_2:int. (((n_2 <= k_2) and (k_2 <= m_0)) ->
+  (p <= to_int((intP_intM_a_0_3_at_L[shift(a_0, k_2)])))))
+
+predicate ordered(a: intP pointer, n_1: int, m: int,
+  intP_intM_a_2_at_L: (intP pointer,t) farray) =
+  (forall k_1:int. (((n_1 <= k_1) and (k_1 <= m)) -> minimum(a, k_1, m,
+  to_int((intP_intM_a_2_at_L[shift(a, k_1)])), intP_intM_a_2_at_L)))
+
+type 't1 alloc_table
+
+logic offset_min : 't1 alloc_table, 't1 pointer -> int
+
+logic offset_max : 't1 alloc_table, 't1 pointer -> int
+
+axiom Null_pointer :
+  (forall a:'t1 alloc_table [offset_max(a, (null : 't1 pointer))|
+  offset_min(a, (null : 't1 pointer))]. (offset_max(a,
+  (null : 't1 pointer)) = (-2)))
+
+axiom Null_pointer1 :
+  (forall a:'t1 alloc_table [offset_max(a, (null : 't1 pointer))|
+  offset_min(a, (null : 't1 pointer))]. ((-2) <  offset_min(a,
+  (null : 't1 pointer))))
+
+axiom Null_pointer2 :
+  (forall a:'t1 alloc_table [offset_max(a, (null : 't1 pointer))|
+  offset_min(a, (null : 't1 pointer))]. (offset_min(a,
+  (null : 't1 pointer)) = 0))
+
+axiom Offset_max_shift :
+  (forall a:'t1 alloc_table.
+  (forall p:'t1 pointer.
+  (forall i:int [offset_max(a, shift(p, i))| offset_max(a, p)].
+  (offset_max(a, shift(p, i)) = (offset_max(a, p) - i)))))
+
+axiom Offset_min_shift :
+  (forall a:'t1 alloc_table.
+  (forall p:'t1 pointer.
+  (forall i:int [offset_min(a, shift(p, i))| offset_min(a, p)].
+  (offset_min(a, shift(p, i)) = (offset_min(a, p) - i)))))
+
+predicate valid(a: 't1 alloc_table, p: 't1 pointer) = ((offset_min(a,
+  p) <= 0) and (0 <= offset_max(a, p)))
+
+predicate not_assigns(a1: 't1 alloc_table, a2: 't1 alloc_table,
+  m1: ('t1 pointer,'v) farray, m2: ('t1 pointer,'v) farray, l: 't1 pset) =
+  (forall p:'t1 pointer [in_pset(p, l)| (m2[p])| (m1[p])]. ((valid(a1, p) and
+  valid(a2, p)) -> ((not in_pset(p, l)) -> ((m2[p]) = (m1[p])))))
+
+axiom Not_assigns_refl :
+  (forall a1:'t1 alloc_table.
+  (forall a2:'t1 alloc_table.
+  (forall m:('t1 pointer,'v) farray.
+  (forall l:'t1 pset [not_assigns(a1, a2, m, m, l)]. not_assigns(a1, a2, m,
+  m, l)))))
+
+axiom Not_assigns_trans :
+  (forall a1:'t1 alloc_table.
+  (forall a2:'t1 alloc_table.
+  (forall m1:('t1 pointer,'v) farray.
+  (forall m2:('t1 pointer,'v) farray.
+  (forall m3:('t1 pointer,'v) farray.
+  (forall l:'t1 pset [not_assigns(a1, a2, m1, m2, l), not_assigns(a1, a2, m2,
+  m3, l)| not_assigns(a1, a2, m1, m3, l)]. (not_assigns(a1, a2, m1, m2, l) ->
+  (not_assigns(a1, a2, m2, m3, l) -> not_assigns(a1, a2, m1, m3, l)))))))))
+
+axiom Permutation_saves_min :
+  (forall intP_intM_a_9_14_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_9_14_at_L1:(intP pointer,t) farray.
+  (forall a_9:intP pointer.
+  (forall n_5:int.
+  (forall m_3:int.
+  (forall s:int. (permutation(a_9, n_5, (m_3 + 1), intP_intM_a_9_14_at_L2,
+  intP_intM_a_9_14_at_L1) -> (minimum(a_9, n_5, m_3, s,
+  intP_intM_a_9_14_at_L1) -> minimum(a_9, n_5, m_3, s,
+  intP_intM_a_9_14_at_L2)))))))))
+
+axiom Permutation_saves_max :
+  (forall intP_intM_a_10_15_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_10_15_at_L1:(intP pointer,t) farray.
+  (forall a_10:intP pointer.
+  (forall n_6:int.
+  (forall m_4:int.
+  (forall p_1:int.
+  (forall q:int. (((m_4 <  p_1) or (q <  n_6)) -> (permutation(a_10, p_1,
+  (q + 1), intP_intM_a_10_15_at_L2, intP_intM_a_10_15_at_L1) ->
+  (permutation(a_10, n_6, (m_4 + 1), intP_intM_a_10_15_at_L2,
+  intP_intM_a_10_15_at_L1) ->
+  ((forall i_3:int. (((n_6 <= i_3) and (i_3 <= m_4)) -> minimum(a_10, p_1, q,
+   to_int((intP_intM_a_10_15_at_L1[shift(a_10, i_3)])),
+   intP_intM_a_10_15_at_L1))) ->
+  (forall i_4:int. (((n_6 <= i_4) and (i_4 <= m_4)) -> minimum(a_10, p_1, q,
+  to_int((intP_intM_a_10_15_at_L2[shift(a_10, i_4)])),
+  intP_intM_a_10_15_at_L2))))))))))))))
+
+axiom Permutation_reads :
+  (forall intP_intM_a_8_13_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_8_13_at_L1:(intP pointer,t) farray.
+  (forall a_8:intP pointer.
+  (forall n_4:int.
+  (forall m_2:int.
+  ((forall i_2:int. (((n_4 <= i_2) and (i_2 <= m_2)) ->
+   ((intP_intM_a_8_13_at_L1[shift(a_8,
+   i_2)]) = (intP_intM_a_8_13_at_L2[shift(a_8, i_2)])))) ->
+  permutation(a_8, n_4, (m_2 + 1), intP_intM_a_8_13_at_L2,
+  intP_intM_a_8_13_at_L1)))))))
+
+axiom Minimum_saved :
+  (forall intP_intM_a_1_8_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_1_8_at_L1:(intP pointer,t) farray.
+  (forall a_1_0:intP pointer.
+  (forall n_3:int.
+  (forall m_1:int.
+  ((forall i:int. (((n_3 <= i) and (i <= m_1)) ->
+   ((intP_intM_a_1_8_at_L1[shift(a_1_0,
+   i)]) = (intP_intM_a_1_8_at_L2[shift(a_1_0, i)])))) ->
+  (forall p_0:int. (minimum(a_1_0, n_3, m_1, p_0, intP_intM_a_1_8_at_L1) ->
+  minimum(a_1_0, n_3, m_1, p_0, intP_intM_a_1_8_at_L2)))))))))
+
+axiom Minimum_saved1 :
+  (forall intP_intM_a_1_8_at_L2:(intP pointer,t) farray.
+  (forall intP_intM_a_1_8_at_L1:(intP pointer,t) farray.
+  (forall a_1_0:intP pointer.
+  (forall n_3:int.
+  (forall m_1:int.
+  ((forall i:int. (((n_3 <= i) and (i <= m_1)) ->
+   ((intP_intM_a_1_8_at_L1[shift(a_1_0,
+   i)]) = (intP_intM_a_1_8_at_L2[shift(a_1_0, i)])))) ->
+  (forall p_0:int. (minimum(a_1_0, n_3, m_1, p_0, intP_intM_a_1_8_at_L2) ->
+  minimum(a_1_0, n_3, m_1, p_0, intP_intM_a_1_8_at_L1)))))))))
+
+goal WP_parameter_qsort_ensures_default :
+  (forall a_0_0:intP pointer. forall l_0_0:t. forall u_0:t.
+  forall intP_intM_a_0_7:(intP pointer,t) farray.
+  forall intP_a_0_7_alloc_table:intP alloc_table.
+  (((to_int(l_0_0) <= (to_int(u_0) + (-1))) ->
+  ((offset_min(intP_a_0_7_alloc_table, a_0_0) <= to_int(l_0_0)) and
+  (offset_max(intP_a_0_7_alloc_table, a_0_0) >= (to_int(u_0) + (-1))))) ->
+  (forall result:bool. (((result = true) <->
+  (to_int(u_0) <= to_int(l_0_0))) -> ((not (result = true)) ->
+  (forall o:t. ((to_int(o) = 1) ->
+  (forall o1:t. ((to_int(o1) = (to_int(l_0_0) + to_int(o))) ->
+  ((not (u_0 = o1)) ->
+  (forall intP_intM_a_0_71:(intP pointer,t) farray.
+  (forall o2:t.
+  (((forall p:intP pointer [in_pset(p, pset_singleton(a_0_0))|
+    (intP_intM_a_0_71[p])| (intP_intM_a_0_7[p])].
+    (valid(intP_a_0_7_alloc_table, p) -> ((not in_pset(p,
+    pset_singleton(a_0_0))) ->
+    ((intP_intM_a_0_71[p]) = (intP_intM_a_0_7[p]))))) and
+  (permutation(a_0_0, to_int(l_0_0), to_int(u_0), intP_intM_a_0_71,
+  intP_intM_a_0_7) and ((to_int(l_0_0) <= to_int(o2)) and
+  ((to_int(o2) <= (to_int(u_0) + (-1))) and
+  (forall k_4:int. (((to_int(l_0_0) <= k_4) and (k_4 <= to_int(o2))) ->
+  (forall k_2:int. (((to_int(o2) <= k_2) and (k_2 <= (to_int(u_0) - 1))) ->
+  (to_int((intP_intM_a_0_71[shift(a_0_0,
+  k_4)])) <= to_int((intP_intM_a_0_71[shift(a_0_0, k_2)]))))))))))) ->
+  (forall m_5:t. ((m_5 = o2) ->
+  (forall intP_intM_a_0_72:(intP pointer,t) farray.
+  ((((forall k_1:int. (((to_int(l_0_0) <= k_1) and
+     (k_1 <= (to_int(m_5) - 1))) -> minimum(a_0_0, k_1, (to_int(m_5) - 1),
+     to_int((intP_intM_a_0_72[shift(a_0_0, k_1)])), intP_intM_a_0_72))) and
+  permutation(a_0_0, to_int(l_0_0), to_int(m_5), intP_intM_a_0_72,
+  intP_intM_a_0_71)) and
+  (forall p:intP pointer [in_pset(p, pset_range(pset_singleton(a_0_0),
+  to_int(l_0_0), (to_int(m_5) - 1)))| (intP_intM_a_0_72[p])|
+  (intP_intM_a_0_71[p])]. (valid(intP_a_0_7_alloc_table, p) ->
+  ((not in_pset(p, pset_range(pset_singleton(a_0_0), to_int(l_0_0),
+  (to_int(m_5) - 1)))) -> ((intP_intM_a_0_72[p]) = (intP_intM_a_0_71[p])))))) ->
+  (forall o3:t. ((to_int(o3) = 1) ->
+  (forall usjessie_12:t.
+  ((to_int(usjessie_12) = (to_int(m_5) + to_int(o3))) ->
+  (forall intP_intM_a_0_73:(intP pointer,t) farray.
+  ((((forall k_1:int. (((to_int(usjessie_12) <= k_1) and
+     (k_1 <= (to_int(u_0) - 1))) -> minimum(a_0_0, k_1, (to_int(u_0) - 1),
+     to_int((intP_intM_a_0_73[shift(a_0_0, k_1)])), intP_intM_a_0_73))) and
+  permutation(a_0_0, to_int(usjessie_12), to_int(u_0), intP_intM_a_0_73,
+  intP_intM_a_0_72)) and
+  (forall p:intP pointer [in_pset(p, pset_range(pset_singleton(a_0_0),
+  to_int(usjessie_12), (to_int(u_0) - 1)))| (intP_intM_a_0_73[p])|
+  (intP_intM_a_0_72[p])]. (valid(intP_a_0_7_alloc_table, p) ->
+  ((not in_pset(p, pset_range(pset_singleton(a_0_0), to_int(usjessie_12),
+  (to_int(u_0) - 1)))) -> ((intP_intM_a_0_73[p]) = (intP_intM_a_0_72[p])))))) ->
+  (forall p:intP pointer [in_pset(p, pset_range(pset_singleton(a_0_0),
+  to_int(l_0_0), (to_int(u_0) - 1)))| (intP_intM_a_0_73[p])|
+  (intP_intM_a_0_7[p])]. (valid(intP_a_0_7_alloc_table, p) ->
+  ((not in_pset(p, pset_range(pset_singleton(a_0_0), to_int(l_0_0),
+  (to_int(u_0) - 1)))) -> ((intP_intM_a_0_73[p]) = (intP_intM_a_0_7[p]))))))))))))))))))))))))))))

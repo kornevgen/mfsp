@@ -1,0 +1,251 @@
+
+axiomatic Padding {
+
+  logic type padding
+  
+}
+
+tag voidP = {
+}
+
+type voidP = [voidP]
+
+tag charP = voidP with {
+  int8 charM: 8;
+}
+
+tag intP = {
+  int32 intM: 32;
+}
+
+type intP = [intP]
+
+predicate ordered{L}(intP[..] a, integer n_1, integer m) =
+(\forall integer k_1;
+  (((n_1 <= k_1) && (k_1 <= m)) ==>
+    minimum{L}(a, k_1, m, ((a + k_1).intM :> integer))))
+
+predicate minimum{L}(intP[..] a_0, integer n_2, integer m_0, integer p) =
+(\forall integer k_2;
+  (((n_2 <= k_2) && (k_2 <= m_0)) ==> (p <= ((a_0 + k_2).intM :> integer))))
+
+predicate permutation{L1, L2}(intP[..] a_1, integer l, integer h) {
+case Permut_refl{L}: \at((\forall intP[..] a_2;
+                           (\forall integer l_0;
+                             (\forall integer h_0;
+                               permutation{L,
+                               L}(a_2, l_0, h_0)))),L);
+  
+  case Permut_sym{L1, L2}: (\forall intP[..] a_3;
+                             (\forall integer l_1;
+                               (\forall integer h_1;
+                                 (permutation{L1,
+                                   L2}(a_3, l_1, h_1) ==>
+                                   permutation{L2,
+                                   L1}(a_3, l_1, h_1)))));
+  
+  case Permut_trans{L1, L2, L3}: (\forall intP[..] a_4;
+                                   (\forall integer l_2;
+                                     (\forall integer h_2;
+                                       ((permutation{L1,
+                                          L2}(a_4, l_2, h_2) &&
+                                          permutation{L2,
+                                          L3}(a_4, l_2, h_2)) ==>
+                                         permutation{L1,
+                                         L3}(a_4, l_2, h_2)))));
+  
+  case Permut_swap{L1, L2}: (\forall intP[..] a_5;
+                              (\forall integer l_3;
+                                (\forall integer h_3;
+                                  (\forall integer i;
+                                    (\forall integer j;
+                                      ((((((l_3 <= i) && (i <= h_3)) &&
+                                           (l_3 <= j)) &&
+                                          (j <= h_3)) &&
+                                         Swap{L1,
+                                         L2}(a_5, i, j)) ==>
+                                        permutation{L1,
+                                        L2}(a_5, l_3, h_3)))))));
+  
+}
+
+predicate Swap{L1, L2}(intP[..] a_6, integer i_0, integer j_0) =
+(((\at((a_6 + i_0).intM,L1) == \at((a_6 + j_0).intM,L2)) &&
+   (\at((a_6 + j_0).intM,L1) == \at((a_6 + i_0).intM,L2))) &&
+  (\forall integer k_3;
+    (((! (k_3 == i_0)) && (! (k_3 == j_0))) ==>
+      (\at((a_6 + k_3).intM,L1) == \at((a_6 + k_3).intM,L2)))))
+
+int32 partition(intP[..] a, int32 l, int32 u)
+  requires ((_C_10 : ((u :> integer) >= ((l :> integer) + 1))) &&
+             (_C_11 : \at((if (\at(l,Here) <= \at(u,Here)) then (((\offset_min(
+                                                                    \at(a,Here)) <=
+                                                                    \at(l,Here)) &&
+                                                                   (\offset_max(
+                                                                    \at(a,Here)) >=
+                                                                    \at(u,Here))) &&
+                                                                  (\forall integer __framac_tmp1;
+                                                                    (((\at(l,Here) <=
+                                                                    __framac_tmp1) &&
+                                                                    (__framac_tmp1 <=
+                                                                    \at(u,Here))) ==>
+                                                                    true))) else true),Here)));
+behavior default:
+  assigns a.intM;
+  ensures (_C_1 : ((_C_2 : permutation{Old,
+                   Here}(\at(a,Old), (\at(l,Old) :> integer),
+                         (\at(u,Old) :> integer))) &&
+                    (((_C_5 : (\at(l,Old) <= \result)) &&
+                       (_C_6 : (\result <= \at(u,Old)))) &&
+                      ((_C_8 : (\forall integer k_4;
+                                 ((((\at(l,Old) :> integer) <= k_4) &&
+                                    (k_4 <= ((\result :> integer) - 1))) ==>
+                                   minimum{Here}(\at(a,Old),
+                                                 (\result :> integer),
+                                                 (\at(u,Old) :> integer),
+                                                 ((\at(a,Old) + k_4).intM :> integer))))) &&
+                        (_C_9 : minimum{Here}(\at(a,Old),
+                                              ((\result :> integer) + 1),
+                                              (\at(u,Old) :> integer),
+                                              ((\at(a,Old) +
+                                                 (\result :> integer)).intM :> integer)))))));
+;
+
+unit qsort(intP[..] a_0, int32 l_0, int32 u_0)
+  requires (_C_32 : \at((if (\at(l_0,Here) <= \at(u_0,Here)) then (((\offset_min(
+                                                                    \at(a_0,Here)) <=
+                                                                    \at(l_0,Here)) &&
+                                                                    (\offset_max(
+                                                                    \at(a_0,Here)) >=
+                                                                    \at(u_0,Here))) &&
+                                                                    (\forall integer __framac_tmp2;
+                                                                    (((\at(l_0,Here) <=
+                                                                    __framac_tmp2) &&
+                                                                    (__framac_tmp2 <=
+                                                                    \at(u_0,Here))) ==>
+                                                                    true))) else true),Here));
+  decreases (_C_33 : ((u_0 :> integer) - (l_0 :> integer)));
+behavior default:
+  assigns (a_0 + [(l_0 :> integer)..(u_0 :> integer)]).intM;
+  ensures (_C_29 : ((_C_30 : ordered{Here}(\at(a_0,Old),
+                                           (\at(l_0,Old) :> integer),
+                                           (\at(u_0,Old) :> integer))) &&
+                     (_C_31 : permutation{Old,
+                     Here}(\at(a_0,Old), (\at(l_0,Old) :> integer),
+                           (\at(u_0,Old) :> integer)))));
+{  
+   (var int32 m);
+   
+   {  (if (_C_28 : (u_0 > l_0)) then 
+      {  (_C_13 : (m = (_C_12 : partition(a_0, l_0, u_0))));
+         (_Lb1 : ());
+         (if (_C_17 : (m > l_0)) then (_C_16 : qsort(a_0, l_0,
+                                                     (_C_15 : ((_C_14 : 
+                                                               (m -
+                                                                 (1 :> int32))) :> int32)))) else ());
+         
+         {  
+            (assert for default: (_C_18 : (astraver : permutation{_Lb1,
+                                          Here}(a_0, (m :> integer),
+                                                (u_0 :> integer)))));
+            ()
+         };
+         
+         {  
+            (assert for default: (_C_19 : (astraver : permutation{_Lb1,
+                                          Here}(a_0, (l_0 :> integer),
+                                                ((m :> integer) - 1)))));
+            ()
+         };
+         
+         {  
+            (assert for default: (_C_20 : (astraver : permutation{_Lb1,
+                                          Here}(a_0, (l_0 :> integer),
+                                                (u_0 :> integer)))));
+            ()
+         };
+         (_Lb2 : ());
+         (if (_C_24 : (m < u_0)) then (_C_23 : qsort(a_0,
+                                                     (_C_22 : ((_C_21 : 
+                                                               (m +
+                                                                 (1 :> int32))) :> int32)),
+                                                     u_0)) else ());
+         
+         {  
+            (assert for default: (_C_25 : (astraver : permutation{_Lb2,
+                                          Here}(a_0, ((m :> integer) + 1),
+                                                (u_0 :> integer)))));
+            ()
+         };
+         
+         {  
+            (assert for default: (_C_26 : (astraver : permutation{_Lb2,
+                                          Here}(a_0, (l_0 :> integer),
+                                                (m :> integer)))));
+            ()
+         };
+         
+         {  
+            (assert for default: (_C_27 : (astraver : permutation{_Lb2,
+                                          Here}(a_0, (l_0 :> integer),
+                                                (u_0 :> integer)))));
+            ()
+         }
+      } else ());
+      
+      (return ())
+   }
+}
+
+lemma permutation_reads{L1, L2} :
+(_C_34 : (\forall intP[..] a_7;
+           (\forall integer n_3;
+             (\forall integer m_1;
+               ((\forall integer i_1;
+                  (((n_3 <= i_1) && (i_1 <= m_1)) ==>
+                    (\at((a_7 + i_1).intM,L1) == \at((a_7 + i_1).intM,L2)))) ==>
+                 permutation{L1,
+                 L2}(a_7, n_3, m_1))))))
+
+lemma permutation_saves_min{L1, L2} :
+(_C_35 : (\forall intP[..] a_8;
+           (\forall integer n_4;
+             (\forall integer m_2;
+               (\forall integer s;
+                 (permutation{L1,
+                   L2}(a_8, n_4, m_2) ==>
+                   (minimum{L1}(a_8, n_4, m_2, s) ==>
+                     minimum{L2}(a_8, n_4, m_2, s))))))))
+
+lemma permutation_saves_many_min{L1, L2} :
+(_C_36 : (\forall intP[..] a_9;
+           (\forall integer n_5;
+             (\forall integer m_3;
+               (\forall integer p_0;
+                 (\forall integer q;
+                   (((m_3 < p_0) || (q < n_5)) ==>
+                     (permutation{L1,
+                       L2}(a_9, p_0, q) ==>
+                       (permutation{L1,
+                         L2}(a_9, n_5, m_3) ==>
+                         ((\forall integer i_2;
+                            (((n_5 <= i_2) && (i_2 <= m_3)) ==>
+                              minimum{L1}(a_9, p_0, q,
+                                          (\at((a_9 + i_2).intM,L1) :> integer)))) ==>
+                           (\forall integer i_3;
+                             (((n_5 <= i_3) && (i_3 <= m_3)) ==>
+                               minimum{L2}(a_9, p_0, q,
+                                           (\at((a_9 + i_3).intM,L2) :> integer))))))))))))))
+
+lemma permutation_split{L1, L2} :
+(_C_37 : (\forall intP[..] a_10;
+           (\forall integer n_6;
+             (\forall integer m_4;
+               (\forall integer k_5;
+                 (((n_6 <= m_4) && (m_4 <= k_5)) ==>
+                   ((permutation{L1,
+                      L2}(a_10, n_6, m_4) &&
+                      permutation{L1,
+                      L2}(a_10, (m_4 + 1), k_5)) ==>
+                     permutation{L1,
+                     L2}(a_10, n_6, k_5))))))))
