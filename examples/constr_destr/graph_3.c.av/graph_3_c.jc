@@ -154,15 +154,18 @@ axiomatic EdgesCount {
 __anonstruct_Graph_4[..] graph_create()
 behavior default:
   ensures (_C_66 : ((! (\result == null)) ==>
-                     (((((valid{Here}(\result) &&
-                           \at((((\offset_min(\at(\result,Here)) <=
-                                   \at(0,Here)) &&
-                                  (\offset_max(\at(\result,Here)) >=
-                                    \at(0,Here))) &&
-                                 true),Here)) &&
-                          \freeable{Here}(\result)) &&
-                         \freeable{Here}(\result.vertices)) &&
-                        \freeable{Here}(\result.edges)) &&
+                     ((((((((valid{Here}(\result) &&
+                              \at((((\offset_min(\at(\result,Here)) <=
+                                      \at(0,Here)) &&
+                                     (\offset_max(\at(\result,Here)) >=
+                                       \at(0,Here))) &&
+                                    true),Here)) &&
+                             \freeable{Here}(\result)) &&
+                            \freeable{Here}(\result.vertices)) &&
+                           \freeable{Here}(\result.edges)) &&
+                          \allocable{Old}(\result)) &&
+                         \allocable{Old}(\result.vertices)) &&
+                        \allocable{Old}(\result.edges)) &&
                        (\result.ecnt == (0 :> int32)))));
 {  
    (var __anonstruct_Graph_4[..] g);

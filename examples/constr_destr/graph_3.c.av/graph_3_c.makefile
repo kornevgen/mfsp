@@ -2,7 +2,7 @@
 
 TIMEOUT ?= 10
 
-WHYLIB ?= /home/student/.opam/4.07.1/lib/astraver
+WHYLIB ?= /home/debian/.opam/4.07.1/lib/astraver
 
 USERWHYTHREEOPT=
 

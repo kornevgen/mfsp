@@ -77,6 +77,9 @@ typedef struct {
         \freeable(\result) &&
         \freeable(\result->vertices) &&
         \freeable(\result->edges) &&
+        \allocable{Pre}(\result) &&
+        \allocable{Pre}(\result->vertices) &&
+        \allocable{Pre}(\result->edges) &&
         \result->ecnt == 0;
  */
 Graph *graph_create(void)

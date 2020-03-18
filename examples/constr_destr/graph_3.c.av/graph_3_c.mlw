@@ -1753,7 +1753,7 @@ theory Axiomatic_EdgesCount
   
   
   axiom Count_zero
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 55 65 180#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 55 65 180#
   "expl:Axiom count_zero"  :
   (forall __anonstruct_Graph_4_edges_g_7_10_at_L : (memory voidP (pointer
    voidP)).
@@ -1761,7 +1761,7 @@ theory Axiomatic_EdgesCount
     Int32.t).
     (forall __anonstruct_Edge_3_to_edges_23_at_L : (memory voidP Int32.t).
      (forall __anonstruct_Edge_3_from_edges_23_at_L : (memory voidP Int32.t).
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 57 26 112#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 57 26 112#
       (forall g_10 : (pointer voidP).
        (forall f_2 : int.
         (forall t_2 : int.
@@ -1776,7 +1776,7 @@ theory Axiomatic_EdgesCount
             __anonstruct_Edge_3_from_edges_23_at_L) (0)))))))))))))
   
   axiom Count_one
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 58 38 219#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 58 38 219#
   "expl:Axiom count_one"  :
   (forall __anonstruct_Graph_4_edges_g_7_10_at_L : (memory voidP (pointer
    voidP)).
@@ -1784,7 +1784,7 @@ theory Axiomatic_EdgesCount
     Int32.t).
     (forall __anonstruct_Edge_3_to_edges_23_at_L : (memory voidP Int32.t).
      (forall __anonstruct_Edge_3_from_edges_23_at_L : (memory voidP Int32.t).
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 60 25 178#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 60 25 178#
       (forall g_11 : (pointer voidP).
        (forall f_3 : int.
         (forall t_3 : int.
@@ -1815,7 +1815,7 @@ theory Axiomatic_EdgesCount
            t_3)) then (1) else (0))))))))))))
   
   axiom Count_split
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 61 119 285#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 61 119 285#
   "expl:Axiom count_split"  :
   (forall __anonstruct_Graph_4_edges_g_7_10_at_L : (memory voidP (pointer
    voidP)).
@@ -1823,7 +1823,7 @@ theory Axiomatic_EdgesCount
     Int32.t).
     (forall __anonstruct_Edge_3_to_edges_23_at_L : (memory voidP Int32.t).
      (forall __anonstruct_Edge_3_from_edges_23_at_L : (memory voidP Int32.t).
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 63 27 163#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 63 27 163#
       (forall g_12 : (pointer voidP).
        (forall f_4 : int.
         (forall t_4 : int.
@@ -1871,7 +1871,7 @@ theory Axiomatic_EdgesCount
   
   
   axiom Count_saved_ax
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 64 80 238#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 64 80 238#
   "expl:Axiom count_saved_ax"  :
   (forall __anonstruct_Graph_4_edges_g_7_10_at_L2 : (memory voidP (pointer
    voidP)).
@@ -1888,7 +1888,7 @@ theory Axiomatic_EdgesCount
          Int32.t).
          (forall __anonstruct_Edge_3_from_edges_23_at_L1 : (memory voidP
           Int32.t).
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 66 38 155#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 66 38 155#
           (forall g_13 : (pointer voidP).
            (forall f_5 : int.
             (forall t_5 : int.
@@ -2705,7 +2705,7 @@ module Struct___anonstruct_Edge_3_unsafe
 end
 
 module Function_graph_create_safety
-#"/home/student/mfsp/examples/constr_destr/graph_3.c" 82 6 25#
+#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 85 6 25#
 "expl:graph_create, safety"
 
   use import core.Voidp 
@@ -2759,7 +2759,7 @@ module Function_graph_create_safety
   use why3.Bool.Bool 
   
   let graph_create
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 82 6 25#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 85 6 25#
   "expl:Function graph_create, safety" =
   fun
    (voidP_result_13_alloc_table : ref (alloc_table voidP))
@@ -2795,12 +2795,12 @@ module Function_graph_create_safety
        voidP_result_13_alloc_table voidP_result_13_tag_table ) in
       begin
       (assert {
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 84 15 32#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 87 15 32#
       "expl:Pointer index bounds" true) }); _jessie_95 end));
       (if
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 85 8 10#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 88 8 10#
       (Bool.notb 
-       (#"graph_3_c.jc" 179 22 31#
+       (#"graph_3_c.jc" 182 22 31#
        (neq_pointer  !voidP_result_13_alloc_table
         !voidP_result_13_alloc_table !g_14 (null  ) )) ))
       then
@@ -2809,64 +2809,64 @@ module Function_graph_create_safety
         (let _jessie_96 = (null  ) in
         begin
         (assert {
-        (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 86 8 17#
+        (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 89 8 17#
         "expl:Pointer index bounds" true) }); _jessie_96 end));
         (raise (Return_label_exc ())) end else ());
       begin
       (let _jessie_91 =
       (let _jessie_90 =
-      (#"graph_3_c.jc" 184 35 50# "expl:Integer cast"
+      (#"graph_3_c.jc" 187 35 50# "expl:Integer cast"
       (Safe_int32.of_int (1024))) in
       begin
       (assert {
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 88 4 19#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 91 4 19#
       "expl:Pointer index bounds" true) }); _jessie_90 end) in
       (let _jessie_92 = !g_14 in
       (let _jessie_93 = (0) in
       (let _jessie_94 = _jessie_92 in
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 88 4 19#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 91 4 19#
       "expl:Pointer dereference"
       (upd  !voidP_result_13_alloc_table __anonstruct_Graph_4_vsize_result_13
        _jessie_92 _jessie_91 ))))));
        begin
        (let _jessie_85 =
        (let _jessie_84 =
-       (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 18 56#
+       (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 18 56#
        "expl:Allocation size"
        (allocate_struct___anonstruct_Vertex_2_requires 
         (Safe_uint64.to_int 
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 25 33#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 25 33#
          "expl:Integer cast"
          (Safe_uint64_of_Safe_int32.cast 
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 25 33#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 25 33#
           "expl:Pointer dereference"
           (acc  !voidP_result_13_alloc_table
            !__anonstruct_Graph_4_vsize_result_13 !g_14 )) )) )
         voidP_vertices_27_alloc_table voidP_vertices_27_tag_table )) in
        begin
        (assert {
-       (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 18 56#
+       (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 18 56#
        "expl:Pointer index bounds" true) }); _jessie_84 end) in
        (let _jessie_86 = !g_14 in
        (let _jessie_87 = (0) in
        (let _jessie_88 = _jessie_86 in
-       (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 18 56#
+       (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 18 56#
        "expl:Pointer dereference"
        (upd  !voidP_result_13_alloc_table
         __anonstruct_Graph_4_vertices_result_13 _jessie_86 _jessie_85 ))))));
         (if
-        (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 90 8 20#
+        (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 93 8 20#
         (Bool.notb 
-         (#"graph_3_c.jc" 187 23 51#
+         (#"graph_3_c.jc" 190 23 51#
          (neq_pointer  !voidP_vertices_27_alloc_table
           !voidP_vertices_27_alloc_table
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 90 9 20#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 93 9 20#
           "expl:Pointer dereference"
           (acc  !voidP_result_13_alloc_table
            !__anonstruct_Graph_4_vertices_result_13 !g_14 )) (null  ) )) ))
         then
          begin
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 91 8 15#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 94 8 15#
          (free_struct___anonstruct_Graph_4  !g_14 voidP_result_13_alloc_table
           ));
           begin
@@ -2874,88 +2874,88 @@ module Function_graph_create_safety
            (let _jessie_89 = (null  ) in
            begin
            (assert {
-           (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 92 8 17#
+           (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 95 8 17#
            "expl:Pointer index bounds" true) }); _jessie_89 end));
            (raise (Return_label_exc ())) end end else ());
         begin
         (let _jessie_80 =
         (let _jessie_79 =
-        (#"graph_3_c.jc" 195 36 51# "expl:Integer cast"
+        (#"graph_3_c.jc" 198 36 51# "expl:Integer cast"
         (Safe_int32.of_int (1024))) in
         begin
         (assert {
-        (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 94 4 19#
+        (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 97 4 19#
         "expl:Pointer index bounds" true) }); _jessie_79 end) in
         (let _jessie_81 = !g_14 in
         (let _jessie_82 = (0) in
         (let _jessie_83 = _jessie_81 in
-        (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 94 4 19#
+        (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 97 4 19#
         "expl:Pointer dereference"
         (upd  !voidP_result_13_alloc_table
          __anonstruct_Graph_4_esize_result_13 _jessie_81 _jessie_80 ))))));
          begin
          (let _jessie_75 =
          (let _jessie_74 =
-         (#"graph_3_c.jc" 196 35 47# "expl:Integer cast"
+         (#"graph_3_c.jc" 199 35 47# "expl:Integer cast"
          (Safe_int32.of_int (0))) in
          begin
          (assert {
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 95 4 15#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 98 4 15#
          "expl:Pointer index bounds" true) }); _jessie_74 end) in
          (let _jessie_76 = !g_14 in
          (let _jessie_77 = (0) in
          (let _jessie_78 = _jessie_76 in
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 95 4 15#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 98 4 15#
          "expl:Pointer dereference"
          (upd  !voidP_result_13_alloc_table
           __anonstruct_Graph_4_ecnt_result_13 _jessie_76 _jessie_75 ))))));
           begin
           (let _jessie_55 =
           (let _jessie_54 =
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 15 50#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 15 50#
           "expl:Allocation size"
           (allocate_struct___anonstruct_Edge_3_requires 
            (Safe_uint64.to_int 
-            (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 22 30#
+            (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 22 30#
             "expl:Integer cast"
             (Safe_uint64_of_Safe_int32.cast 
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 22 30#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 22 30#
              "expl:Pointer dereference"
              (acc  !voidP_result_13_alloc_table
               !__anonstruct_Graph_4_esize_result_13 !g_14 )) )) )
            voidP_edges_28_alloc_table voidP_edges_28_tag_table )) in
           begin
           (assert {
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 15 50#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 15 50#
           "expl:Pointer index bounds" true) }); _jessie_54 end) in
           (let _jessie_56 = !g_14 in
           (let _jessie_57 = (0) in
           (let _jessie_58 = _jessie_56 in
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 15 50#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 15 50#
           "expl:Pointer dereference"
           (upd  !voidP_result_13_alloc_table
            __anonstruct_Graph_4_edges_result_13 _jessie_56 _jessie_55 ))))));
            (if
-           (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 97 8 17#
+           (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 100 8 17#
            (Bool.notb 
-            (#"graph_3_c.jc" 199 23 48#
+            (#"graph_3_c.jc" 202 23 48#
             (neq_pointer  !voidP_edges_28_alloc_table
              !voidP_edges_28_alloc_table
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 97 9 17#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 100 9 17#
              "expl:Pointer dereference"
              (acc  !voidP_result_13_alloc_table
               !__anonstruct_Graph_4_edges_result_13 !g_14 )) (null  ) )) ))
            then
             begin
-            (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 98 8 25#
+            (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 101 8 25#
             (free_struct___anonstruct_Vertex_2 
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 98 13 24#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 101 13 24#
              "expl:Pointer dereference"
              (acc  !voidP_result_13_alloc_table
               !__anonstruct_Graph_4_vertices_result_13 !g_14 ))
              voidP_vertices_27_alloc_table ));
              begin
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 99 8 15#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 102 8 15#
              (free_struct___anonstruct_Graph_4  !g_14
               voidP_result_13_alloc_table ));
               begin
@@ -2963,27 +2963,27 @@ module Function_graph_create_safety
                (let _jessie_59 = (null  ) in
                begin
                (assert {
-               (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 100 8 17#
+               (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 103 8 17#
                "expl:Pointer index bounds" true) }); _jessie_59 end));
                (raise (Return_label_exc ())) end end end else ());
            try
             begin
             (i :=
              (let _jessie_66 =
-             (#"graph_3_c.jc" 209 23 35# "expl:Integer cast"
+             (#"graph_3_c.jc" 212 23 35# "expl:Integer cast"
              (Safe_int32.of_int (0))) in
              begin
              (assert {
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 107 13 14#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 110 13 14#
              "expl:Pointer index bounds" true) }); _jessie_66 end));
              'LoopEntry:
              begin
              'LoopEntry:
              'Loop_3:
              loop
-             invariant { (#"graph_3_c.jc" 211 9 837# true) }
+             invariant { (#"graph_3_c.jc" 214 9 837# true) }
                variant {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 105 21 33#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 108 21 33#
                  (Int.(-)
                  (Int32.to_int
                  (select !__anonstruct_Graph_4_vsize_result_13 !g_14))
@@ -2995,17 +2995,17 @@ module Function_graph_create_safety
               __anonstruct_Graph_4_vsize_result_13,
               __anonstruct_Vertex_2_existent_vertices_27 }
               ensures {
-                ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 41#
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 41#
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 29#
-                  (Int32.(<=) (#"graph_3_c.jc" 217 41 53# "expl:Integer cast"
+                ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 41#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 29#
+                  (Int32.(<=) (#"graph_3_c.jc" 220 41 53# "expl:Integer cast"
                   (Int32.of_int (0))) !i))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 28 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 28 41#
                  (Int32.(<=) !i
                  (select !__anonstruct_Graph_4_vsize_result_13 !g_14))))))
                 /\
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 103 23 81#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 106 23 81#
                 (forall k_8 : int.
                  ((((<=) (0) k_8) /\ ((<) k_8 (Int32.to_int !i))) ->
                   ((=)
@@ -3020,9 +3020,9 @@ module Function_graph_create_safety
                 begin
                 'LoopCurrent:
                 (if
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 107 20 32#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 110 20 32#
                 (Safe_int32.(<)  !i
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 107 24 32#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 110 24 32#
                  "expl:Pointer dereference"
                  (acc  !voidP_result_13_alloc_table
                   !__anonstruct_Graph_4_vsize_result_13 !g_14 )) )) then ()
@@ -3030,21 +3030,21 @@ module Function_graph_create_safety
                  begin
                  (let _jessie_61 =
                  (let _jessie_60 =
-                 (#"graph_3_c.jc" 224 83 95# "expl:Integer cast"
+                 (#"graph_3_c.jc" 227 83 95# "expl:Integer cast"
                  (Safe_int32.of_int (0))) in
                  begin
                  (assert {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 108 8 35#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 111 8 35#
                  "expl:Pointer index bounds" true) }); _jessie_60 end) in
                  (let _jessie_62 =
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 108 8 19#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 111 8 19#
                  "expl:Pointer dereference"
                  (acc  !voidP_result_13_alloc_table
                   !__anonstruct_Graph_4_vertices_result_13 !g_14 )) in
                  (let _jessie_63 = (Safe_int32.to_int  !i ) in
                  (let _jessie_64 = (shift_typesafe  _jessie_62 _jessie_63 )
                  in
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 108 8 35#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 111 8 35#
                  "expl:Pointer dereference"
                  (upd_offset_typesafe  !voidP_vertices_27_alloc_table
                   __anonstruct_Vertex_2_existent_vertices_27 _jessie_62
@@ -3052,11 +3052,11 @@ module Function_graph_create_safety
                   (i :=
                    (let _jessie_65 =
                    (Safe_int32.(+)  !i
-                    (#"graph_3_c.jc" 225 53 65# "expl:Integer cast"
+                    (#"graph_3_c.jc" 228 53 65# "expl:Integer cast"
                     (Safe_int32.of_int (1))) ) in
                    begin
                    (assert {
-                   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 107 34 37#
+                   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 110 34 37#
                    "expl:Pointer index bounds" true) }); _jessie_65 end)) end
                 end; (raise (Loop_continue_exc ())) end with
                 Loop_continue_exc _jessie_5 -> () end end end;
@@ -3067,20 +3067,20 @@ module Function_graph_create_safety
             begin
             (i_0 :=
              (let _jessie_73 =
-             (#"graph_3_c.jc" 231 25 37# "expl:Integer cast"
+             (#"graph_3_c.jc" 234 25 37# "expl:Integer cast"
              (Safe_int32.of_int (0))) in
              begin
              (assert {
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 115 13 14#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 118 13 14#
              "expl:Pointer index bounds" true) }); _jessie_73 end));
              'LoopEntry:
              begin
              'LoopEntry:
              'Loop_4:
              loop
-             invariant { (#"graph_3_c.jc" 233 9 853# true) }
+             invariant { (#"graph_3_c.jc" 236 9 853# true) }
                variant {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 113 21 33#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 116 21 33#
                  (Int.(-)
                  (Int32.to_int
                  (select !__anonstruct_Graph_4_esize_result_13 !g_14))
@@ -3092,17 +3092,17 @@ module Function_graph_create_safety
               __anonstruct_Graph_4_edges_result_13,
               __anonstruct_Graph_4_esize_result_13 }
               ensures {
-                ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 41#
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 41#
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 29#
-                  (Int32.(<=) (#"graph_3_c.jc" 239 41 53# "expl:Integer cast"
+                ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 41#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 29#
+                  (Int32.(<=) (#"graph_3_c.jc" 242 41 53# "expl:Integer cast"
                   (Int32.of_int (0))) !i_0))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 28 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 28 41#
                  (Int32.(<=) !i_0
                  (select !__anonstruct_Graph_4_esize_result_13 !g_14))))))
                 /\
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 111 23 78#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 114 23 78#
                 (forall k_9 : int.
                  ((((<=) (0) k_9) /\ ((<) k_9 (Int32.to_int !i_0))) ->
                   ((=)
@@ -3116,9 +3116,9 @@ module Function_graph_create_safety
                 begin
                 'LoopCurrent:
                 (if
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 115 20 32#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 118 20 32#
                 (Safe_int32.(<)  !i_0
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 115 24 32#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 118 24 32#
                  "expl:Pointer dereference"
                  (acc  !voidP_result_13_alloc_table
                   !__anonstruct_Graph_4_esize_result_13 !g_14 )) )) then ()
@@ -3126,21 +3126,21 @@ module Function_graph_create_safety
                  begin
                  (let _jessie_68 =
                  (let _jessie_67 =
-                 (#"graph_3_c.jc" 246 84 96# "expl:Integer cast"
+                 (#"graph_3_c.jc" 249 84 96# "expl:Integer cast"
                  (Safe_int32.of_int (0))) in
                  begin
                  (assert {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 116 8 32#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 119 8 32#
                  "expl:Pointer index bounds" true) }); _jessie_67 end) in
                  (let _jessie_69 =
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 116 8 16#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 119 8 16#
                  "expl:Pointer dereference"
                  (acc  !voidP_result_13_alloc_table
                   !__anonstruct_Graph_4_edges_result_13 !g_14 )) in
                  (let _jessie_70 = (Safe_int32.to_int  !i_0 ) in
                  (let _jessie_71 = (shift_typesafe  _jessie_69 _jessie_70 )
                  in
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 116 8 32#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 119 8 32#
                  "expl:Pointer dereference"
                  (upd_offset_typesafe  !voidP_edges_28_alloc_table
                   __anonstruct_Edge_3_existent_0_edges_28 _jessie_69
@@ -3148,11 +3148,11 @@ module Function_graph_create_safety
                   (i_0 :=
                    (let _jessie_72 =
                    (Safe_int32.(+)  !i_0
-                    (#"graph_3_c.jc" 247 57 69# "expl:Integer cast"
+                    (#"graph_3_c.jc" 250 57 69# "expl:Integer cast"
                     (Safe_int32.of_int (1))) ) in
                    begin
                    (assert {
-                   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 115 34 37#
+                   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 118 34 37#
                    "expl:Pointer index bounds" true) }); _jessie_72 end)) end
                 end; (raise (Loop_continue_exc ())) end with
                 Loop_continue_exc _jessie_7 -> () end end end;
@@ -3164,7 +3164,7 @@ module Function_graph_create_safety
             (let _jessie_53 = !g_14 in
             begin
             (assert {
-            (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 118 4 13#
+            (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 121 4 13#
             "expl:Pointer index bounds" true) }); _jessie_53 end));
             (raise (Return_label_exc ())) end end end end end end end with
      Return_label_exc _jessie_3 ->
@@ -3174,7 +3174,7 @@ module Function_graph_create_safety
      (return :=
       (let _jessie_97 = !__retres in
       begin
-      (assert { (#"graph_3_c.jc" 254 7 22# "expl:Pointer index bounds" true)
+      (assert { (#"graph_3_c.jc" 257 7 22# "expl:Pointer index bounds" true)
       }); _jessie_97 end)); (raise Return) end end))))); absurd  end with
     Return -> !return end)
   
@@ -3601,7 +3601,7 @@ theory Logic_valid_0
 end
 
 module Function_graph_create_behaviors
-#"/home/student/mfsp/examples/constr_destr/graph_3.c" 82 6 25#
+#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 85 6 25#
 "expl:graph_create, behaviors"
 
   use import core.Voidp 
@@ -3657,7 +3657,7 @@ module Function_graph_create_behaviors
   use why3.Bool.Bool 
   
   let graph_create_ensures_default
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 82 6 25#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 85 6 25#
   "expl:Function graph_create, default behavior" =
   fun
    (voidP_result_13_alloc_table : ref (alloc_table voidP))
@@ -3678,7 +3678,7 @@ module Function_graph_create_behaviors
    requires { (true) }
    ensures {
      ("expl:Postcondition"
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 74 12 215#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 74 12 340#
      "expl:Ensures clause"
      ((not ((=) result null)) ->
       ((valid_0 result !voidP_edges_28_alloc_table
@@ -3717,8 +3717,19 @@ module Function_graph_create_behaviors
        (select !__anonstruct_Graph_4_edges_result_13 result) (Int.(-_) 1)
        !voidP_edges_28_alloc_table))
       /\
+      ((fresh_alloc_struct___anonstruct_Graph_4 result (0) (old
+       !voidP_result_13_alloc_table))
+      /\
+      ((fresh_alloc_struct___anonstruct_Vertex_2
+       (select !__anonstruct_Graph_4_vertices_result_13 result) (0) (old
+       !voidP_vertices_27_alloc_table))
+      /\
+      ((fresh_alloc_struct___anonstruct_Edge_3
+       (select !__anonstruct_Graph_4_edges_result_13 result) (0) (old
+       !voidP_edges_28_alloc_table))
+      /\
       (Int32.(=) (select !__anonstruct_Graph_4_ecnt_result_13 result)
-      (#"graph_3_c.jc" 166 40 52# "expl:Integer cast" (Int32.of_int (0))))))))))))
+      (#"graph_3_c.jc" 169 40 52# "expl:Integer cast" (Int32.of_int (0)))))))))))))))
      } diverges  ->
    'Init:
    (let return = ref (any_pointer  () : (pointer voidP)) in
@@ -3735,13 +3746,13 @@ module Function_graph_create_behaviors
       (allocate_singleton_struct___anonstruct_Graph_4 
        voidP_result_13_alloc_table voidP_result_13_tag_table ));
       (if
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 85 8 10#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 88 8 10#
       (Bool.notb  ((<>)  !g_14 (null  ) ) ))
       then begin (__retres := (null  )); (raise (Return_label_exc ())) end
       else ());
       begin
       (let _jessie_46 =
-      (#"graph_3_c.jc" 184 35 50# "expl:Integer cast"
+      (#"graph_3_c.jc" 187 35 50# "expl:Integer cast"
       (Unsafe_int32.of_int (1024))) in
       (let _jessie_47 = !g_14 in
       (let _jessie_48 = (0) in
@@ -3749,11 +3760,11 @@ module Function_graph_create_behaviors
       (upd  __anonstruct_Graph_4_vsize_result_13 _jessie_49 _jessie_46 )))));
        begin
        (let _jessie_40 =
-       (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 18 56#
+       (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 18 56#
        "expl:Allocation size"
        (allocate_struct___anonstruct_Vertex_2 
         (Unsafe_uint64.to_int 
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 89 25 33#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 92 25 33#
          "expl:Integer cast"
          (Unsafe_uint64_of_Unsafe_int32.cast 
           (acc  !__anonstruct_Graph_4_vsize_result_13 !g_14 ) )) )
@@ -3763,20 +3774,20 @@ module Function_graph_create_behaviors
        (let _jessie_43 = _jessie_41 in
        (upd  __anonstruct_Graph_4_vertices_result_13 _jessie_43 _jessie_40 )))));
         (if
-        (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 90 8 20#
+        (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 93 8 20#
         (Bool.notb 
          ((<>)  (acc  !__anonstruct_Graph_4_vertices_result_13 !g_14 )
           (null  ) ) ))
         then
          begin
-         (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 91 8 15#
+         (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 94 8 15#
          (safe_free_struct___anonstruct_Graph_4  !g_14
           voidP_result_13_alloc_table ));
           begin (__retres := (null  )); (raise (Return_label_exc ())) end end
         else ());
         begin
         (let _jessie_35 =
-        (#"graph_3_c.jc" 195 36 51# "expl:Integer cast"
+        (#"graph_3_c.jc" 198 36 51# "expl:Integer cast"
         (Unsafe_int32.of_int (1024))) in
         (let _jessie_36 = !g_14 in
         (let _jessie_37 = (0) in
@@ -3784,7 +3795,7 @@ module Function_graph_create_behaviors
         (upd  __anonstruct_Graph_4_esize_result_13 _jessie_38 _jessie_35 )))));
          begin
          (let _jessie_30 =
-         (#"graph_3_c.jc" 196 35 47# "expl:Integer cast"
+         (#"graph_3_c.jc" 199 35 47# "expl:Integer cast"
          (Unsafe_int32.of_int (0))) in
          (let _jessie_31 = !g_14 in
          (let _jessie_32 = (0) in
@@ -3792,11 +3803,11 @@ module Function_graph_create_behaviors
          (upd  __anonstruct_Graph_4_ecnt_result_13 _jessie_33 _jessie_30 )))));
           begin
           (let _jessie_10 =
-          (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 15 50#
+          (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 15 50#
           "expl:Allocation size"
           (allocate_struct___anonstruct_Edge_3 
            (Unsafe_uint64.to_int 
-            (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 96 22 30#
+            (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 99 22 30#
             "expl:Integer cast"
             (Unsafe_uint64_of_Unsafe_int32.cast 
              (acc  !__anonstruct_Graph_4_esize_result_13 !g_14 ) )) )
@@ -3806,18 +3817,18 @@ module Function_graph_create_behaviors
           (let _jessie_13 = _jessie_11 in
           (upd  __anonstruct_Graph_4_edges_result_13 _jessie_13 _jessie_10 )))));
            (if
-           (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 97 8 17#
+           (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 100 8 17#
            (Bool.notb 
             ((<>)  (acc  !__anonstruct_Graph_4_edges_result_13 !g_14 )
              (null  ) ) ))
            then
             begin
-            (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 98 8 25#
+            (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 101 8 25#
             (safe_free_struct___anonstruct_Vertex_2 
              (acc  !__anonstruct_Graph_4_vertices_result_13 !g_14 )
              voidP_vertices_27_alloc_table ));
              begin
-             (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 99 8 15#
+             (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 102 8 15#
              (safe_free_struct___anonstruct_Graph_4  !g_14
               voidP_result_13_alloc_table ));
               begin (__retres := (null  )); (raise (Return_label_exc ())) end
@@ -3825,7 +3836,7 @@ module Function_graph_create_behaviors
            try
             begin
             (i :=
-             (#"graph_3_c.jc" 209 23 35# "expl:Integer cast"
+             (#"graph_3_c.jc" 212 23 35# "expl:Integer cast"
              (Unsafe_int32.of_int (0))));
              'LoopEntry:
              begin
@@ -3833,7 +3844,7 @@ module Function_graph_create_behaviors
              'Loop_1:
              loop
              invariant
-               { ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 103 23 81#
+               { ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 106 23 81#
                   (forall k_8 : int.
                    ((((<=) (0) k_8) /\ ((<) k_8 (Int32.to_int !i))) ->
                     ((=)
@@ -3843,13 +3854,13 @@ module Function_graph_create_behaviors
                     (select !__anonstruct_Graph_4_vertices_result_13 !g_14)
                     k_8))) (0)))))
                  &&
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 41#
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 41#
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 23 29#
-                  (Int32.(<=) (#"graph_3_c.jc" 217 41 53# "expl:Integer cast"
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 41#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 23 29#
+                  (Int32.(<=) (#"graph_3_c.jc" 220 41 53# "expl:Integer cast"
                   (Int32.of_int (0))) !i))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 104 28 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 107 28 41#
                  (Int32.(<=) !i
                  (select !__anonstruct_Graph_4_vsize_result_13 !g_14))))))) } 
                
@@ -3861,13 +3872,13 @@ module Function_graph_create_behaviors
                 begin
                 'LoopCurrent:
                 (if
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 107 20 32#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 110 20 32#
                 (Unsafe_int32.(<)  !i
                  (acc  !__anonstruct_Graph_4_vsize_result_13 !g_14 ) ))
                 then () else (raise (Goto_while_0_break_exc ())));
                  begin
                  (let _jessie_16 =
-                 (#"graph_3_c.jc" 224 83 95# "expl:Integer cast"
+                 (#"graph_3_c.jc" 227 83 95# "expl:Integer cast"
                  (Unsafe_int32.of_int (0))) in
                  (let _jessie_17 =
                  (acc  !__anonstruct_Graph_4_vertices_result_13 !g_14 ) in
@@ -3877,7 +3888,7 @@ module Function_graph_create_behaviors
                   _jessie_16 )))));
                   (i :=
                    (Unsafe_int32.(+)  !i
-                    (#"graph_3_c.jc" 225 53 65# "expl:Integer cast"
+                    (#"graph_3_c.jc" 228 53 65# "expl:Integer cast"
                     (Unsafe_int32.of_int (1))) )) end end;
                  (raise (Loop_continue_exc ())) end with Loop_continue_exc
                 _jessie_5 -> () end end end;
@@ -3887,7 +3898,7 @@ module Function_graph_create_behaviors
            try
             begin
             (i_0 :=
-             (#"graph_3_c.jc" 231 25 37# "expl:Integer cast"
+             (#"graph_3_c.jc" 234 25 37# "expl:Integer cast"
              (Unsafe_int32.of_int (0))));
              'LoopEntry:
              begin
@@ -3895,7 +3906,7 @@ module Function_graph_create_behaviors
              'Loop_2:
              loop
              invariant
-               { ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 111 23 78#
+               { ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 114 23 78#
                   (forall k_9 : int.
                    ((((<=) (0) k_9) /\ ((<) k_9 (Int32.to_int !i_0))) ->
                     ((=)
@@ -3905,13 +3916,13 @@ module Function_graph_create_behaviors
                     (select !__anonstruct_Graph_4_edges_result_13 !g_14) k_9)))
                     (0)))))
                  &&
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 41#
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 41#
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 23 29#
-                  (Int32.(<=) (#"graph_3_c.jc" 239 41 53# "expl:Integer cast"
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 41#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 23 29#
+                  (Int32.(<=) (#"graph_3_c.jc" 242 41 53# "expl:Integer cast"
                   (Int32.of_int (0))) !i_0))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 112 28 41#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 115 28 41#
                  (Int32.(<=) !i_0
                  (select !__anonstruct_Graph_4_esize_result_13 !g_14))))))) } 
                
@@ -3923,13 +3934,13 @@ module Function_graph_create_behaviors
                 begin
                 'LoopCurrent:
                 (if
-                (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 115 20 32#
+                (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 118 20 32#
                 (Unsafe_int32.(<)  !i_0
                  (acc  !__anonstruct_Graph_4_esize_result_13 !g_14 ) ))
                 then () else (raise (Goto_while_0_break_0_exc ())));
                  begin
                  (let _jessie_23 =
-                 (#"graph_3_c.jc" 246 84 96# "expl:Integer cast"
+                 (#"graph_3_c.jc" 249 84 96# "expl:Integer cast"
                  (Unsafe_int32.of_int (0))) in
                  (let _jessie_24 =
                  (acc  !__anonstruct_Graph_4_edges_result_13 !g_14 ) in
@@ -3939,7 +3950,7 @@ module Function_graph_create_behaviors
                   _jessie_23 )))));
                   (i_0 :=
                    (Unsafe_int32.(+)  !i_0
-                    (#"graph_3_c.jc" 247 57 69# "expl:Integer cast"
+                    (#"graph_3_c.jc" 250 57 69# "expl:Integer cast"
                     (Unsafe_int32.of_int (1))) )) end end;
                  (raise (Loop_continue_exc ())) end with Loop_continue_exc
                 _jessie_7 -> () end end end;
@@ -3955,7 +3966,7 @@ module Function_graph_create_behaviors
 end
 
 module Function_graph_destroy_safety
-#"/home/student/mfsp/examples/constr_destr/graph_3.c" 131 5 32#
+#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 134 5 32#
 "expl:graph_destroy, safety"
 
   use import core.Voidp 
@@ -3993,7 +4004,7 @@ module Function_graph_destroy_safety
   use why3.Bool.Bool 
   
   let graph_destroy
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 131 5 32#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 134 5 32#
   "expl:Function graph_destroy, safety" =
   fun
    (graph : (pointer voidP)) (voidP_graph_14_alloc_table : ref (alloc_table
@@ -4009,8 +4020,8 @@ module Function_graph_destroy_safety
    (__anonstruct_Graph_4_ecnt_graph_14 : (memory voidP Int32.t))
    (__anonstruct_Graph_4_esize_graph_14 : (memory voidP Int32.t)) 
    requires {
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 122 13 25#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 125 13 25#
     (valid_0 graph !voidP_edges_44_alloc_table !voidP_vertices_43_alloc_table
     __anonstruct_Graph_4_esize_graph_14 __anonstruct_Graph_4_ecnt_graph_14
     __anonstruct_Graph_4_edges_graph_14 __anonstruct_Graph_4_vsize_graph_14
@@ -4019,49 +4030,49 @@ module Function_graph_destroy_safety
     __anonstruct_Edge_3_from_edges_44
     __anonstruct_Vertex_2_existent_vertices_43))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 123 13 26#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 126 13 26#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      ((<=) (offset_min !voidP_graph_14_alloc_table graph) (0)))
     /\
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      ((>=) (offset_max !voidP_graph_14_alloc_table graph) (0)))
-    /\ (#"graph_3_c.jc" 259 12 422# ((=) true true)))))))
+    /\ (#"graph_3_c.jc" 262 12 422# ((=) true true)))))))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 124 13 29#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 127 13 29#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      (strict_left_valid_struct___anonstruct_Graph_4 graph (0)
      !voidP_graph_14_alloc_table))
     /\
-    (#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
     (right_valid_struct___anonstruct_Graph_4 graph (Int.(-_) 1)
     !voidP_graph_14_alloc_table)))))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 125 13 39#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 128 13 39#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      (strict_left_valid_struct___anonstruct_Vertex_2
      (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
      !voidP_vertices_43_alloc_table))
     /\
-    (#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
     (right_valid_struct___anonstruct_Vertex_2
     (select __anonstruct_Graph_4_vertices_graph_14 graph) (Int.(-_) 1)
     !voidP_vertices_43_alloc_table)))))
    /\
-   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 126 13 36#
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"graph_3_c.jc" 259 12 422#
+   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 129 13 36#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"graph_3_c.jc" 262 12 422#
     (strict_left_valid_struct___anonstruct_Edge_3
     (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
     !voidP_edges_44_alloc_table))
    /\
-   (#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
    (right_valid_struct___anonstruct_Edge_3
    (select __anonstruct_Graph_4_edges_graph_14 graph) (Int.(-_) 1)
    !voidP_edges_44_alloc_table))))))))))))) }
@@ -4069,29 +4080,29 @@ module Function_graph_destroy_safety
    'Init:
    try
     begin
-    (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 133 4 22#
+    (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 136 4 22#
     (free_struct___anonstruct_Edge_3 
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 133 9 21#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 136 9 21#
      "expl:Pointer dereference"
      (acc  !voidP_graph_14_alloc_table __anonstruct_Graph_4_edges_graph_14
       graph )) voidP_edges_44_alloc_table ));
      begin
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 134 4 25#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 137 4 25#
      (free_struct___anonstruct_Vertex_2 
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 134 9 24#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 137 9 24#
       "expl:Pointer dereference"
       (acc  !voidP_graph_14_alloc_table
        __anonstruct_Graph_4_vertices_graph_14 graph ))
       voidP_vertices_43_alloc_table ));
       begin
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 135 4 15#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 138 4 15#
       (free_struct___anonstruct_Graph_4  graph voidP_graph_14_alloc_table ));
        (raise Return) end end; (raise Return) end with Return -> () end
   
 end
 
 module Function_graph_destroy_behaviors
-#"/home/student/mfsp/examples/constr_destr/graph_3.c" 131 5 32#
+#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 134 5 32#
 "expl:graph_destroy, behaviors"
 
   use import core.Voidp 
@@ -4129,7 +4140,7 @@ module Function_graph_destroy_behaviors
   use why3.Bool.Bool 
   
   let graph_destroy_ensures_default
-  #"/home/student/mfsp/examples/constr_destr/graph_3.c" 131 5 32#
+  #"/home/debian/mfsp/examples/constr_destr/graph_3.c" 134 5 32#
   "expl:Function graph_destroy, default behavior" =
   fun
    (graph : (pointer voidP)) (voidP_graph_14_alloc_table : ref (alloc_table
@@ -4145,8 +4156,8 @@ module Function_graph_destroy_behaviors
    (__anonstruct_Graph_4_ecnt_graph_14 : (memory voidP Int32.t))
    (__anonstruct_Graph_4_esize_graph_14 : (memory voidP Int32.t)) 
    requires {
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 122 13 25#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 125 13 25#
     (valid_0 graph !voidP_edges_44_alloc_table !voidP_vertices_43_alloc_table
     __anonstruct_Graph_4_esize_graph_14 __anonstruct_Graph_4_ecnt_graph_14
     __anonstruct_Graph_4_edges_graph_14 __anonstruct_Graph_4_vsize_graph_14
@@ -4155,72 +4166,72 @@ module Function_graph_destroy_behaviors
     __anonstruct_Edge_3_from_edges_44
     __anonstruct_Vertex_2_existent_vertices_43))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 123 13 26#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 126 13 26#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      ((<=) (offset_min !voidP_graph_14_alloc_table graph) (0)))
     /\
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      ((>=) (offset_max !voidP_graph_14_alloc_table graph) (0)))
-    /\ (#"graph_3_c.jc" 259 12 422# ((=) true true)))))))
+    /\ (#"graph_3_c.jc" 262 12 422# ((=) true true)))))))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 124 13 29#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 127 13 29#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      (strict_left_valid_struct___anonstruct_Graph_4 graph (0)
      !voidP_graph_14_alloc_table))
     /\
-    (#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
     (right_valid_struct___anonstruct_Graph_4 graph (Int.(-_) 1)
     !voidP_graph_14_alloc_table)))))
    /\
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 125 13 39#
-    (#"graph_3_c.jc" 259 12 422#
-    ((#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 128 13 39#
+    (#"graph_3_c.jc" 262 12 422#
+    ((#"graph_3_c.jc" 262 12 422#
      (strict_left_valid_struct___anonstruct_Vertex_2
      (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
      !voidP_vertices_43_alloc_table))
     /\
-    (#"graph_3_c.jc" 259 12 422#
+    (#"graph_3_c.jc" 262 12 422#
     (right_valid_struct___anonstruct_Vertex_2
     (select __anonstruct_Graph_4_vertices_graph_14 graph) (Int.(-_) 1)
     !voidP_vertices_43_alloc_table)))))
    /\
-   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 126 13 36#
-   (#"graph_3_c.jc" 259 12 422#
-   ((#"graph_3_c.jc" 259 12 422#
+   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 129 13 36#
+   (#"graph_3_c.jc" 262 12 422#
+   ((#"graph_3_c.jc" 262 12 422#
     (strict_left_valid_struct___anonstruct_Edge_3
     (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
     !voidP_edges_44_alloc_table))
    /\
-   (#"graph_3_c.jc" 259 12 422#
+   (#"graph_3_c.jc" 262 12 422#
    (right_valid_struct___anonstruct_Edge_3
    (select __anonstruct_Graph_4_edges_graph_14 graph) (Int.(-_) 1)
    !voidP_edges_44_alloc_table))))))))))))) }
    ensures {
      ("expl:Postcondition"
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
      "expl:Ensures clause"
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
      "expl:Ensures clause"
-     ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+     ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
       "expl:Ensures clause"
       (fresh_alloc_struct___anonstruct_Graph_4 graph (0)
       !voidP_graph_14_alloc_table))
      /\
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
      "expl:Ensures clause"
-     ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 128 12 49#
+     ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 131 12 49#
       "expl:Ensures clause"
       (fresh_alloc_struct___anonstruct_Vertex_2
       (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
       !voidP_vertices_43_alloc_table))
      /\
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 129 12 46#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 132 12 46#
      "expl:Ensures clause"
      (fresh_alloc_struct___anonstruct_Edge_3
      (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
@@ -4228,17 +4239,17 @@ module Function_graph_destroy_behaviors
    'Init:
    try
     begin
-    (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 133 4 22#
+    (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 136 4 22#
     (safe_free_struct___anonstruct_Edge_3 
      (acc  __anonstruct_Graph_4_edges_graph_14 graph )
      voidP_edges_44_alloc_table ));
      begin
-     (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 134 4 25#
+     (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 137 4 25#
      (safe_free_struct___anonstruct_Vertex_2 
       (acc  __anonstruct_Graph_4_vertices_graph_14 graph )
       voidP_vertices_43_alloc_table ));
       begin
-      (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 135 4 15#
+      (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 138 4 15#
       (safe_free_struct___anonstruct_Graph_4  graph
        voidP_graph_14_alloc_table )); (raise Return) end end; (raise Return)
     end with Return -> () end
@@ -9594,7 +9605,7 @@ module Function_graph_create
                        (typeof !voidP_result_13_tag_table (shift result i))
                        __anonstruct_Graph_4_tag)))))
                    /\
-                   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 74 12 215#
+                   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 74 12 340#
                    "expl:Ensures clause"
                    ((not ((=) result null)) ->
                     ((valid_0 result !voidP_edges_28_alloc_table
@@ -9638,10 +9649,21 @@ module Function_graph_create
                      (select !__anonstruct_Graph_4_edges_result_13 result)
                      (Int.(-_) 1) !voidP_edges_28_alloc_table))
                     /\
+                    ((fresh_alloc_struct___anonstruct_Graph_4 result (0) (old
+                     !voidP_result_13_alloc_table))
+                    /\
+                    ((fresh_alloc_struct___anonstruct_Vertex_2
+                     (select !__anonstruct_Graph_4_vertices_result_13 result)
+                     (0) (old !voidP_vertices_27_alloc_table))
+                    /\
+                    ((fresh_alloc_struct___anonstruct_Edge_3
+                     (select !__anonstruct_Graph_4_edges_result_13 result)
+                     (0) (old !voidP_edges_28_alloc_table))
+                    /\
                     (Int32.(=)
                     (select !__anonstruct_Graph_4_ecnt_result_13 result)
-                    (#"graph_3_c.jc" 166 40 52# "expl:Integer cast"
-                    (Int32.of_int (0)))))))))))) }
+                    (#"graph_3_c.jc" 169 40 52# "expl:Integer cast"
+                    (Int32.of_int (0))))))))))))))) }
   
 end
 
@@ -9733,7 +9755,7 @@ module Function_graph_create_safe
                        (typeof !voidP_result_13_tag_table (shift result i))
                        __anonstruct_Graph_4_tag)))))
                    /\
-                   (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 74 12 215#
+                   (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 74 12 340#
                    "expl:Ensures clause"
                    ((not ((=) result null)) ->
                     ((valid_0 result !voidP_edges_28_alloc_table
@@ -9777,10 +9799,21 @@ module Function_graph_create_safe
                      (select !__anonstruct_Graph_4_edges_result_13 result)
                      (Int.(-_) 1) !voidP_edges_28_alloc_table))
                     /\
+                    ((fresh_alloc_struct___anonstruct_Graph_4 result (0) (old
+                     !voidP_result_13_alloc_table))
+                    /\
+                    ((fresh_alloc_struct___anonstruct_Vertex_2
+                     (select !__anonstruct_Graph_4_vertices_result_13 result)
+                     (0) (old !voidP_vertices_27_alloc_table))
+                    /\
+                    ((fresh_alloc_struct___anonstruct_Edge_3
+                     (select !__anonstruct_Graph_4_edges_result_13 result)
+                     (0) (old !voidP_edges_28_alloc_table))
+                    /\
                     (Int32.(=)
                     (select !__anonstruct_Graph_4_ecnt_result_13 result)
-                    (#"graph_3_c.jc" 166 40 52# "expl:Integer cast"
-                    (Int32.of_int (0)))))))))))) }
+                    (#"graph_3_c.jc" 169 40 52# "expl:Integer cast"
+                    (Int32.of_int (0))))))))))))))) }
   
 end
 
@@ -9829,24 +9862,24 @@ module Function_graph_destroy
                writes { voidP_edges_44_alloc_table,
                voidP_graph_14_alloc_table, voidP_vertices_43_alloc_table }
                ensures {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                   "expl:Ensures clause"
                   (fresh_alloc_struct___anonstruct_Graph_4 graph (0)
                   !voidP_graph_14_alloc_table))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 128 12 49#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 131 12 49#
                   "expl:Ensures clause"
                   (fresh_alloc_struct___anonstruct_Vertex_2
                   (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
                   !voidP_vertices_43_alloc_table))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 129 12 46#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 132 12 46#
                  "expl:Ensures clause"
                  (fresh_alloc_struct___anonstruct_Edge_3
                  (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
@@ -9900,8 +9933,8 @@ module Function_graph_destroy_safe
                Int32.t)) : unit
                requires {
                  ("expl:Internal"
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 122 13 25#
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 125 13 25#
                   "expl:Requires clause"
                   (valid_0 graph !voidP_edges_44_alloc_table
                   !voidP_vertices_43_alloc_table
@@ -9915,55 +9948,55 @@ module Function_graph_destroy_safe
                   __anonstruct_Edge_3_from_edges_44
                   __anonstruct_Vertex_2_existent_vertices_43))
                  /\
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 123 13 26#
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 126 13 26#
                   "expl:Requires clause"
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                  ((#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                  ((#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                    ((<=) (offset_min !voidP_graph_14_alloc_table graph) (0)))
                   /\
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                  ((#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                  ((#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                    ((>=) (offset_max !voidP_graph_14_alloc_table graph) (0)))
                   /\
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                   ((=) true true)))))))
                  /\
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 124 13 29#
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 127 13 29#
                   "expl:Requires clause"
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                  ((#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                  ((#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                    (strict_left_valid_struct___anonstruct_Graph_4 graph (0)
                    !voidP_graph_14_alloc_table))
                   /\
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                   (right_valid_struct___anonstruct_Graph_4 graph (Int.(-_) 1)
                   !voidP_graph_14_alloc_table)))))
                  /\
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 125 13 39#
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 128 13 39#
                   "expl:Requires clause"
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                  ((#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                  ((#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                    (strict_left_valid_struct___anonstruct_Vertex_2
                    (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
                    !voidP_vertices_43_alloc_table))
                   /\
-                  (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                  (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                   (right_valid_struct___anonstruct_Vertex_2
                   (select __anonstruct_Graph_4_vertices_graph_14 graph)
                   (Int.(-_) 1) !voidP_vertices_43_alloc_table)))))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 126 13 36#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 129 13 36#
                  "expl:Requires clause"
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
-                 ((#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
+                 ((#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                   (strict_left_valid_struct___anonstruct_Edge_3
                   (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
                   !voidP_edges_44_alloc_table))
                  /\
-                 (#"graph_3_c.jc" 259 12 422# "expl:Requires clause"
+                 (#"graph_3_c.jc" 262 12 422# "expl:Requires clause"
                  (right_valid_struct___anonstruct_Edge_3
                  (select __anonstruct_Graph_4_edges_graph_14 graph)
                  (Int.(-_) 1) !voidP_edges_44_alloc_table)))))))))))))) }
@@ -9972,24 +10005,24 @@ module Function_graph_destroy_safe
                writes { voidP_edges_44_alloc_table,
                voidP_graph_14_alloc_table, voidP_vertices_43_alloc_table }
                ensures {
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                   "expl:Ensures clause"
                   (fresh_alloc_struct___anonstruct_Graph_4 graph (0)
                   !voidP_graph_14_alloc_table))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 127 12 29#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 130 12 29#
                  "expl:Ensures clause"
-                 ((#"/home/student/mfsp/examples/constr_destr/graph_3.c" 128 12 49#
+                 ((#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 131 12 49#
                   "expl:Ensures clause"
                   (fresh_alloc_struct___anonstruct_Vertex_2
                   (select __anonstruct_Graph_4_vertices_graph_14 graph) (0)
                   !voidP_vertices_43_alloc_table))
                  /\
-                 (#"/home/student/mfsp/examples/constr_destr/graph_3.c" 129 12 46#
+                 (#"/home/debian/mfsp/examples/constr_destr/graph_3.c" 132 12 46#
                  "expl:Ensures clause"
                  (fresh_alloc_struct___anonstruct_Edge_3
                  (select __anonstruct_Graph_4_edges_graph_14 graph) (0)
