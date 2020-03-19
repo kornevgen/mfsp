@@ -12,15 +12,6 @@ void swap(int *a, int i, int j) {
     a[j] = tmp;
 }
 
-/*@
-    requires u >= l + 1;
-    requires \valid(a + (l .. u));
-    assigns a[l .. u];
-    ensures permutation{Pre, Post}(a, l, u);
-    ensures l <= \result <= u;
-    ensures \forall integer k; l <= k <= \result - 1 ==> minimum(a, \result, u, a[k]);
-    ensures minimum(a, \result + 1, u, a[\result]);
- */
 int partition(int *a, int l, int u) {
     int m = l, i = l;
     // array is splitted into the following areas:
