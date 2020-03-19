@@ -25,7 +25,7 @@ Z3).
 1. Метод фундированных множеств [(слайды)](slides/floyd_term/floyd_term.pdf) [(упражнения)](exercises/x3.md)
 1. Спецификация функции на языке Си на языке ACSL [(слайды)](slides/intro_acsl/intro_acsl.pdf) [(упражнения)](exercises/x4.md)
 1. Модель памяти инструмента AstraVer [(слайды)](slides/memory_acsl/memory_acsl.pdf) [(упражнения)](exercises/x5.md)
-1. Спецификация и верификация программы на языке Си из нескольких функций
+1. Спецификация и верификация программы на языке Си из нескольких функций [(слайды)](slides/modules_acsl/modules_acsl.pdf)
 1. Auto-active verification
 1. Другие формальные методы разработки программ
 
