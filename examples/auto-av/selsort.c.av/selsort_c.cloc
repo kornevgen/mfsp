@@ -1,0 +1,890 @@
+[_C_128]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 165
+begin = 10
+end = 30
+
+[_C_115]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 201
+begin = 22
+end = 56
+
+[_C_52]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 8
+end = 29
+
+[_C_132]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 164
+begin = 11
+end = 33
+
+[_C_121]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 203
+begin = 22
+end = 66
+
+[_C_35]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 105
+begin = 12
+end = 15
+
+[count_frame2_proof]
+name = "Function count_frame2_proof"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 74
+begin = 7
+end = 50
+
+[_C_117]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 202
+begin = 51
+end = 56
+
+[_C_120]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 203
+begin = 51
+end = 62
+
+[_C_56]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 122
+begin = 8
+end = 14
+
+[_C_28]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 86
+begin = 27
+end = 33
+
+[_C_72]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 174
+begin = 23
+end = 56
+
+[_C_130]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 166
+begin = 10
+end = 44
+
+[_C_59]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 114
+begin = 14
+end = 39
+
+[_C_48]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 11
+end = 16
+
+[_C_116]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 202
+begin = 51
+end = 56
+
+[_C_51]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 8
+end = 29
+
+[_C_103]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 197
+begin = 24
+end = 56
+
+[_C_31]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 97
+begin = 16
+end = 20
+
+[_C_108]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 199
+begin = 25
+end = 29
+
+[_C_77]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 21
+end = 26
+
+[_C_83]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 184
+begin = 27
+end = 43
+
+[_C_41]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 68
+begin = 14
+end = 39
+
+[_C_4]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 17
+begin = 24
+end = 89
+
+[_C_101]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 195
+begin = 66
+end = 90
+
+[_C_71]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 175
+begin = 23
+end = 57
+
+[_C_70]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 176
+begin = 28
+end = 34
+
+[_C_89]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 189
+begin = 23
+end = 24
+
+[_C_90]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 189
+begin = 23
+end = 33
+
+[_C_61]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 116
+begin = 15
+end = 16
+
+[_C_69]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 176
+begin = 23
+end = 29
+
+[_C_32]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 97
+begin = 16
+end = 20
+
+[_C_23]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 78
+begin = 28
+end = 34
+
+[_C_19]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 80
+begin = 21
+end = 26
+
+[_C_42]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 69
+begin = 14
+end = 39
+
+[_C_129]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 165
+begin = 10
+end = 30
+
+[_C_82]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 185
+begin = 36
+end = 42
+
+[_C_110]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 199
+begin = 12
+end = 29
+
+[count_saved_refl]
+name = "Lemma count_saved_refl"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 153
+begin = 3
+end = 441
+
+[_C_94]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 35
+end = 38
+
+[_C_84]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 184
+begin = 27
+end = 39
+
+[count_frame_proof]
+name = "Function count_frame_proof"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 53
+begin = 7
+end = 56
+
+[_C_13]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 51
+begin = 13
+end = 50
+
+[_C_5]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 20
+begin = 25
+end = 140
+
+[_C_91]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 189
+begin = 16
+end = 17
+
+[_C_36]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 105
+begin = 12
+end = 15
+
+[_C_12]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 55
+begin = 12
+end = 17
+
+[_C_33]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 97
+begin = 16
+end = 20
+
+[count_base]
+name = "Lemma count_base"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 2
+begin = 68
+end = 167
+
+[_C_111]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 199
+begin = 12
+end = 29
+
+[_C_79]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 186
+begin = 25
+end = 30
+
+[sort]
+name = "Function sort"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 170
+begin = 5
+end = 24
+
+[_C_104]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 198
+begin = 22
+end = 23
+
+[_C_85]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 184
+begin = 32
+end = 43
+
+[_C_22]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 78
+begin = 23
+end = 29
+
+[_C_65]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 159
+begin = 8
+end = 148
+
+[_C_9]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 56
+begin = 12
+end = 47
+
+[_C_57]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 118
+begin = 13
+end = 53
+
+[_C_54]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 126
+begin = 27
+end = 32
+
+[_C_30]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 92
+begin = 12
+end = 43
+
+[_C_63]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 155
+begin = 8
+end = 67
+
+[_C_6]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 23
+begin = 23
+end = 100
+
+[_C_64]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 157
+begin = 8
+end = 109
+
+[_C_122]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 204
+begin = 23
+end = 172
+
+[count_saved_trans]
+name = "Lemma count_saved_trans"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 157
+begin = 110
+end = 301
+
+[ordered_split]
+name = "Lemma ordered_split"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 18
+begin = 25
+end = 168
+
+[_C_95]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 35
+end = 38
+
+[_C_93]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 189
+begin = 16
+end = 33
+
+[_C_102]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 196
+begin = 23
+end = 116
+
+[_C_49]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 11
+end = 16
+
+[_C_24]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 84
+begin = 12
+end = 13
+
+[_C_45]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 23
+end = 28
+
+[_C_127]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 179
+begin = 27
+end = 30
+
+[_C_97]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 194
+begin = 23
+end = 106
+
+[_C_20]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 79
+begin = 23
+end = 112
+
+[_C_73]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 173
+begin = 23
+end = 43
+
+[_C_96]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 35
+end = 38
+
+[ordered_base]
+name = "Lemma ordered_base"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 15
+begin = 55
+end = 147
+
+[_C_38]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 102
+begin = 12
+end = 18
+
+[_C_3]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 10
+begin = 21
+end = 103
+
+[_C_98]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 195
+begin = 45
+end = 46
+
+[_C_109]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 199
+begin = 12
+end = 13
+
+[_C_124]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 193
+begin = 12
+end = 24
+
+[_C_114]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 200
+begin = 12
+end = 22
+
+[_C_92]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 189
+begin = 16
+end = 20
+
+[_C_81]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 185
+begin = 27
+end = 37
+
+[_C_131]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 163
+begin = 11
+end = 17
+
+[_C_17]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 49
+begin = 15
+end = 20
+
+[_C_112]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 200
+begin = 12
+end = 13
+
+[_C_7]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 56
+begin = 38
+end = 43
+
+[_C_86]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 183
+begin = 27
+end = 52
+
+[_C_62]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 141
+begin = 8
+end = 905
+
+[_C_55]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 126
+begin = 8
+end = 33
+
+[_C_27]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 86
+begin = 27
+end = 38
+
+[_C_105]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 198
+begin = 22
+end = 32
+
+[count_saved_comm]
+name = "Lemma count_saved_comm"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 155
+begin = 68
+end = 406
+
+[_C_87]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 28
+end = 33
+
+[copy_array]
+name = "Function copy_array"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 120
+begin = 7
+end = 42
+
+[_C_46]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 20
+end = 22
+
+[_C_44]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 23
+end = 28
+
+[_C_15]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 47
+begin = 14
+end = 39
+
+[_C_99]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 195
+begin = 38
+end = 64
+
+[_C_26]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 87
+begin = 27
+end = 98
+
+[_C_47]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 20
+end = 29
+
+[_C_10]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 57
+begin = 23
+end = 111
+
+[_C_68]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 176
+begin = 23
+end = 34
+
+[_C_60]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 115
+begin = 14
+end = 39
+
+[_C_53]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 126
+begin = 27
+end = 32
+
+[_C_40]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 67
+begin = 14
+end = 20
+
+[_C_58]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 113
+begin = 14
+end = 20
+
+[_C_8]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 56
+begin = 38
+end = 43
+
+[_C_119]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 203
+begin = 51
+end = 62
+
+[_C_66]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 179
+begin = 13
+end = 14
+
+[_C_18]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 76
+begin = 8
+end = 9
+
+[_C_29]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 86
+begin = 32
+end = 38
+
+[_C_75]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 181
+begin = 12
+end = 19
+
+[_C_14]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 46
+begin = 14
+end = 39
+
+[_C_123]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 205
+begin = 23
+end = 158
+
+[_C_106]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 198
+begin = 16
+end = 19
+
+[_C_50]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 125
+begin = 8
+end = 10
+
+[_C_37]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 105
+begin = 12
+end = 15
+
+[count_splitted]
+name = "Lemma count_splitted"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 138
+begin = 128
+end = 1062
+
+[_C_43]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 70
+begin = 14
+end = 55
+
+[_C_107]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 199
+begin = 25
+end = 26
+
+[_C_88]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 190
+begin = 16
+end = 27
+
+[_C_100]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 195
+begin = 38
+end = 64
+
+[_C_2]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 7
+begin = 23
+end = 141
+
+[_C_34]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 94
+begin = 16
+end = 22
+
+[_C_67]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 177
+begin = 21
+end = 26
+
+[_C_16]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 48
+begin = 14
+end = 55
+
+[_C_125]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 179
+begin = 27
+end = 30
+
+[_C_113]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 200
+begin = 12
+end = 22
+
+[_C_126]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 179
+begin = 27
+end = 30
+
+[_C_1]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 4
+begin = 22
+end = 96
+
+[_C_76]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 21
+end = 26
+
+[_C_25]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 88
+begin = 25
+end = 30
+
+[count_one]
+name = "Lemma count_one"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 8
+begin = 67
+end = 173
+
+[_C_39]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 72
+begin = 13
+end = 103
+
+[_C_80]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 185
+begin = 27
+end = 42
+
+[_C_74]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 179
+begin = 20
+end = 25
+
+[_C_78]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 188
+begin = 17
+end = 18
+
+[_C_11]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 58
+begin = 23
+end = 111
+
+[ordered_two]
+name = "Lemma ordered_two"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 21
+begin = 67
+end = 170
+
+[count_split]
+name = "Lemma count_split"
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 5
+begin = 31
+end = 175
+
+[_C_21]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 78
+begin = 23
+end = 34
+
+[_C_118]
+file = "/home/debian/mfsp/examples/auto-av/selsort.c"
+line = 202
+begin = 22
+end = 66
+

@@ -1,0 +1,337 @@
+
+axiomatic Padding {
+
+  logic type padding
+  
+}
+
+tag voidP = {
+}
+
+type voidP = [voidP]
+
+tag charP = voidP with {
+  int8 charM: 8;
+}
+
+tag intP = {
+  int32 intM: 32;
+}
+
+type intP = [intP]
+
+axiomatic Count {
+
+  logic integer count{L}(intP[..] a, integer i, integer j, integer p)
+   
+  axiom base{L} :
+  (_C_1 : (\forall intP[..] a_0;
+            (\forall integer i_0;
+              (\forall integer j_0;
+                (\forall integer p_0;
+                  ((i_0 >= j_0) ==> (count{L}(a_0, i_0, j_0, p_0) == 0)))))))
+   
+  axiom split{L} :
+  (_C_2 : (\forall intP[..] a_1;
+            (\forall integer i_1;
+              (\forall integer k_1;
+                (\forall integer j_1;
+                  (\forall integer p_1;
+                    (((i_1 <= k_1) && (k_1 <= j_1)) ==>
+                      (count{L}(a_1, i_1, j_1, p_1) ==
+                        (count{L}(a_1, i_1, k_1, p_1) +
+                          count{L}(a_1, k_1, j_1, p_1))))))))))
+   
+  axiom one{L} :
+  (_C_3 : (\forall intP[..] a_2;
+            (\forall integer i_2;
+              (\forall integer p_2;
+                (((((a_2 + i_2).intM :> integer) == p_2) ==>
+                   (count{L}(a_2, i_2, (i_2 + 1), p_2) == 1)) &&
+                  ((! (((a_2 + i_2).intM :> integer) == p_2)) ==>
+                    (count{L}(a_2, i_2, (i_2 + 1), p_2) == 0)))))))
+  
+}
+
+unit lemma_max_count_value_proof(intP[..] a, int32 i, int32 j, int32 p)
+  requires ((_C_15 : (i <= j)) &&
+             (_C_16 : \at((if (\at(i,Here) <= \at(((j :> integer) - 1),Here)) then 
+                          (((\offset_min(\at(a,Here)) <= \at(i,Here)) &&
+                             (\offset_max(\at(a,Here)) >=
+                               \at(((j :> integer) - 1),Here))) &&
+                            (\forall integer __framac_tmp1;
+                              (((\at(i,Here) <= __framac_tmp1) &&
+                                 (__framac_tmp1 <=
+                                   \at(((j :> integer) - 1),Here))) ==>
+                                true))) else true),Here)));
+  decreases (_C_17 : ((j :> integer) - (i :> integer)));
+behavior default:
+  assigns \nothing;
+  allocates \nothing;
+  ensures (_C_12 : ((_C_13 : (0 <=
+                               count{Here}(\at(a,Old),
+                                           (\at(i,Old) :> integer),
+                                           (\at(j,Old) :> integer),
+                                           (\at(p,Old) :> integer)))) &&
+                     (_C_14 : (count{Here}(\at(a,Old),
+                                           (\at(i,Old) :> integer),
+                                           (\at(j,Old) :> integer),
+                                           (\at(p,Old) :> integer)) <=
+                                ((\at(j,Old) :> integer) -
+                                  (\at(i,Old) :> integer))))));
+{  
+   {  (if (_C_11 : (i == j)) then () else (if (_C_10 : ((_C_9 : ((_C_8 : 
+                                                                 (i +
+                                                                   (1 :> int32))) :> int32)) ==
+                                                         j)) then () else 
+                                          {  (_C_6 : lemma_max_count_value_proof(
+                                             a,
+                                             (_C_5 : ((_C_4 : (i +
+                                                                (1 :> int32))) :> int32)),
+                                             j, p));
+                                             
+                                             {  
+                                                (assert for default: 
+                                                (_C_7 : (astraver : (count{Here}(
+                                                                    a,
+                                                                    (i :> integer),
+                                                                    (j :> integer),
+                                                                    (p :> integer)) ==
+                                                                    (count{Here}(
+                                                                    a,
+                                                                    (i :> integer),
+                                                                    ((i :> integer) +
+                                                                    1),
+                                                                    (p :> integer)) +
+                                                                    count{Here}(
+                                                                    a,
+                                                                    ((i :> integer) +
+                                                                    1),
+                                                                    (j :> integer),
+                                                                    (p :> integer)))))));
+                                                ()
+                                             }
+                                          }));
+      
+      (return ())
+   }
+}
+
+axiomatic LF__Axiomatic__lemma_max_count_value_proof {
+
+  axiom LF__Lemma__lemma_max_count_value_proof{Here} :
+  (_C_18 : (\forall intP[..] a_3;
+             (\forall int32 i_3;
+               (\forall int32 j_2;
+                 (\forall int32 p_3;
+                   (((i_3 <= j_2) &&
+                      \at((if (\at(i_3,Here) <=
+                                \at(((j_2 :> integer) - 1),Here)) then 
+                          (((\offset_min(\at(a_3,Here)) <= \at(i_3,Here)) &&
+                             (\offset_max(\at(a_3,Here)) >=
+                               \at(((j_2 :> integer) - 1),Here))) &&
+                            (\forall integer __framac_tmp2;
+                              (((\at(i_3,Here) <= __framac_tmp2) &&
+                                 (__framac_tmp2 <=
+                                   \at(((j_2 :> integer) - 1),Here))) ==>
+                                true))) else true),Here)) ==>
+                     ((0 <=
+                        count{Here}(a_3, (i_3 :> integer), (j_2 :> integer),
+                                    (p_3 :> integer))) &&
+                       (count{Here}(a_3, (i_3 :> integer), (j_2 :> integer),
+                                    (p_3 :> integer)) <=
+                         ((j_2 :> integer) - (i_3 :> integer))))))))))
+   
+  predicate _LF__Predicate__lemma_max_count_value_proof() =
+  true
+  
+}
+
+int32 what_more(intP[..] a_0, int32 n_9, int32 x, int32 y)
+  requires (_LF__Predicate__lemma_max_count_value_proof() &&
+             ((_C_77 : (n_9 > (0 :> int32))) &&
+               (_C_78 : \at((if (\at(0,Here) <=
+                                  \at(((n_9 :> integer) - 1),Here)) then 
+                            (((\offset_min(\at(a_0,Here)) <= \at(0,Here)) &&
+                               (\offset_max(\at(a_0,Here)) >=
+                                 \at(((n_9 :> integer) - 1),Here))) &&
+                              (\forall integer __framac_tmp3;
+                                (((\at(0,Here) <= __framac_tmp3) &&
+                                   (__framac_tmp3 <=
+                                     \at(((n_9 :> integer) - 1),Here))) ==>
+                                  true))) else true),Here))));
+behavior default:
+  ensures (_C_72 : ((_C_73 : ((count{Here}(\at(a_0,Old), 0,
+                                           (\at(n_9,Old) :> integer),
+                                           (\at(x,Old) :> integer)) >
+                                count{Here}(\at(a_0,Old), 0,
+                                            (\at(n_9,Old) :> integer),
+                                            (\at(y,Old) :> integer))) ==>
+                               (\result > (0 :> int32)))) &&
+                     ((_C_75 : ((count{Here}(\at(a_0,Old), 0,
+                                             (\at(n_9,Old) :> integer),
+                                             (\at(x,Old) :> integer)) ==
+                                  count{Here}(\at(a_0,Old), 0,
+                                              (\at(n_9,Old) :> integer),
+                                              (\at(y,Old) :> integer))) ==>
+                                 (\result == (0 :> int32)))) &&
+                       (_C_76 : ((count{Here}(\at(a_0,Old), 0,
+                                              (\at(n_9,Old) :> integer),
+                                              (\at(x,Old) :> integer)) <
+                                   count{Here}(\at(a_0,Old), 0,
+                                               (\at(n_9,Old) :> integer),
+                                               (\at(y,Old) :> integer))) ==>
+                                  (\result < (0 :> int32)))))));
+{  
+   (var int32 c_x);
+   
+   (var int32 c_y);
+   
+   (var int32 i_0);
+   
+   (var int32 i1);
+   
+   (var int32 __retres);
+   
+   {  (if (_C_20 : (x == y)) then 
+      {  (_C_19 : (__retres = (0 :> int32)));
+         
+         (goto return_label)
+      } else ());
+      (_C_21 : (c_x = (0 :> int32)));
+      (_C_22 : (c_y = (0 :> int32)));
+      (_C_23 : (i_0 = (0 :> int32)));
+      (LoopEntry : 
+      loop 
+      behavior default:
+        invariant (_C_27 : ((_C_28 : ((0 :> int32) <= i_0)) &&
+                             (_C_29 : (i_0 <= n_9))));
+      behavior default:
+        invariant (_C_26 : ((c_x :> integer) ==
+                             count{Here}(a_0, 0, (i_0 :> integer),
+                                         (x :> integer))));
+      behavior default:
+        invariant (_C_25 : ((c_y :> integer) ==
+                             count{Here}(a_0, 0, (i_0 :> integer),
+                                         (y :> integer))));
+      variant (_C_24 : ((n_9 :> integer) - (i_0 :> integer)));
+      while (true)
+      {  
+         {  (LoopCurrent : (if (_C_30 : (i_0 < n_9)) then () else 
+                           (goto while_0_break)));
+            
+            {  (if (_C_42 : ((_C_41 : (_C_40 : (a_0 + i_0)).intM) == x)) then 
+               (_C_39 : (c_x = (_C_38 : ((_C_37 : (c_x + (1 :> int32))) :> int32)))) else 
+               (if (_C_36 : ((_C_35 : (_C_34 : (a_0 + i_0)).intM) == y)) then 
+               (_C_33 : (c_y = (_C_32 : ((_C_31 : (c_y + (1 :> int32))) :> int32)))) else ()));
+               
+               {  
+                  (assert for default: (_C_43 : (astraver : (count{Here}(
+                                                              a_0, 0,
+                                                              ((i_0 :> integer) +
+                                                                1),
+                                                              (x :> integer)) ==
+                                                              (count{Here}(
+                                                                a_0, 0,
+                                                                (i_0 :> integer),
+                                                                (x :> integer)) +
+                                                                count{Here}(
+                                                                a_0,
+                                                                (i_0 :> integer),
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (x :> integer)))))));
+                  ()
+               };
+               
+               {  
+                  (assert for default: (_C_44 : (astraver : (count{Here}(
+                                                              a_0, 0,
+                                                              ((i_0 :> integer) +
+                                                                1),
+                                                              (y :> integer)) ==
+                                                              (count{Here}(
+                                                                a_0, 0,
+                                                                (i_0 :> integer),
+                                                                (y :> integer)) +
+                                                                count{Here}(
+                                                                a_0,
+                                                                (i_0 :> integer),
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (y :> integer)))))));
+                  ()
+               };
+               (_C_47 : (i1 = (_C_46 : ((_C_45 : (i_0 + (1 :> int32))) :> int32))));
+               
+               {  
+                  (assert for default: (_C_48 : (astraver : (count{Here}(
+                                                              a_0, 0,
+                                                              (n_9 :> integer),
+                                                              (x :> integer)) ==
+                                                              (count{Here}(
+                                                                a_0, 0,
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (x :> integer)) +
+                                                                count{Here}(
+                                                                a_0,
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (n_9 :> integer),
+                                                                (x :> integer)))))));
+                  ()
+               };
+               
+               {  
+                  (assert for default: (_C_49 : (astraver : (count{Here}(
+                                                              a_0, 0,
+                                                              (n_9 :> integer),
+                                                              (y :> integer)) ==
+                                                              (count{Here}(
+                                                                a_0, 0,
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (y :> integer)) +
+                                                                count{Here}(
+                                                                a_0,
+                                                                ((i_0 :> integer) +
+                                                                  1),
+                                                                (n_9 :> integer),
+                                                                (y :> integer)))))));
+                  ()
+               };
+               (if (_C_57 : (c_x >
+                              (_C_56 : ((_C_55 : (c_y +
+                                                   (_C_54 : ((_C_53 : 
+                                                             ((_C_52 : (
+                                                              (_C_51 : 
+                                                              (n_9 -
+                                                                i_0)) :> int32)) -
+                                                               (1 :> int32))) :> int32)))) :> int32)))) then 
+               {  (_C_50 : (__retres = (1 :> int32)));
+                  
+                  (goto return_label)
+               } else ());
+               (if (_C_65 : (c_y >
+                              (_C_64 : ((_C_63 : (c_x +
+                                                   (_C_62 : ((_C_61 : 
+                                                             ((_C_60 : (
+                                                              (_C_59 : 
+                                                              (n_9 -
+                                                                i_0)) :> int32)) -
+                                                               (1 :> int32))) :> int32)))) :> int32)))) then 
+               {  (_C_58 : (__retres = (-1 :> int32)));
+                  
+                  (goto return_label)
+               } else ())
+            };
+            (_C_68 : (i_0 = (_C_67 : ((_C_66 : (i_0 + (1 :> int32))) :> int32))))
+         }
+      });
+      (while_0_break : ());
+      (_C_71 : (__retres = (_C_70 : ((_C_69 : (c_x - c_y)) :> int32))));
+      (return_label : 
+      (return __retres))
+   }
+}
