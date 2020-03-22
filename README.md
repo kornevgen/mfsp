@@ -26,7 +26,7 @@ Z3).
 1. Спецификация функции на языке Си на языке ACSL [(слайды)](slides/intro_acsl/intro_acsl.pdf) [(упражнения)](exercises/x4.md)
 1. Модель памяти инструмента AstraVer [(слайды)](slides/memory_acsl/memory_acsl.pdf) [(упражнения)](exercises/x5.md)
 1. Спецификация и верификация программы на языке Си из нескольких функций [(слайды)](slides/modules_acsl/modules_acsl.pdf)
-1. Auto-active verification
+1. Auto-active verification [(слайды)](slides/proof_methods/proof_methods.pdf)
 1. Другие формальные методы разработки программ
 
 ## Литература
@@ -39,6 +39,7 @@ Z3).
 1. [Mandrykin, M.U., Khoroshilov, A.V. (2015) High-level memory model with low-level pointer cast support for Jessie intermediate language. In: Programming and Computer Software, 41, 197–207.](https://link.springer.com/article/10.1134%2FS0361768815040040)
 1. [Grigoriy Volkov, Mikhail Mandrykin, Denis Efremov (2018) Lemma Functions for Frama-C: C Programs as Proofs. In: 2018 Ivannikov ISPRAS Open Conference](https://arxiv.org/abs/1811.05879)
 1. [Blanchard A., Loulergue F., Kosmatov N. (2019) Towards Full Proof Automation in Frama-C Using Auto-active Verification. In: Badger J., Rozier K. (eds) NASA Formal Methods. NFM 2019. Lecture Notes in Computer Science, vol 11460. Springer, Cham](https://allan-blanchard.fr/publis/blk_nfm_2019.pdf)
+1. [Becker N., Müller P., Summers A.J. (2019) The Axiom Profiler: Understanding and Debugging SMT Quantifier Instantiations. In: Vojnar T., Zhang L. (eds) Tools and Algorithms for the Construction and Analysis of Systems. TACAS 2019. Lecture Notes in Computer Science, vol 11427. Springer, Cham](https://link.springer.com/chapter/10.1007/978-3-030-17462-0_6)
 
 ## Практикум
 
