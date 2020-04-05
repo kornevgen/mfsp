@@ -104,7 +104,7 @@ typedef struct {
   requires g->vertices[f].existent;
   requires g->vertices[t].existent;
   requires !full(g);
-  assigns g->edges[0 .. g->esize - 1];
+  assigns g, g->edges[0 .. g->esize - 1];
   ensures valid(g);
   ensures all_count(g, f, t) == all_count{Pre}(g, f, t) + 1;
   ensures \forall integer f2, t2; (f2 != f || t2 != t) ==> all_count(g, f2, t2) == all_count{Pre}(g, f2, t2);
