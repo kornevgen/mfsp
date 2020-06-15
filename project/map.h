@@ -1,27 +1,7 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-typedef struct {
-    int a;
-    int b;
-} Key;
-
-typedef struct {
-    int c;
-    int d;
-} Value;
-
-typedef struct {
-    Key key __attribute__((noembed));
-    Value value;
-    int existent;
-} Item;
-
-typedef struct {
-    Item *items;
-    int capacity;
-    int count;
-} Map;
+#include "maptypes.h"
 
 Map *createMap(int size);
 
