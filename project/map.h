@@ -3,9 +3,9 @@
 
 #include "maptypes.h"
 
-Map *createMap(int size);
+int initializeMap(Map *map, int size);
 
-void deleteMap(Map *map);
+void finalizeMap(Map *map);
 
 int addElement(Map *map, Key *key, Value *value);
 
