@@ -2,244 +2,286 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="4">
-<prover id="0" name="Alt-Ergo" version="2.3.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="0" name="Z3" version="4.8.9" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.3.2" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.6" timelimit="5" steplimit="0" memlimit="1000"/>
 <file name="../what_more_3_c.mlw" expanded="true">
-<theory name="Function_what_more_safety" sum="9ab14104c3cf09763871d2fa49b4405b">
+<theory name="Function_what_more_safety" sum="967182d451e941c27b511255f6ecd002">
  <goal name="WP_parameter what_more" expl="Function what_more, safety">
  <transf name="split_goal_wp">
   <goal name="WP_parameter what_more.1" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.05" steps="11"/></proof>
+  <proof prover="1"><result status="valid" time="0.05" steps="12"/></proof>
   </goal>
   <goal name="WP_parameter what_more.2" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.04" steps="11"/></proof>
+  <proof prover="1"><result status="valid" time="0.04" steps="12"/></proof>
   </goal>
   <goal name="WP_parameter what_more.3" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.04" steps="14"/></proof>
+  <proof prover="1"><result status="valid" time="0.04" steps="14"/></proof>
   </goal>
   <goal name="WP_parameter what_more.4" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.04" steps="18"/></proof>
+  <proof prover="1"><result status="valid" time="0.04" steps="18"/></proof>
   </goal>
   <goal name="WP_parameter what_more.5" expl="Pointer dereference (Dereference by offset. Validity)">
-  <proof prover="0"><result status="valid" time="0.26" steps="178"/></proof>
+  <proof prover="1"><result status="valid" time="0.04" steps="73"/></proof>
   </goal>
   <goal name="WP_parameter what_more.6" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.06" steps="43"/></proof>
+  <proof prover="1"><result status="valid" time="0.06" steps="48"/></proof>
   </goal>
   <goal name="WP_parameter what_more.7" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.13" steps="172"/></proof>
+  <proof prover="1"><result status="valid" time="0.39" steps="459"/></proof>
   </goal>
   <goal name="WP_parameter what_more.8" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.06" steps="58"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="54"/></proof>
   </goal>
   <goal name="WP_parameter what_more.9" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.23" steps="259"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="249"/></proof>
   </goal>
   <goal name="WP_parameter what_more.10" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.10" steps="67"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="64"/></proof>
   </goal>
   <goal name="WP_parameter what_more.11" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.28" steps="288"/></proof>
+  <proof prover="1"><result status="valid" time="0.21" steps="278"/></proof>
   </goal>
   <goal name="WP_parameter what_more.12" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.08" steps="76"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="72"/></proof>
   </goal>
   <goal name="WP_parameter what_more.13" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.08" steps="76"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="72"/></proof>
   </goal>
   <goal name="WP_parameter what_more.14" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.09" steps="78"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="74"/></proof>
   </goal>
   <goal name="WP_parameter what_more.15" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.09" steps="80"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="76"/></proof>
   </goal>
   <goal name="WP_parameter what_more.16" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.39" steps="336"/></proof>
+  <proof prover="1"><result status="valid" time="0.29" steps="326"/></proof>
   </goal>
   <goal name="WP_parameter what_more.17" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.13" steps="94"/></proof>
+  <proof prover="1"><result status="valid" time="0.13" steps="91"/></proof>
   </goal>
   <goal name="WP_parameter what_more.18" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.10" steps="91"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="87"/></proof>
   </goal>
   <goal name="WP_parameter what_more.19" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.41" steps="361"/></proof>
+  <proof prover="1"><result status="valid" time="0.28" steps="351"/></proof>
   </goal>
   <goal name="WP_parameter what_more.20" expl="loop variant decrease">
-  <proof prover="0"><result status="valid" time="0.11" steps="99"/></proof>
+  <proof prover="1"><result status="valid" time="0.11" steps="95"/></proof>
   </goal>
   <goal name="WP_parameter what_more.21" expl="Pointer dereference (Dereference by offset. Validity)">
-  <proof prover="0"><result status="valid" time="0.04" steps="40"/></proof>
+  <proof prover="1"><result status="valid" time="0.04" steps="44"/></proof>
   </goal>
   <goal name="WP_parameter what_more.22" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.06" steps="45"/></proof>
+  <proof prover="1"><result status="valid" time="0.06" steps="50"/></proof>
   </goal>
   <goal name="WP_parameter what_more.23" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.13" steps="174"/></proof>
+  <proof prover="1"><result status="valid" time="0.13" steps="403"/></proof>
   </goal>
   <goal name="WP_parameter what_more.24" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.07" steps="60"/></proof>
+  <proof prover="1"><result status="valid" time="0.06" steps="56"/></proof>
   </goal>
   <goal name="WP_parameter what_more.25" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.23" steps="261"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="251"/></proof>
   </goal>
   <goal name="WP_parameter what_more.26" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.10" steps="69"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="66"/></proof>
   </goal>
   <goal name="WP_parameter what_more.27" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.30" steps="295"/></proof>
+  <proof prover="1"><result status="valid" time="0.24" steps="332"/></proof>
   </goal>
   <goal name="WP_parameter what_more.28" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.08" steps="78"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="74"/></proof>
   </goal>
   <goal name="WP_parameter what_more.29" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.09" steps="78"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="74"/></proof>
   </goal>
   <goal name="WP_parameter what_more.30" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.08" steps="80"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="76"/></proof>
   </goal>
   <goal name="WP_parameter what_more.31" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.10" steps="82"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="78"/></proof>
   </goal>
   <goal name="WP_parameter what_more.32" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.40" steps="338"/></proof>
+  <proof prover="1"><result status="valid" time="0.32" steps="328"/></proof>
   </goal>
   <goal name="WP_parameter what_more.33" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.15" steps="96"/></proof>
+  <proof prover="1"><result status="valid" time="0.15" steps="93"/></proof>
   </goal>
   <goal name="WP_parameter what_more.34" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.12" steps="93"/></proof>
+  <proof prover="1"><result status="valid" time="0.12" steps="89"/></proof>
   </goal>
   <goal name="WP_parameter what_more.35" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.43" steps="363"/></proof>
+  <proof prover="1"><result status="valid" time="0.31" steps="353"/></proof>
   </goal>
   <goal name="WP_parameter what_more.36" expl="loop variant decrease">
-  <proof prover="0"><result status="valid" time="0.12" steps="101"/></proof>
+  <proof prover="1"><result status="valid" time="0.12" steps="97"/></proof>
   </goal>
   <goal name="WP_parameter what_more.37" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.09" steps="53"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="50"/></proof>
   </goal>
   <goal name="WP_parameter what_more.38" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.22" steps="231"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="217"/></proof>
   </goal>
   <goal name="WP_parameter what_more.39" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.09" steps="61"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="58"/></proof>
   </goal>
   <goal name="WP_parameter what_more.40" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.27" steps="260"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="247"/></proof>
   </goal>
   <goal name="WP_parameter what_more.41" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.07" steps="70"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="66"/></proof>
   </goal>
   <goal name="WP_parameter what_more.42" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.07" steps="70"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="66"/></proof>
   </goal>
   <goal name="WP_parameter what_more.43" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.07" steps="72"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="68"/></proof>
   </goal>
   <goal name="WP_parameter what_more.44" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.07" steps="74"/></proof>
+  <proof prover="1"><result status="valid" time="0.07" steps="70"/></proof>
   </goal>
   <goal name="WP_parameter what_more.45" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.35" steps="303"/></proof>
+  <proof prover="1"><result status="valid" time="0.26" steps="335"/></proof>
   </goal>
   <goal name="WP_parameter what_more.46" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.12" steps="88"/></proof>
+  <proof prover="1"><result status="valid" time="0.12" steps="85"/></proof>
   </goal>
   <goal name="WP_parameter what_more.47" expl="Integer cast (integer overflow)">
-  <proof prover="0"><result status="valid" time="0.10" steps="85"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="81"/></proof>
   </goal>
   <goal name="WP_parameter what_more.48" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.39" steps="328"/></proof>
+  <proof prover="1"><result status="valid" time="0.25" steps="314"/></proof>
   </goal>
   <goal name="WP_parameter what_more.49" expl="loop variant decrease">
-  <proof prover="0"><result status="valid" time="0.10" steps="93"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="89"/></proof>
   </goal>
   <goal name="WP_parameter what_more.50" expl="integer overflow">
-  <proof prover="0"><result status="valid" time="0.10" steps="137"/></proof>
+  <proof prover="1"><result status="valid" time="0.10" steps="289"/></proof>
   </goal>
  </transf>
  </goal>
 </theory>
-<theory name="Function_what_more_behaviors" sum="8c23008caa001f8e6f1f5970787efa5c">
- <goal name="WP_parameter what_more_ensures_default" expl="Function what_more, default behavior">
- <transf name="split_goal_wp">
+<theory name="Function_what_more_behaviors" sum="70e39cf8ad444adf5a35f4da9f23695b" expanded="true">
+ <goal name="WP_parameter what_more_ensures_default" expl="Function what_more, default behavior" expanded="true">
+ <transf name="split_goal_wp" expanded="true">
   <goal name="WP_parameter what_more_ensures_default.1" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.05" steps="18"/></proof>
+  <proof prover="1"><result status="valid" time="0.05" steps="19"/></proof>
   </goal>
   <goal name="WP_parameter what_more_ensures_default.2" expl="loop invariant init">
-  <proof prover="0"><result status="valid" time="0.12" steps="160"/></proof>
+  <proof prover="1"><result status="valid" time="0.12" steps="158"/></proof>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.3" expl="Assertion in line 49">
-  <proof prover="0"><result status="valid" time="0.06" steps="43"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.3" expl="Ensures clause (Postcondition)">
+  <proof prover="1"><result status="valid" time="1.48" steps="963"/></proof>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.4" expl="Assertion in line 50">
-  <proof prover="0"><result status="valid" time="0.07" steps="45"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.4" expl="Ensures clause (Postcondition)">
+  <transf name="split_goal_wp">
+   <goal name="WP_parameter what_more_ensures_default.4.1" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.06" steps="80"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.4.2" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.06" steps="80"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.4.3" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.05" steps="80"/></proof>
+   </goal>
+  </transf>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.5" expl="Assertion in line 51">
-  <proof prover="0"><result status="valid" time="0.09" steps="47"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.5" expl="loop invariant preservation">
+  <proof prover="1"><result status="valid" time="0.33" steps="523"/></proof>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.6" expl="Assertion in line 52">
-  <proof prover="0"><result status="valid" time="0.09" steps="49"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.6" expl="Ensures clause (Postcondition)">
+  <proof prover="1"><result status="valid" time="0.08" steps="171"/></proof>
   </goal>
   <goal name="WP_parameter what_more_ensures_default.7" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.19" steps="299"/></proof>
+  <transf name="split_goal_wp">
+   <goal name="WP_parameter what_more_ensures_default.7.1" expl="Ensures clause">
+   <proof prover="0"><result status="valid" time="0.17"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.7.2" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="1.91" steps="965"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.7.3" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.06" steps="82"/></proof>
+   </goal>
+  </transf>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.8" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.17" steps="201"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.8" expl="loop invariant preservation">
+  <proof prover="1"><result status="valid" time="0.34" steps="458"/></proof>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.9" expl="loop invariant preservation">
-  <proof prover="0"><result status="valid" time="0.42" steps="425"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.9" expl="Ensures clause (Postcondition)">
+  <transf name="split_goal_wp">
+   <goal name="WP_parameter what_more_ensures_default.9.1" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.04" steps="64"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.9.2" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.94" steps="950"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.9.3" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.05" steps="64"/></proof>
+   </goal>
+  </transf>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.10" expl="Assertion in line 49">
-  <proof prover="0"><result status="valid" time="0.07" steps="45"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.10" expl="Ensures clause (Postcondition)">
+  <transf name="split_goal_wp">
+   <goal name="WP_parameter what_more_ensures_default.10.1" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.05" steps="76"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.10.2" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="1.08" steps="1053"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.10.3" expl="Ensures clause">
+   <proof prover="1"><result status="valid" time="0.06" steps="76"/></proof>
+   </goal>
+  </transf>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.11" expl="Assertion in line 50">
-  <proof prover="0"><result status="valid" time="0.08" steps="47"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.11" expl="loop invariant preservation">
+  <transf name="split_goal_wp">
+   <goal name="WP_parameter what_more_ensures_default.11.1" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.08" steps="74"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.11.2" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.07" steps="74"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.11.3" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.27" steps="329"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.11.4" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.26" steps="336"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.11.5" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.09" steps="82"/></proof>
+   </goal>
+   <goal name="WP_parameter what_more_ensures_default.11.6" expl="Function what_more, default behavior">
+   <proof prover="1"><result status="valid" time="0.10" steps="84"/></proof>
+   </goal>
+  </transf>
   </goal>
-  <goal name="WP_parameter what_more_ensures_default.12" expl="Assertion in line 51">
-  <proof prover="0"><result status="valid" time="0.08" steps="49"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.13" expl="Assertion in line 52">
-  <proof prover="0"><result status="valid" time="0.09" steps="51"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.14" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.17" steps="177"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.15" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.27" steps="345"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.16" expl="loop invariant preservation">
-  <proof prover="0"><result status="valid" time="0.35" steps="361"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.17" expl="Assertion in line 49">
-  <proof prover="0"><result status="valid" time="0.07" steps="39"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.18" expl="Assertion in line 50">
-  <proof prover="0"><result status="valid" time="0.07" steps="41"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.19" expl="Assertion in line 51">
-  <proof prover="0"><result status="valid" time="0.07" steps="43"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.20" expl="Assertion in line 52">
-  <proof prover="0"><result status="valid" time="0.08" steps="45"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.21" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.24" steps="277"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.22" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.26" steps="321"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.23" expl="loop invariant preservation">
-  <proof prover="0"><result status="valid" time="0.53" steps="552"/></proof>
-  </goal>
-  <goal name="WP_parameter what_more_ensures_default.24" expl="Ensures clause (Postcondition)">
-  <proof prover="0"><result status="valid" time="0.09" steps="94"/></proof>
+  <goal name="WP_parameter what_more_ensures_default.12" expl="Ensures clause (Postcondition)">
+  <proof prover="1"><result status="valid" time="0.09" steps="104"/></proof>
   </goal>
  </transf>
  </goal>
 </theory>
-<theory name="Lemma_max_count_value" sum="62a1be380d217c16b1405547f3dbe2d4" expanded="true">
- <goal name="Max_count_value" expl="Lemma max_count_value" expanded="true">
+<theory name="Lemma_max_count_value" sum="dc9acf0511c0eb6041b530b88e9d8f58">
+ <goal name="Max_count_value" expl="Lemma max_count_value">
+ </goal>
+</theory>
+<theory name="Lemma_next1" sum="eeec6cf5e48a25150cda1535b1c03b81">
+ <goal name="Next1" expl="Lemma next1">
+ <proof prover="0"><result status="highfailure" time="4.34"/></proof>
+ <proof prover="1"><result status="timeout" time="4.67"/></proof>
+ <proof prover="2"><result status="unknown" time="4.68" steps="338625"/></proof>
+ </goal>
+</theory>
+<theory name="Lemma_next2" sum="0fe3b96c4e05fbedc223aa4154381cd3">
+ <goal name="Next2" expl="Lemma next2">
+ <proof prover="1"><result status="timeout" time="4.76"/></proof>
+ </goal>
+</theory>
+<theory name="Lemma_next3" sum="fedbace943eb89311ec9b3fc6cd1ec3e">
+ <goal name="Next3" expl="Lemma next3">
+ <proof prover="1"><result status="timeout" time="4.79"/></proof>
  </goal>
 </theory>
 <theory name="Axiomatic_Padding" sum="d41d8cd98f00b204e9800998ecf8427e" expanded="true">

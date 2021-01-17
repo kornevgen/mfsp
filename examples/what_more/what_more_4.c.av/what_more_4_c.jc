@@ -42,67 +42,60 @@ axiomatic Count {
                         (count{L}(a_1, i_1, k_1, p_1) +
                           count{L}(a_1, k_1, j_1, p_1))))))))))
    
-  axiom one_0{L} :
+  axiom one{L} :
   (_C_3 : (\forall intP[..] a_2;
             (\forall integer i_2;
               (\forall int32 p_2;
-                (((a_2 + i_2).intM == p_2) ==>
-                  (count{L}(a_2, i_2, (i_2 + 1), (p_2 :> integer)) == 1))))))
-   
-  axiom one_1{L} :
-  (_C_4 : (\forall intP[..] a_3;
-            (\forall integer i_3;
-              (\forall int32 p_3;
-                ((! ((a_3 + i_3).intM == p_3)) ==>
-                  (count{L}(a_3, i_3, (i_3 + 1), (p_3 :> integer)) == 0))))))
+                (count{L}(a_2, i_2, (i_2 + 1), (p_2 :> integer)) ==
+                  (if ((a_2 + i_2).intM == p_2) then 1 else 0))))))
   
 }
 
 lemma max_count_value{L} :
-(_C_5 : (\forall intP[..] a_4;
-          (\forall integer i_4;
+(_C_4 : (\forall intP[..] a_3;
+          (\forall integer i_3;
             (\forall integer j_2;
-              (\forall integer p_4;
-                ((i_4 <= j_2) ==>
-                  ((0 <= count{L}(a_4, i_4, j_2, p_4)) &&
-                    (count{L}(a_4, i_4, j_2, p_4) <= (j_2 - i_4)))))))))
+              (\forall integer p_3;
+                ((i_3 <= j_2) ==>
+                  ((0 <= count{L}(a_3, i_3, j_2, p_3)) &&
+                    (count{L}(a_3, i_3, j_2, p_3) <= (j_2 - i_3)))))))))
 
 lemma split_delta{L} :
-(_C_6 : (\forall intP[..] a_5;
-          (\forall integer i_5;
+(_C_5 : (\forall intP[..] a_4;
+          (\forall integer i_4;
             (\forall integer j_3;
-              (\forall integer p_5;
-                (((0 <= i_5) && (0 <= j_3)) ==>
-                  (count{L}(a_5, 0, (i_5 + j_3), p_5) ==
-                    (count{L}(a_5, 0, i_5, p_5) +
-                      count{L}(a_5, i_5, (i_5 + j_3), p_5)))))))))
+              (\forall integer p_4;
+                (((0 <= i_4) && (0 <= j_3)) ==>
+                  (count{L}(a_4, 0, (i_4 + j_3), p_4) ==
+                    (count{L}(a_4, 0, i_4, p_4) +
+                      count{L}(a_4, i_4, (i_4 + j_3), p_4)))))))))
 
 int32 what_more(intP[..] a, int32 n_9, int32 x, int32 y)
-  requires ((_C_58 : (n_9 > (0 :> int32))) &&
-             (_C_59 : (\forall integer i_6;
-                        (((0 <= i_6) && (i_6 < (n_9 :> integer))) ==>
-                          \at((((\offset_min(\at(a,Here)) <= \at(i_6,Here)) &&
-                                 (\offset_max(\at(a,Here)) >= \at(i_6,Here))) &&
+  requires ((_C_57 : (n_9 > (0 :> int32))) &&
+             (_C_58 : (\forall integer i_5;
+                        (((0 <= i_5) && (i_5 < (n_9 :> integer))) ==>
+                          \at((((\offset_min(\at(a,Here)) <= \at(i_5,Here)) &&
+                                 (\offset_max(\at(a,Here)) >= \at(i_5,Here))) &&
                                 (\forall integer __framac_tmp1;
-                                  (((\at(i_6,Here) <= __framac_tmp1) &&
-                                     (__framac_tmp1 <= \at(i_6,Here))) ==>
+                                  (((\at(i_5,Here) <= __framac_tmp1) &&
+                                     (__framac_tmp1 <= \at(i_5,Here))) ==>
                                     true))),Here)))));
 behavior default:
-  ensures (_C_53 : ((_C_54 : ((count{Here}(\at(a,Old), 0,
+  ensures (_C_52 : ((_C_53 : ((count{Here}(\at(a,Old), 0,
                                            (\at(n_9,Old) :> integer),
                                            (\at(x,Old) :> integer)) >
                                 count{Here}(\at(a,Old), 0,
                                             (\at(n_9,Old) :> integer),
                                             (\at(y,Old) :> integer))) ==>
                                (\result > (0 :> int32)))) &&
-                     ((_C_56 : ((count{Here}(\at(a,Old), 0,
+                     ((_C_55 : ((count{Here}(\at(a,Old), 0,
                                              (\at(n_9,Old) :> integer),
                                              (\at(x,Old) :> integer)) ==
                                   count{Here}(\at(a,Old), 0,
                                               (\at(n_9,Old) :> integer),
                                               (\at(y,Old) :> integer))) ==>
                                  (\result == (0 :> int32)))) &&
-                       (_C_57 : ((count{Here}(\at(a,Old), 0,
+                       (_C_56 : ((count{Here}(\at(a,Old), 0,
                                               (\at(n_9,Old) :> integer),
                                               (\at(x,Old) :> integer)) <
                                    count{Here}(\at(a,Old), 0,
@@ -118,65 +111,65 @@ behavior default:
    
    (var int32 __retres);
    
-   {  (if (_C_8 : (x == y)) then 
-      {  (_C_7 : (__retres = (0 :> int32)));
+   {  (if (_C_7 : (x == y)) then 
+      {  (_C_6 : (__retres = (0 :> int32)));
          
          (goto return_label)
       } else ());
-      (_C_9 : (c_x = (0 :> int32)));
-      (_C_10 : (c_y = (0 :> int32)));
-      (_C_11 : (i = (0 :> int32)));
+      (_C_8 : (c_x = (0 :> int32)));
+      (_C_9 : (c_y = (0 :> int32)));
+      (_C_10 : (i = (0 :> int32)));
       (LoopEntry : 
       loop 
       behavior default:
-        invariant (_C_15 : ((_C_16 : ((0 :> int32) <= i)) &&
-                             (_C_17 : (i <= n_9))));
+        invariant (_C_14 : ((_C_15 : ((0 :> int32) <= i)) &&
+                             (_C_16 : (i <= n_9))));
       behavior default:
-        invariant (_C_14 : ((c_x :> integer) ==
+        invariant (_C_13 : ((c_x :> integer) ==
                              count{Here}(a, 0, (i :> integer), (x :> integer))));
       behavior default:
-        invariant (_C_13 : ((c_y :> integer) ==
+        invariant (_C_12 : ((c_y :> integer) ==
                              count{Here}(a, 0, (i :> integer), (y :> integer))));
-      variant (_C_12 : ((n_9 :> integer) - (i :> integer)));
+      variant (_C_11 : ((n_9 :> integer) - (i :> integer)));
       while (true)
       {  
-         {  (LoopCurrent : (if (_C_18 : (i < n_9)) then () else 
+         {  (LoopCurrent : (if (_C_17 : (i < n_9)) then () else 
                            (goto while_0_break)));
             
-            {  (if (_C_30 : ((_C_29 : (_C_28 : (a + i)).intM) == x)) then 
-               (_C_27 : (c_x = (_C_26 : ((_C_25 : (c_x + (1 :> int32))) :> int32)))) else 
-               (if (_C_24 : ((_C_23 : (_C_22 : (a + i)).intM) == y)) then 
-               (_C_21 : (c_y = (_C_20 : ((_C_19 : (c_y + (1 :> int32))) :> int32)))) else ()));
-               (if (_C_38 : (c_x >
-                              (_C_37 : ((_C_36 : (c_y +
-                                                   (_C_35 : ((_C_34 : 
-                                                             ((_C_33 : (
-                                                              (_C_32 : 
+            {  (if (_C_29 : ((_C_28 : (_C_27 : (a + i)).intM) == x)) then 
+               (_C_26 : (c_x = (_C_25 : ((_C_24 : (c_x + (1 :> int32))) :> int32)))) else 
+               (if (_C_23 : ((_C_22 : (_C_21 : (a + i)).intM) == y)) then 
+               (_C_20 : (c_y = (_C_19 : ((_C_18 : (c_y + (1 :> int32))) :> int32)))) else ()));
+               (if (_C_37 : (c_x >
+                              (_C_36 : ((_C_35 : (c_y +
+                                                   (_C_34 : ((_C_33 : 
+                                                             ((_C_32 : (
+                                                              (_C_31 : 
                                                               (n_9 -
                                                                 i)) :> int32)) -
                                                                (1 :> int32))) :> int32)))) :> int32)))) then 
-               {  (_C_31 : (__retres = (1 :> int32)));
+               {  (_C_30 : (__retres = (1 :> int32)));
                   
                   (goto return_label)
                } else ());
-               (if (_C_46 : (c_y >
-                              (_C_45 : ((_C_44 : (c_x +
-                                                   (_C_43 : ((_C_42 : 
-                                                             ((_C_41 : (
-                                                              (_C_40 : 
+               (if (_C_45 : (c_y >
+                              (_C_44 : ((_C_43 : (c_x +
+                                                   (_C_42 : ((_C_41 : 
+                                                             ((_C_40 : (
+                                                              (_C_39 : 
                                                               (n_9 -
                                                                 i)) :> int32)) -
                                                                (1 :> int32))) :> int32)))) :> int32)))) then 
-               {  (_C_39 : (__retres = (-1 :> int32)));
+               {  (_C_38 : (__retres = (-1 :> int32)));
                   
                   (goto return_label)
                } else ())
             };
-            (_C_49 : (i = (_C_48 : ((_C_47 : (i + (1 :> int32))) :> int32))))
+            (_C_48 : (i = (_C_47 : ((_C_46 : (i + (1 :> int32))) :> int32))))
          }
       });
       (while_0_break : ());
-      (_C_52 : (__retres = (_C_51 : ((_C_50 : (c_x - c_y)) :> int32))));
+      (_C_51 : (__retres = (_C_50 : ((_C_49 : (c_x - c_y)) :> int32))));
       (return_label : 
       (return __retres))
    }

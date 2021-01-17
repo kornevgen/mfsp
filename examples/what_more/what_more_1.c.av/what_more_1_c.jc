@@ -46,23 +46,23 @@ axiomatic Count {
   (_C_3 : (\forall intP[..] a_2;
             (\forall integer i_2;
               (\forall integer p_2;
-                (((((a_2 + i_2).intM :> integer) == p_2) ==>
-                   (count{L}(a_2, i_2, (i_2 + 1), p_2) == 1)) &&
-                  ((! (((a_2 + i_2).intM :> integer) == p_2)) ==>
-                    (count{L}(a_2, i_2, (i_2 + 1), p_2) == 0)))))))
+                (count{L}(a_2, i_2, (i_2 + 1), p_2) ==
+                  (if (((a_2 + i_2).intM :> integer) == p_2) then 1 else 0))))))
   
 }
 
 int32 what_more(intP[..] a, int32 n_9, int32 x, int32 y)
   requires ((_C_9 : (n_9 > (0 :> int32))) &&
-             (_C_10 : (\forall integer i_3;
-                        (((0 <= i_3) && (i_3 < (n_9 :> integer))) ==>
-                          \at((((\offset_min(\at(a,Here)) <= \at(i_3,Here)) &&
-                                 (\offset_max(\at(a,Here)) >= \at(i_3,Here))) &&
-                                (\forall integer __framac_tmp1;
-                                  (((\at(i_3,Here) <= __framac_tmp1) &&
-                                     (__framac_tmp1 <= \at(i_3,Here))) ==>
-                                    true))),Here)))));
+             (_C_10 : \at((if (\at(0,Here) <=
+                                \at(((n_9 :> integer) - 1),Here)) then 
+                          (((\offset_min(\at(a,Here)) <= \at(0,Here)) &&
+                             (\offset_max(\at(a,Here)) >=
+                               \at(((n_9 :> integer) - 1),Here))) &&
+                            (\forall integer __framac_tmp1;
+                              (((\at(0,Here) <= __framac_tmp1) &&
+                                 (__framac_tmp1 <=
+                                   \at(((n_9 :> integer) - 1),Here))) ==>
+                                true))) else true),Here)));
 behavior default:
   assigns a.intM;
   ensures (_C_4 : ((_C_5 : ((count{Here}(\at(a,Old), 0,

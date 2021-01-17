@@ -1684,10 +1684,10 @@ theory Axiomatic_Count
   int
   
   
-  axiom Base #"/home/debian/mfsp/examples/what_more/what_more_1.c" 3 68 162#
+  axiom Base #"/home/student/mfsp/examples/what_more/what_more_1.c" 3 68 174#
   "expl:Axiom base"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 6 8 75#
+   (#"/home/student/mfsp/examples/what_more/what_more_1.c" 6 8 87#
    (forall a_0_0 : (pointer intP).
     (forall i_0 : int.
      (forall j_0 : int.
@@ -1695,10 +1695,11 @@ theory Axiomatic_Count
        (((>=) i_0 j_0) ->
         ((=) (count a_0_0 i_0 j_0 p_0 intP_intM_a_2_at_L) (0)))))))))
   
-  axiom Split #"/home/debian/mfsp/examples/what_more/what_more_1.c" 6 76 214#
+  axiom Split
+  #"/home/student/mfsp/examples/what_more/what_more_1.c" 7 35 185#
   "expl:Axiom split"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 9 8 118#
+   (#"/home/student/mfsp/examples/what_more/what_more_1.c" 10 8 130#
    (forall a_1 : (pointer intP).
     (forall i_1 : int.
      (forall k_1 : int.
@@ -1709,20 +1710,17 @@ theory Axiomatic_Count
          (Int.(+) (count a_1 i_1 k_1 p_1 intP_intM_a_2_at_L)
          (count a_1 k_1 j_1 p_1 intP_intM_a_2_at_L)))))))))))
   
-  axiom One #"/home/debian/mfsp/examples/what_more/what_more_1.c" 9 119 283#
+  axiom One #"/home/student/mfsp/examples/what_more/what_more_1.c" 11 71 180#
   "expl:Axiom one"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 12 8 146#
+   (#"/home/student/mfsp/examples/what_more/what_more_1.c" 14 8 91#
    (forall a_2 : (pointer intP).
     (forall i_2 : int.
      (forall p_2 : int.
-      ((((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2)
-        ->
-        ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L) (1)))
-      /\
-      ((not
-       ((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2))
-       -> ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L) (0)))))))))
+      ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L)
+      (if
+       ((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2)
+       then (1) else (0))))))))
   
 end
 
@@ -7365,11 +7363,11 @@ module Function_what_more
            (not_assigns intP_a_3_alloc_table intP_a_3_alloc_table (old
            !intP_intM_a_3) !intP_intM_a_3 (pset_singleton a_0)))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          ((#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          ((#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
            "expl:Ensures clause"
            (((>)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
@@ -7379,9 +7377,9 @@ module Function_what_more
             (Int32.(>) result (#"what_more_1_c.jc" 74 40 52#
             "expl:Integer cast" (Int32.of_int (0))))))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          ((#"/home/debian/mfsp/examples/what_more/what_more_1.c" 22 12 67#
+          ((#"/home/student/mfsp/examples/what_more/what_more_1.c" 23 12 67#
            "expl:Ensures clause"
            (((=)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
@@ -7391,7 +7389,7 @@ module Function_what_more
             (Int32.(=) result (#"what_more_1_c.jc" 81 43 55#
             "expl:Integer cast" (Int32.of_int (0))))))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 23 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 24 12 65#
           "expl:Ensures clause"
           (((<)
            (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) !intP_intM_a_3)
@@ -7435,32 +7433,34 @@ module Function_what_more_safe
        (intP_a_3_alloc_table : (alloc_table intP)) : Int32.t
         requires {
           ("expl:External"
-          (#"what_more_1_c.jc" 57 12 582# "expl:Requires clause"
-          ((#"/home/debian/mfsp/examples/what_more/what_more_1.c" 18 13 18#
+          (#"what_more_1_c.jc" 55 12 671# "expl:Requires clause"
+          ((#"/home/student/mfsp/examples/what_more/what_more_1.c" 19 13 18#
            "expl:Requires clause"
-           (Int32.(>) n_9 (#"what_more_1_c.jc" 57 27 39# "expl:Integer cast"
+           (Int32.(>) n_9 (#"what_more_1_c.jc" 55 27 39# "expl:Integer cast"
            (Int32.of_int (0)))))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 19 13 60#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 20 13 37#
           "expl:Requires clause"
-          (forall i_3 : int.
-           ((((<=) (0) i_3) /\ ((<) i_3 (Int32.to_int n_9))) ->
-            (((<=) (offset_min intP_a_3_alloc_table a_0) i_3) /\
-            (((>=) (offset_max intP_a_3_alloc_table a_0) i_3) /\
-            (forall __framac_tmp1 : int.
-             ((((<=) i_3 __framac_tmp1) /\ ((<=) __framac_tmp1 i_3)) ->
-              ((=) true true))))))))))) }
+          (if ((<=) (0) (Int.(-) (Int32.to_int n_9) (1))) then
+           (((<=) (offset_min intP_a_3_alloc_table a_0) (0)) /\
+           (((>=) (offset_max intP_a_3_alloc_table a_0)
+            (Int.(-) (Int32.to_int n_9) (1)))
+           /\
+           (forall __framac_tmp1 : int.
+            ((((<=) (0) __framac_tmp1) /\
+             ((<=) __framac_tmp1 (Int.(-) (Int32.to_int n_9) (1)))) ->
+             ((=) true true))))) else ((=) true true)))))) }
         reads { intP_intM_a_3 } writes { intP_intM_a_3 }
         ensures {
           ((#"what_more_1_c.jc" 67 10 16# "expl:Assigns clause"
            (not_assigns intP_a_3_alloc_table intP_a_3_alloc_table (old
            !intP_intM_a_3) !intP_intM_a_3 (pset_singleton a_0)))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          ((#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          ((#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
            "expl:Ensures clause"
            (((>)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
@@ -7470,9 +7470,9 @@ module Function_what_more_safe
             (Int32.(>) result (#"what_more_1_c.jc" 74 40 52#
             "expl:Integer cast" (Int32.of_int (0))))))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 21 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 22 12 65#
           "expl:Ensures clause"
-          ((#"/home/debian/mfsp/examples/what_more/what_more_1.c" 22 12 67#
+          ((#"/home/student/mfsp/examples/what_more/what_more_1.c" 23 12 67#
            "expl:Ensures clause"
            (((=)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
@@ -7482,7 +7482,7 @@ module Function_what_more_safe
             (Int32.(=) result (#"what_more_1_c.jc" 81 43 55#
             "expl:Integer cast" (Int32.of_int (0))))))
           /\
-          (#"/home/debian/mfsp/examples/what_more/what_more_1.c" 23 12 65#
+          (#"/home/student/mfsp/examples/what_more/what_more_1.c" 24 12 65#
           "expl:Ensures clause"
           (((<)
            (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) !intP_intM_a_3)

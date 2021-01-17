@@ -1684,10 +1684,10 @@ theory Axiomatic_Count
   int
   
   
-  axiom Base #"/home/debian/mfsp/examples/what_more/what_more_3.c" 3 68 162#
+  axiom Base #"/home/student/mfsp/examples/what_more/what_more_3.c" 3 68 174#
   "expl:Axiom base"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 6 8 75#
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 6 8 87#
    (forall a_0_0 : (pointer intP).
     (forall i_0 : int.
      (forall j_0 : int.
@@ -1695,10 +1695,11 @@ theory Axiomatic_Count
        (((>=) i_0 j_0) ->
         ((=) (count a_0_0 i_0 j_0 p_0 intP_intM_a_2_at_L) (0)))))))))
   
-  axiom Split #"/home/debian/mfsp/examples/what_more/what_more_3.c" 6 76 214#
+  axiom Split
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 7 35 185#
   "expl:Axiom split"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 9 8 118#
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 10 8 130#
    (forall a_1 : (pointer intP).
     (forall i_1 : int.
      (forall k_1 : int.
@@ -1709,24 +1710,21 @@ theory Axiomatic_Count
          (Int.(+) (count a_1 i_1 k_1 p_1 intP_intM_a_2_at_L)
          (count a_1 k_1 j_1 p_1 intP_intM_a_2_at_L)))))))))))
   
-  axiom One #"/home/debian/mfsp/examples/what_more/what_more_3.c" 9 119 283#
+  axiom One #"/home/student/mfsp/examples/what_more/what_more_3.c" 11 71 180#
   "expl:Axiom one"  :
   (forall intP_intM_a_2_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 12 8 146#
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 14 8 91#
    (forall a_2 : (pointer intP).
     (forall i_2 : int.
      (forall p_2 : int.
-      ((((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2)
-        ->
-        ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L) (1)))
-      /\
-      ((not
-       ((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2))
-       -> ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L) (0)))))))))
+      ((=) (count a_2 i_2 (Int.(+) i_2 (1)) p_2 intP_intM_a_2_at_L)
+      (if
+       ((=) (Int32.to_int (select intP_intM_a_2_at_L (shift a_2 i_2))) p_2)
+       then (1) else (0))))))))
   
 end
 
-theory Lemma_max_count_value #"what_more_3_c.jc" 56 0 324#
+theory Lemma_max_count_value #"what_more_3_c.jc" 54 0 324#
 "expl:Lemma max_count_value"
 
   use import Root_intP 
@@ -1744,10 +1742,10 @@ theory Lemma_max_count_value #"what_more_3_c.jc" 56 0 324#
   use why3.Bool.Bool 
   
   lemma Max_count_value
-  #"/home/debian/mfsp/examples/what_more/what_more_3.c" 17 3 111#
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 18 3 111#
   "expl:Lemma max_count_value"  :
   (forall intP_intM_a_3_7_at_L : (memory intP Int32.t).
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 18 8 83#
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 19 8 83#
    (forall a_3 : (pointer intP).
     (forall i_3 : int.
      (forall j_2 : int.
@@ -1755,6 +1753,102 @@ theory Lemma_max_count_value #"what_more_3_c.jc" 56 0 324#
        (((<=) i_3 j_2) ->
         (((<=) (0) (count a_3 i_3 j_2 p_3 intP_intM_a_3_7_at_L)) /\
         ((<=) (count a_3 i_3 j_2 p_3 intP_intM_a_3_7_at_L) (Int.(-) j_2 i_3))))))))))
+  
+end
+
+theory Lemma_next1 #"what_more_3_c.jc" 63 0 273# "expl:Lemma next1"
+
+  use import Root_intP 
+  
+  use import core.Pointer 
+  
+  use import core.Memory 
+  
+  use enum.Int32 
+  
+  use import int.Int 
+  
+  use import Axiomatic_Count 
+  
+  use why3.Bool.Bool 
+  
+  lemma Next1
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 22 3 116#
+  "expl:Lemma next1"  :
+  (forall intP_intM_a_4_8_at_L : (memory intP Int32.t).
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 23 8 98#
+   (forall a_4 : (pointer intP).
+    (forall i_4 : int.
+     (forall x_0 : int.
+      (((=) (Int32.to_int (select intP_intM_a_4_8_at_L (shift a_4 i_4))) x_0)
+       ->
+       ((=) (Int.(+) (count a_4 (0) i_4 x_0 intP_intM_a_4_8_at_L) (1))
+       (count a_4 (0) (Int.(+) i_4 (1)) x_0 intP_intM_a_4_8_at_L))))))))
+  
+end
+
+theory Lemma_next2 #"what_more_3_c.jc" 71 0 279# "expl:Lemma next2"
+
+  use import Root_intP 
+  
+  use import core.Pointer 
+  
+  use import core.Memory 
+  
+  use enum.Int32 
+  
+  use import int.Int 
+  
+  use import Axiomatic_Count 
+  
+  use why3.Bool.Bool 
+  
+  lemma Next2
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 26 3 112#
+  "expl:Lemma next2"  :
+  (forall intP_intM_a_5_9_at_L : (memory intP Int32.t).
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 27 8 94#
+   (forall a_5 : (pointer intP).
+    (forall i_5 : int.
+     (forall x_0_0 : int.
+      ((not
+       ((=) (Int32.to_int (select intP_intM_a_5_9_at_L (shift a_5 i_5)))
+       x_0_0)) ->
+       ((=) (count a_5 (0) i_5 x_0_0 intP_intM_a_5_9_at_L)
+       (count a_5 (0) (Int.(+) i_5 (1)) x_0_0 intP_intM_a_5_9_at_L))))))))
+  
+end
+
+theory Lemma_next3 #"what_more_3_c.jc" 79 0 317# "expl:Lemma next3"
+
+  use import Root_intP 
+  
+  use import core.Pointer 
+  
+  use import core.Memory 
+  
+  use enum.Int32 
+  
+  use import int.Int 
+  
+  use import Axiomatic_Count 
+  
+  use why3.Bool.Bool 
+  
+  lemma Next3
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 30 3 137#
+  "expl:Lemma next3"  :
+  (forall intP_intM_a_6_10_at_L : (memory intP Int32.t).
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 31 8 119#
+   (forall a_6 : (pointer intP).
+    (forall i_6 : int.
+     (forall n_1 : int.
+      (forall x_1 : int.
+       ((=)
+       (Int.(-) (count a_6 (0) n_1 x_1 intP_intM_a_6_10_at_L)
+       (count a_6 (0) (Int.(+) i_6 (1)) x_1 intP_intM_a_6_10_at_L))
+       (count a_6 (0) (Int.(-) (Int.(-) n_1 i_6) (1)) x_1
+       intP_intM_a_6_10_at_L))))))))
   
 end
 
@@ -1893,7 +1987,7 @@ module Exceptions
 end
 
 module Function_what_more_safety
-#"/home/debian/mfsp/examples/what_more/what_more_3.c" 29 4 43#
+#"/home/student/mfsp/examples/what_more/what_more_3.c" 46 4 43#
 "expl:what_more, safety"
 
   use import core.Tag_table_type 
@@ -1928,10 +2022,16 @@ module Function_what_more_safety
   
   use why3.Bool.Bool 
   
+  use import Lemma_next3 
+  
+  use import Lemma_next2 
+  
+  use import Lemma_next1 
+  
   use import Lemma_max_count_value 
   
   let what_more
-  #"/home/debian/mfsp/examples/what_more/what_more_3.c" 29 4 43#
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 46 4 43#
   "expl:Function what_more, safety" =
   fun
    (a_0 : (pointer intP)) (n_9 : Int32.t) (x : Int32.t) (y : Int32.t)
@@ -1945,249 +2045,216 @@ module Function_what_more_safety
        ((<) i (offset_max intP_a_3_alloc_table a_0))) ->
        ((=) (typeof intP_a_3_tag_table (shift a_0 i)) intP_tag)))))
    /\
-   (#"what_more_3_c.jc" 66 12 583#
-   ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 22 13 18#
-    (Int32.(>) n_9 (#"what_more_3_c.jc" 66 28 40# "expl:Integer cast"
+   (#"what_more_3_c.jc" 89 12 672#
+   ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 39 13 18#
+    (Int32.(>) n_9 (#"what_more_3_c.jc" 89 28 40# "expl:Integer cast"
     (Int32.of_int (0)))))
    /\
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 23 13 60#
-   (forall i_4 : int.
-    ((((<=) (0) i_4) /\ ((<) i_4 (Int32.to_int n_9))) ->
-     (((<=) (offset_min intP_a_3_alloc_table a_0) i_4) /\
-     (((>=) (offset_max intP_a_3_alloc_table a_0) i_4) /\
-     (forall __framac_tmp1 : int.
-      ((((<=) i_4 __framac_tmp1) /\ ((<=) __framac_tmp1 i_4)) ->
-       ((=) true true))))))))))) } ensures { ("expl:Postcondition" true) } 
-   ->
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 40 13 37#
+   (if ((<=) (0) (Int.(-) (Int32.to_int n_9) (1))) then
+    (((<=) (offset_min intP_a_3_alloc_table a_0) (0)) /\
+    (((>=) (offset_max intP_a_3_alloc_table a_0)
+     (Int.(-) (Int32.to_int n_9) (1)))
+    /\
+    (forall __framac_tmp1 : int.
+     ((((<=) (0) __framac_tmp1) /\
+      ((<=) __framac_tmp1 (Int.(-) (Int32.to_int n_9) (1)))) ->
+      ((=) true true))))) else ((=) true true)))))) }
+   ensures { ("expl:Postcondition" true) }  ->
    'Init:
    (let return = ref (Safe_int32.any_  () ) in
    try
     begin
     (let c_x = ref (Safe_int32.any_  () ) in
     (let c_y = ref (Safe_int32.any_  () ) in
-    (let i_5 = ref (Safe_int32.any_  () ) in
+    (let i_7 = ref (Safe_int32.any_  () ) in
     (let __retres = ref (Safe_int32.any_  () ) in
     try
      begin
      try
       begin
       (if
-      (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 31 8 14#
+      (#"/home/student/mfsp/examples/what_more/what_more_3.c" 48 8 14#
       (Safe_int32.(=)  x y ))
       then
        begin
        (__retres :=
         (let _jessie_16 =
-        (#"what_more_3_c.jc" 107 29 41# "expl:Integer cast"
+        (#"what_more_3_c.jc" 132 29 41# "expl:Integer cast"
         (Safe_int32.of_int (0))) in
         begin
         (assert {
-        (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 32 8 17#
+        (#"/home/student/mfsp/examples/what_more/what_more_3.c" 49 8 17#
         "expl:Pointer index bounds" true) }); _jessie_16 end));
         (raise (Return_label_exc ())) end else ());
        begin
        (c_x :=
         (let _jessie_24 =
-        (#"what_more_3_c.jc" 111 21 33# "expl:Integer cast"
+        (#"what_more_3_c.jc" 136 22 34# "expl:Integer cast"
         (Safe_int32.of_int (0))) in
         begin
         (assert {
-        (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 35 8 11#
+        (#"/home/student/mfsp/examples/what_more/what_more_3.c" 52 8 11#
         "expl:Pointer index bounds" true) }); _jessie_24 end));
         begin
         (c_y :=
          (let _jessie_23 =
-         (#"what_more_3_c.jc" 112 21 33# "expl:Integer cast"
+         (#"what_more_3_c.jc" 137 22 34# "expl:Integer cast"
          (Safe_int32.of_int (0))) in
          begin
          (assert {
-         (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 35 17 20#
+         (#"/home/student/mfsp/examples/what_more/what_more_3.c" 52 17 20#
          "expl:Pointer index bounds" true) }); _jessie_23 end));
          begin
-         (i_5 :=
-          (let _jessie_17 =
-          (#"what_more_3_c.jc" 113 19 31# "expl:Integer cast"
+         (i_7 :=
+          (let _jessie_22 =
+          (#"what_more_3_c.jc" 138 20 32# "expl:Integer cast"
           (Safe_int32.of_int (0))) in
           begin
           (assert {
-          (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 43 9 14#
-          "expl:Pointer index bounds" true) }); _jessie_17 end));
+          (#"/home/student/mfsp/examples/what_more/what_more_3.c" 63 9 14#
+          "expl:Pointer index bounds" true) }); _jessie_22 end));
+          'LoopEntry:
+          begin
+          'LoopEntry:
           'Loop_2:
           loop
-          invariant { (#"what_more_3_c.jc" 115 6 7378# true) }
+          invariant { (#"what_more_3_c.jc" 140 6 3407# true) }
             variant {
-              (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 41 21 26#
-              (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_5))) }
+              (#"/home/student/mfsp/examples/what_more/what_more_3.c" 61 21 26#
+              (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_7))) }
            begin
            any unit
            requires { true } reads { a_0, n_9, x, y }
            ensures {
-             ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 40 23 47#
+             ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 60 23 71#
               ((=) (Int32.to_int !c_y)
-              (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int y)
-              intP_intM_a_3)))
+              (Int.(-)
+              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
+              intP_intM_a_3)
+              (count a_0 (0) (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_7))
+              (Int32.to_int y) intP_intM_a_3))))
              /\
-             ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 39 23 47#
+             ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 59 23 71#
               ((=) (Int32.to_int !c_x)
-              (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int x)
+              (Int.(-)
+              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
+              intP_intM_a_3)
+              (count a_0 (0) (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_7))
+              (Int32.to_int x) intP_intM_a_3))))
+             /\
+             ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 57 23 47#
+              ((=) (Int32.to_int !c_y)
+              (count a_0 (0) (Int32.to_int !i_7) (Int32.to_int y)
               intP_intM_a_3)))
              /\
-             (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 34#
-             (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 34#
-             ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 29#
-              (Int32.(<=) (#"what_more_3_c.jc" 117 38 50# "expl:Integer cast"
-              (Int32.of_int (0))) !i_5))
+             ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 56 23 47#
+              ((=) (Int32.to_int !c_x)
+              (count a_0 (0) (Int32.to_int !i_7) (Int32.to_int x)
+              intP_intM_a_3)))
              /\
-             (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 28 34#
-             (Int32.(<=) !i_5 n_9))))))) } ;
+             (#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 34#
+             (#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 34#
+             ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 29#
+              (Int32.(<=) (#"what_more_3_c.jc" 142 38 50# "expl:Integer cast"
+              (Int32.of_int (0))) !i_7))
+             /\
+             (#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 28 34#
+             (Int32.(<=) !i_7 n_9))))))))) } ;
             try
              begin
+             'LoopCurrent:
              begin
+             'LoopCurrent:
              (if
-             (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 43 16 21#
-             (Safe_int32.(<)  !i_5 n_9 )) then ()
+             (#"/home/student/mfsp/examples/what_more/what_more_3.c" 63 16 21#
+             (Safe_int32.(<)  !i_7 n_9 )) then ()
              else (raise (Goto_while_0_break_exc ())));
               begin
               (if
-              (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 44 12 21#
+              (#"/home/student/mfsp/examples/what_more/what_more_3.c" 64 12 21#
               (Safe_int32.(=) 
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 44 12 16#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 64 12 16#
                "expl:Pointer dereference"
                (acc_offset_typesafe  intP_a_3_alloc_table intP_intM_a_3 a_0
-                (Safe_int32.to_int  !i_5 ) )) x ))
+                (Safe_int32.to_int  !i_7 ) )) x ))
               then
                (c_x :=
-                (let _jessie_19 =
+                (let _jessie_18 =
                 (Safe_int32.(+)  !c_x
-                 (#"what_more_3_c.jc" 132 57 69# "expl:Integer cast"
+                 (#"what_more_3_c.jc" 173 57 69# "expl:Integer cast"
                  (Safe_int32.of_int (1))) ) in
                 begin
                 (assert {
-                (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 45 12 18#
-                "expl:Pointer index bounds" true) }); _jessie_19 end))
+                (#"/home/student/mfsp/examples/what_more/what_more_3.c" 65 12 18#
+                "expl:Pointer index bounds" true) }); _jessie_18 end))
               else
                (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 46 19 28#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 66 19 28#
                (Safe_int32.(=) 
-                (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 46 19 23#
+                (#"/home/student/mfsp/examples/what_more/what_more_3.c" 66 19 23#
                 "expl:Pointer dereference"
                 (acc_offset_typesafe  intP_a_3_alloc_table intP_intM_a_3 a_0
-                 (Safe_int32.to_int  !i_5 ) )) y ))
+                 (Safe_int32.to_int  !i_7 ) )) y ))
                then
                 (c_y :=
-                 (let _jessie_18 =
+                 (let _jessie_17 =
                  (Safe_int32.(+)  !c_y
-                  (#"what_more_3_c.jc" 134 57 69# "expl:Integer cast"
+                  (#"what_more_3_c.jc" 175 57 69# "expl:Integer cast"
                   (Safe_int32.of_int (1))) ) in
                  begin
                  (assert {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 47 12 18#
-                 "expl:Pointer index bounds" true) }); _jessie_18 end))
+                 (#"/home/student/mfsp/examples/what_more/what_more_3.c" 67 12 18#
+                 "expl:Pointer index bounds" true) }); _jessie_17 end))
                else ()));
-               begin
-               any unit
-               requires { true } reads { a_0, x }
-               ensures {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 49 19 83#
-                 ((=)
-                 (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int x) intP_intM_a_3)
-                 (Int.(+)
-                 (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int x)
-                 intP_intM_a_3)
-                 (count a_0 (Int32.to_int !i_5)
-                 (Int.(+) (Int32.to_int !i_5) (1)) (Int32.to_int x)
-                 intP_intM_a_3)))) } ; () end;
-               begin
-               any unit
-               requires { true } reads { a_0, y }
-               ensures {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 50 19 83#
-                 ((=)
-                 (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int y) intP_intM_a_3)
-                 (Int.(+)
-                 (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int y)
-                 intP_intM_a_3)
-                 (count a_0 (Int32.to_int !i_5)
-                 (Int.(+) (Int32.to_int !i_5) (1)) (Int32.to_int y)
-                 intP_intM_a_3)))) } ; () end;
-               begin
-               any unit
-               requires { true } reads { a_0, n_9, x }
-               ensures {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 51 19 85#
-                 ((=)
-                 (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
-                 intP_intM_a_3)
-                 (Int.(+)
-                 (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int x) intP_intM_a_3)
-                 (count a_0 (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)))) } ; ()
-               end;
-               begin
-               any unit
-               requires { true } reads { a_0, n_9, y }
-               ensures {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 52 19 85#
-                 ((=)
-                 (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
-                 intP_intM_a_3)
-                 (Int.(+)
-                 (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int y) intP_intM_a_3)
-                 (count a_0 (Int.(+) (Int32.to_int !i_5) (1))
-                 (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3)))) } ; ()
-               end;
                (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 53 12 35#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 69 12 35#
                (Safe_int32.(>)  !c_x
                 (Safe_int32.(+)  !c_y
-                 (Safe_int32.(-)  (Safe_int32.(-)  n_9 !i_5 )
-                  (#"what_more_3_c.jc" 218 63 75# "expl:Integer cast"
+                 (Safe_int32.(-)  (Safe_int32.(-)  n_9 !i_7 )
+                  (#"what_more_3_c.jc" 183 63 75# "expl:Integer cast"
+                  (Safe_int32.of_int (1))) ) ) ))
+               then
+                begin
+                (__retres :=
+                 (let _jessie_19 =
+                 (#"what_more_3_c.jc" 184 39 51# "expl:Integer cast"
+                 (Safe_int32.of_int (1))) in
+                 begin
+                 (assert {
+                 (#"/home/student/mfsp/examples/what_more/what_more_3.c" 69 37 46#
+                 "expl:Pointer index bounds" true) }); _jessie_19 end));
+                 (raise (Return_label_exc ())) end else ());
+               (if
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 70 12 35#
+               (Safe_int32.(>)  !c_y
+                (Safe_int32.(+)  !c_x
+                 (Safe_int32.(-)  (Safe_int32.(-)  n_9 !i_7 )
+                  (#"what_more_3_c.jc" 195 63 75# "expl:Integer cast"
                   (Safe_int32.of_int (1))) ) ) ))
                then
                 begin
                 (__retres :=
                  (let _jessie_20 =
-                 (#"what_more_3_c.jc" 219 39 51# "expl:Integer cast"
-                 (Safe_int32.of_int (1))) in
-                 begin
-                 (assert {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 53 37 46#
-                 "expl:Pointer index bounds" true) }); _jessie_20 end));
-                 (raise (Return_label_exc ())) end else ());
-               (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 54 12 35#
-               (Safe_int32.(>)  !c_y
-                (Safe_int32.(+)  !c_x
-                 (Safe_int32.(-)  (Safe_int32.(-)  n_9 !i_5 )
-                  (#"what_more_3_c.jc" 230 63 75# "expl:Integer cast"
-                  (Safe_int32.of_int (1))) ) ) ))
-               then
-                begin
-                (__retres :=
-                 (let _jessie_21 =
-                 (#"what_more_3_c.jc" 231 39 52# "expl:Integer cast"
+                 (#"what_more_3_c.jc" 196 39 52# "expl:Integer cast"
                  (Safe_int32.of_int  (Int.(-_)  (1) ) )) in
                  begin
                  (assert {
-                 (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 54 37 47#
-                 "expl:Pointer index bounds" true) }); _jessie_21 end));
+                 (#"/home/student/mfsp/examples/what_more/what_more_3.c" 70 37 47#
+                 "expl:Pointer index bounds" true) }); _jessie_20 end));
                  (raise (Return_label_exc ())) end else ()) end;
-              (i_5 :=
-               (let _jessie_22 =
-               (Safe_int32.(+)  !i_5
-                (#"what_more_3_c.jc" 236 50 62# "expl:Integer cast"
+              (i_7 :=
+               (let _jessie_21 =
+               (Safe_int32.(+)  !i_7
+                (#"what_more_3_c.jc" 201 50 62# "expl:Integer cast"
                 (Safe_int32.of_int (1))) ) in
                begin
                (assert {
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 43 23 26#
-               "expl:Pointer index bounds" true) }); _jessie_22 end)) end;
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 63 23 26#
+               "expl:Pointer index bounds" true) }); _jessie_21 end)) end;
               (raise (Loop_continue_exc ())) end with Loop_continue_exc
              _jessie_4 -> () end end end; (raise (Goto_while_0_break_exc ()))
-         end end end end with Goto_while_0_break_exc _jessie_1 ->
+          end end end end end with Goto_while_0_break_exc _jessie_1 ->
       'While_0_break:
       'While_0_break:
       begin
@@ -2196,7 +2263,7 @@ module Function_what_more_safety
         (let _jessie_25 = (Safe_int32.(-)  !c_x !c_y ) in
         begin
         (assert {
-        (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 57 4 21#
+        (#"/home/student/mfsp/examples/what_more/what_more_3.c" 73 4 21#
         "expl:Pointer index bounds" true) }); _jessie_25 end)) end end;
       (raise (Return_label_exc ())) end with Return_label_exc _jessie_2 ->
      'Return_label:
@@ -2206,14 +2273,14 @@ module Function_what_more_safety
       (let _jessie_26 = !__retres in
       begin
       (assert {
-      (#"what_more_3_c.jc" 242 7 22# "expl:Pointer index bounds" true) });
+      (#"what_more_3_c.jc" 207 7 22# "expl:Pointer index bounds" true) });
        _jessie_26 end)); (raise Return) end end)))); absurd  end with Return
     -> !return end)
   
 end
 
 module Function_what_more_behaviors
-#"/home/debian/mfsp/examples/what_more/what_more_3.c" 29 4 43#
+#"/home/student/mfsp/examples/what_more/what_more_3.c" 46 4 43#
 "expl:what_more, behaviors"
 
   use Unsafe_int32 
@@ -2250,10 +2317,16 @@ module Function_what_more_behaviors
   
   use why3.Bool.Bool 
   
+  use import Lemma_next3 
+  
+  use import Lemma_next2 
+  
+  use import Lemma_next1 
+  
   use import Lemma_max_count_value 
   
   let what_more_ensures_default
-  #"/home/debian/mfsp/examples/what_more/what_more_3.c" 29 4 43#
+  #"/home/student/mfsp/examples/what_more/what_more_3.c" 46 4 43#
   "expl:Function what_more, default behavior" =
   fun
    (a_0 : (pointer intP)) (n_9 : Int32.t) (x : Int32.t) (y : Int32.t)
@@ -2267,46 +2340,48 @@ module Function_what_more_behaviors
        ((<) i (offset_max intP_a_3_alloc_table a_0))) ->
        ((=) (typeof intP_a_3_tag_table (shift a_0 i)) intP_tag)))))
    /\
-   (#"what_more_3_c.jc" 66 12 583#
-   ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 22 13 18#
-    (Int32.(>) n_9 (#"what_more_3_c.jc" 66 28 40# "expl:Integer cast"
+   (#"what_more_3_c.jc" 89 12 672#
+   ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 39 13 18#
+    (Int32.(>) n_9 (#"what_more_3_c.jc" 89 28 40# "expl:Integer cast"
     (Int32.of_int (0)))))
    /\
-   (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 23 13 60#
-   (forall i_4 : int.
-    ((((<=) (0) i_4) /\ ((<) i_4 (Int32.to_int n_9))) ->
-     (((<=) (offset_min intP_a_3_alloc_table a_0) i_4) /\
-     (((>=) (offset_max intP_a_3_alloc_table a_0) i_4) /\
-     (forall __framac_tmp1 : int.
-      ((((<=) i_4 __framac_tmp1) /\ ((<=) __framac_tmp1 i_4)) ->
-       ((=) true true))))))))))) }
+   (#"/home/student/mfsp/examples/what_more/what_more_3.c" 40 13 37#
+   (if ((<=) (0) (Int.(-) (Int32.to_int n_9) (1))) then
+    (((<=) (offset_min intP_a_3_alloc_table a_0) (0)) /\
+    (((>=) (offset_max intP_a_3_alloc_table a_0)
+     (Int.(-) (Int32.to_int n_9) (1)))
+    /\
+    (forall __framac_tmp1 : int.
+     ((((<=) (0) __framac_tmp1) /\
+      ((<=) __framac_tmp1 (Int.(-) (Int32.to_int n_9) (1)))) ->
+      ((=) true true))))) else ((=) true true)))))) }
    ensures {
      ("expl:Postcondition"
-     (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+     (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
      "expl:Ensures clause"
-     (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+     (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
      "expl:Ensures clause"
-     ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+     ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
       "expl:Ensures clause"
       (((>) (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)
        (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3)) ->
-       (Int32.(>) result (#"what_more_3_c.jc" 82 42 54# "expl:Integer cast"
+       (Int32.(>) result (#"what_more_3_c.jc" 107 42 54# "expl:Integer cast"
        (Int32.of_int (0))))))
      /\
-     (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+     (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
      "expl:Ensures clause"
-     ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 26 12 67#
+     ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 43 12 67#
       "expl:Ensures clause"
       (((=) (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)
        (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3)) ->
-       (Int32.(=) result (#"what_more_3_c.jc" 89 45 57# "expl:Integer cast"
+       (Int32.(=) result (#"what_more_3_c.jc" 114 45 57# "expl:Integer cast"
        (Int32.of_int (0))))))
      /\
-     (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 27 12 65#
+     (#"/home/student/mfsp/examples/what_more/what_more_3.c" 44 12 65#
      "expl:Ensures clause"
      (((<) (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)
       (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3)) ->
-      (Int32.(<) result (#"what_more_3_c.jc" 96 45 57# "expl:Integer cast"
+      (Int32.(<) result (#"what_more_3_c.jc" 121 45 57# "expl:Integer cast"
       (Int32.of_int (0)))))))))))) } diverges  ->
    'Init:
    (let return = ref (Unsafe_int32.any_  () ) in
@@ -2314,170 +2389,140 @@ module Function_what_more_behaviors
     begin
     (let c_x = ref (Unsafe_int32.any_  () ) in
     (let c_y = ref (Unsafe_int32.any_  () ) in
-    (let i_5 = ref (Unsafe_int32.any_  () ) in
+    (let i_7 = ref (Unsafe_int32.any_  () ) in
     (let __retres = ref (Unsafe_int32.any_  () ) in
     try
      begin
      try
       begin
       (if
-      (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 31 8 14#
+      (#"/home/student/mfsp/examples/what_more/what_more_3.c" 48 8 14#
       (Unsafe_int32.(=)  x y ))
       then
        begin
        (__retres :=
-        (#"what_more_3_c.jc" 107 29 41# "expl:Integer cast"
+        (#"what_more_3_c.jc" 132 29 41# "expl:Integer cast"
         (Unsafe_int32.of_int (0)))); (raise (Return_label_exc ())) end
       else ());
        begin
        (c_x :=
-        (#"what_more_3_c.jc" 111 21 33# "expl:Integer cast"
+        (#"what_more_3_c.jc" 136 22 34# "expl:Integer cast"
         (Unsafe_int32.of_int (0))));
         begin
         (c_y :=
-         (#"what_more_3_c.jc" 112 21 33# "expl:Integer cast"
+         (#"what_more_3_c.jc" 137 22 34# "expl:Integer cast"
          (Unsafe_int32.of_int (0))));
          begin
-         (i_5 :=
-          (#"what_more_3_c.jc" 113 19 31# "expl:Integer cast"
+         (i_7 :=
+          (#"what_more_3_c.jc" 138 20 32# "expl:Integer cast"
           (Unsafe_int32.of_int (0))));
+          'LoopEntry:
+          begin
+          'LoopEntry:
           'Loop_1:
           loop
           invariant
-            { ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 34#
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 34#
-               ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 23 29#
-                (Int32.(<=) (#"what_more_3_c.jc" 117 38 50#
-                "expl:Integer cast" (Int32.of_int (0))) !i_5))
+            { ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 34#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 34#
+               ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 23 29#
+                (Int32.(<=) (#"what_more_3_c.jc" 142 38 50#
+                "expl:Integer cast" (Int32.of_int (0))) !i_7))
                /\
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 38 28 34#
-               (Int32.(<=) !i_5 n_9)))))
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 55 28 34#
+               (Int32.(<=) !i_7 n_9)))))
               &&
-              ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 39 23 47#
+              ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 56 23 47#
                ((=) (Int32.to_int !c_x)
-               (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int x)
+               (count a_0 (0) (Int32.to_int !i_7) (Int32.to_int x)
                intP_intM_a_3)))
               &&
-              (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 40 23 47#
+              ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 57 23 47#
+               ((=) (Int32.to_int !c_y)
+               (count a_0 (0) (Int32.to_int !i_7) (Int32.to_int y)
+               intP_intM_a_3)))
+              &&
+              ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 59 23 71#
+               ((=) (Int32.to_int !c_x)
+               (Int.(-)
+               (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
+               intP_intM_a_3)
+               (count a_0 (0)
+               (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_7))
+               (Int32.to_int x) intP_intM_a_3))))
+              &&
+              (#"/home/student/mfsp/examples/what_more/what_more_3.c" 60 23 71#
               ((=) (Int32.to_int !c_y)
-              (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int y)
-              intP_intM_a_3))))) } 
+              (Int.(-)
+              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
+              intP_intM_a_3)
+              (count a_0 (0) (Int.(-) (Int32.to_int n_9) (Int32.to_int !i_7))
+              (Int32.to_int y) intP_intM_a_3)))))))) } 
            begin
            any unit requires { true } ensures { true } ;
             try
              begin
+             'LoopCurrent:
              begin
+             'LoopCurrent:
              (if
-             (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 43 16 21#
-             (Unsafe_int32.(<)  !i_5 n_9 )) then ()
+             (#"/home/student/mfsp/examples/what_more/what_more_3.c" 63 16 21#
+             (Unsafe_int32.(<)  !i_7 n_9 )) then ()
              else (raise (Goto_while_0_break_exc ())));
               begin
               (if
-              (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 44 12 21#
+              (#"/home/student/mfsp/examples/what_more/what_more_3.c" 64 12 21#
               (Unsafe_int32.(=) 
                (acc  intP_intM_a_3
-                (shift_  a_0 (Unsafe_int32.to_int  !i_5 ) ) ) x ))
+                (shift_  a_0 (Unsafe_int32.to_int  !i_7 ) ) ) x ))
               then
                (c_x :=
                 (Unsafe_int32.(+)  !c_x
-                 (#"what_more_3_c.jc" 132 57 69# "expl:Integer cast"
+                 (#"what_more_3_c.jc" 173 57 69# "expl:Integer cast"
                  (Unsafe_int32.of_int (1))) ))
               else
                (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 46 19 28#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 66 19 28#
                (Unsafe_int32.(=) 
                 (acc  intP_intM_a_3
-                 (shift_  a_0 (Unsafe_int32.to_int  !i_5 ) ) ) y ))
+                 (shift_  a_0 (Unsafe_int32.to_int  !i_7 ) ) ) y ))
                then
                 (c_y :=
                  (Unsafe_int32.(+)  !c_y
-                  (#"what_more_3_c.jc" 134 57 69# "expl:Integer cast"
+                  (#"what_more_3_c.jc" 175 57 69# "expl:Integer cast"
                   (Unsafe_int32.of_int (1))) )) else ()));
-               begin
-               (assert {
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 49 19 83#
-               "expl:Assertion in line 49"
-               ((=)
-               (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int x) intP_intM_a_3)
-               (Int.(+)
-               (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int x)
-               intP_intM_a_3)
-               (count a_0 (Int32.to_int !i_5)
-               (Int.(+) (Int32.to_int !i_5) (1)) (Int32.to_int x)
-               intP_intM_a_3)))) }); () end;
-               begin
-               (assert {
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 50 19 83#
-               "expl:Assertion in line 50"
-               ((=)
-               (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int y) intP_intM_a_3)
-               (Int.(+)
-               (count a_0 (0) (Int32.to_int !i_5) (Int32.to_int y)
-               intP_intM_a_3)
-               (count a_0 (Int32.to_int !i_5)
-               (Int.(+) (Int32.to_int !i_5) (1)) (Int32.to_int y)
-               intP_intM_a_3)))) }); () end;
-               begin
-               (assert {
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 51 19 85#
-               "expl:Assertion in line 51"
-               ((=)
-               (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
-               intP_intM_a_3)
-               (Int.(+)
-               (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int x) intP_intM_a_3)
-               (count a_0 (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)))) }); ()
-               end;
-               begin
-               (assert {
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 52 19 85#
-               "expl:Assertion in line 52"
-               ((=)
-               (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
-               intP_intM_a_3)
-               (Int.(+)
-               (count a_0 (0) (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int y) intP_intM_a_3)
-               (count a_0 (Int.(+) (Int32.to_int !i_5) (1))
-               (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3)))) }); ()
-               end;
                (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 53 12 35#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 69 12 35#
                (Unsafe_int32.(>)  !c_x
                 (Unsafe_int32.(+)  !c_y
-                 (Unsafe_int32.(-)  (Unsafe_int32.(-)  n_9 !i_5 )
-                  (#"what_more_3_c.jc" 218 63 75# "expl:Integer cast"
+                 (Unsafe_int32.(-)  (Unsafe_int32.(-)  n_9 !i_7 )
+                  (#"what_more_3_c.jc" 183 63 75# "expl:Integer cast"
                   (Unsafe_int32.of_int (1))) ) ) ))
                then
                 begin
                 (__retres :=
-                 (#"what_more_3_c.jc" 219 39 51# "expl:Integer cast"
+                 (#"what_more_3_c.jc" 184 39 51# "expl:Integer cast"
                  (Unsafe_int32.of_int (1)))); (raise (Return_label_exc ()))
                 end else ());
                (if
-               (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 54 12 35#
+               (#"/home/student/mfsp/examples/what_more/what_more_3.c" 70 12 35#
                (Unsafe_int32.(>)  !c_y
                 (Unsafe_int32.(+)  !c_x
-                 (Unsafe_int32.(-)  (Unsafe_int32.(-)  n_9 !i_5 )
-                  (#"what_more_3_c.jc" 230 63 75# "expl:Integer cast"
+                 (Unsafe_int32.(-)  (Unsafe_int32.(-)  n_9 !i_7 )
+                  (#"what_more_3_c.jc" 195 63 75# "expl:Integer cast"
                   (Unsafe_int32.of_int (1))) ) ) ))
                then
                 begin
                 (__retres :=
-                 (#"what_more_3_c.jc" 231 39 52# "expl:Integer cast"
+                 (#"what_more_3_c.jc" 196 39 52# "expl:Integer cast"
                  (Unsafe_int32.of_int  (Int.(-_)  (1) ) )));
                  (raise (Return_label_exc ())) end else ()) end;
-              (i_5 :=
-               (Unsafe_int32.(+)  !i_5
-                (#"what_more_3_c.jc" 236 50 62# "expl:Integer cast"
+              (i_7 :=
+               (Unsafe_int32.(+)  !i_7
+                (#"what_more_3_c.jc" 201 50 62# "expl:Integer cast"
                 (Unsafe_int32.of_int (1))) )) end;
               (raise (Loop_continue_exc ())) end with Loop_continue_exc
              _jessie_4 -> () end end end; (raise (Goto_while_0_break_exc ()))
-         end end end end with Goto_while_0_break_exc _jessie_1 ->
+          end end end end end with Goto_while_0_break_exc _jessie_1 ->
       'While_0_break:
       'While_0_break:
       begin (); (__retres := (Unsafe_int32.(-)  !c_x !c_y )) end end;
@@ -7978,6 +8023,12 @@ module Function_what_more
   
   use why3.Bool.Bool 
   
+  use import Lemma_next3 
+  
+  use import Lemma_next2 
+  
+  use import Lemma_next1 
+  
   use import Lemma_max_count_value 
   
   val what_more
@@ -7990,39 +8041,39 @@ module Function_what_more
         (intP_intM_a_3 : (memory intP Int32.t)) : Int32.t
          requires { true }
          ensures {
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
             "expl:Ensures clause"
             (((>)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
              intP_intM_a_3)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
              intP_intM_a_3)) ->
-             (Int32.(>) result (#"what_more_3_c.jc" 82 42 54#
+             (Int32.(>) result (#"what_more_3_c.jc" 107 42 54#
              "expl:Integer cast" (Int32.of_int (0))))))
            /\
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 26 12 67#
+           ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 43 12 67#
             "expl:Ensures clause"
             (((=)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
              intP_intM_a_3)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
              intP_intM_a_3)) ->
-             (Int32.(=) result (#"what_more_3_c.jc" 89 45 57#
+             (Int32.(=) result (#"what_more_3_c.jc" 114 45 57#
              "expl:Integer cast" (Int32.of_int (0))))))
            /\
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 27 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 44 12 65#
            "expl:Ensures clause"
            (((<)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3))
             ->
-            (Int32.(<) result (#"what_more_3_c.jc" 96 45 57#
+            (Int32.(<) result (#"what_more_3_c.jc" 121 45 57#
             "expl:Integer cast" (Int32.of_int (0))))))))))) }
   
 end
@@ -8049,6 +8100,12 @@ module Function_what_more_safe
   
   use why3.Bool.Bool 
   
+  use import Lemma_next3 
+  
+  use import Lemma_next2 
+  
+  use import Lemma_next1 
+  
   use import Lemma_max_count_value 
   
   val what_more
@@ -8061,55 +8118,57 @@ module Function_what_more_safe
         (intP_intM_a_3 : (memory intP Int32.t)) : Int32.t
          requires {
            ("expl:Internal"
-           (#"what_more_3_c.jc" 66 12 583# "expl:Requires clause"
-           ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 22 13 18#
+           (#"what_more_3_c.jc" 89 12 672# "expl:Requires clause"
+           ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 39 13 18#
             "expl:Requires clause"
-            (Int32.(>) n_9 (#"what_more_3_c.jc" 66 28 40# "expl:Integer cast"
+            (Int32.(>) n_9 (#"what_more_3_c.jc" 89 28 40# "expl:Integer cast"
             (Int32.of_int (0)))))
            /\
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 23 13 60#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 40 13 37#
            "expl:Requires clause"
-           (forall i_4 : int.
-            ((((<=) (0) i_4) /\ ((<) i_4 (Int32.to_int n_9))) ->
-             (((<=) (offset_min intP_a_3_alloc_table a_0) i_4) /\
-             (((>=) (offset_max intP_a_3_alloc_table a_0) i_4) /\
-             (forall __framac_tmp1 : int.
-              ((((<=) i_4 __framac_tmp1) /\ ((<=) __framac_tmp1 i_4)) ->
-               ((=) true true))))))))))) }
+           (if ((<=) (0) (Int.(-) (Int32.to_int n_9) (1))) then
+            (((<=) (offset_min intP_a_3_alloc_table a_0) (0)) /\
+            (((>=) (offset_max intP_a_3_alloc_table a_0)
+             (Int.(-) (Int32.to_int n_9) (1)))
+            /\
+            (forall __framac_tmp1 : int.
+             ((((<=) (0) __framac_tmp1) /\
+              ((<=) __framac_tmp1 (Int.(-) (Int32.to_int n_9) (1)))) ->
+              ((=) true true))))) else ((=) true true)))))) }
          ensures {
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
             "expl:Ensures clause"
             (((>)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
              intP_intM_a_3)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
              intP_intM_a_3)) ->
-             (Int32.(>) result (#"what_more_3_c.jc" 82 42 54#
+             (Int32.(>) result (#"what_more_3_c.jc" 107 42 54#
              "expl:Integer cast" (Int32.of_int (0))))))
            /\
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 25 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 42 12 65#
            "expl:Ensures clause"
-           ((#"/home/debian/mfsp/examples/what_more/what_more_3.c" 26 12 67#
+           ((#"/home/student/mfsp/examples/what_more/what_more_3.c" 43 12 67#
             "expl:Ensures clause"
             (((=)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x)
              intP_intM_a_3)
              (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y)
              intP_intM_a_3)) ->
-             (Int32.(=) result (#"what_more_3_c.jc" 89 45 57#
+             (Int32.(=) result (#"what_more_3_c.jc" 114 45 57#
              "expl:Integer cast" (Int32.of_int (0))))))
            /\
-           (#"/home/debian/mfsp/examples/what_more/what_more_3.c" 27 12 65#
+           (#"/home/student/mfsp/examples/what_more/what_more_3.c" 44 12 65#
            "expl:Ensures clause"
            (((<)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int x) intP_intM_a_3)
             (count a_0 (0) (Int32.to_int n_9) (Int32.to_int y) intP_intM_a_3))
             ->
-            (Int32.(<) result (#"what_more_3_c.jc" 96 45 57#
+            (Int32.(<) result (#"what_more_3_c.jc" 121 45 57#
             "expl:Integer cast" (Int32.of_int (0))))))))))) }
   
 end

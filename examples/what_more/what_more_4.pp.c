@@ -8,17 +8,13 @@
 
     // trigger: count(a, i, k, p) + count(a, k, j, p)
     axiom split:
-        \forall int *a, integer i, k, j, p; i <= k <= j ==> count(a, i, j, p) == count(a, i, k, p) + count(a, k, j, p);
+        \forall int *a, integer i, k, j, p; i <= k <= j ==>
+            count(a, i, j, p) == count(a, i, k, p) + count(a, k, j, p);
 
     // trigger: count(a, i, i + 1, p)
-    axiom one_0:
+    axiom one:
         \forall int *a, integer i, int p;
-            a[i] == p ==> count(a, i, i+1, p) == 1;
-
-    // trigger: count(a, i, i + 1, p)
-    axiom one_1:
-        \forall int *a, integer i, int p;
-            a[i] != p ==> count(a, i, i+1, p) == 0;
+            count(a, i, i+1, p) == (a[i] == p ? 1 : 0);
 }*/
 
 // trigger: count(a, i, j, p)
@@ -32,6 +28,9 @@
         \forall int *a, integer i, j, p; 0 <= i && 0 <= j ==>
             count(a, 0, i + j, p) == count(a, 0, i, p) + count(a, i, i + j, p);*/
 // */
+
+// Another proof with lemmas.
+// But lemma max_count_values can't be proved by a SMT-solver.
 
 /*@
     requires n > 0;

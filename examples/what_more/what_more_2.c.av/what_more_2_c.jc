@@ -46,23 +46,23 @@ axiomatic Count {
   (_C_3 : (\forall intP[..] a_2;
             (\forall integer i_2;
               (\forall integer p_2;
-                (((((a_2 + i_2).intM :> integer) == p_2) ==>
-                   (count{L}(a_2, i_2, (i_2 + 1), p_2) == 1)) &&
-                  ((! (((a_2 + i_2).intM :> integer) == p_2)) ==>
-                    (count{L}(a_2, i_2, (i_2 + 1), p_2) == 0)))))))
+                (count{L}(a_2, i_2, (i_2 + 1), p_2) ==
+                  (if (((a_2 + i_2).intM :> integer) == p_2) then 1 else 0))))))
   
 }
 
 int32 what_more(intP[..] a, int32 n_9, int32 x, int32 y)
   requires ((_C_55 : (n_9 > (0 :> int32))) &&
-             (_C_56 : (\forall integer i_3;
-                        (((0 <= i_3) && (i_3 < (n_9 :> integer))) ==>
-                          \at((((\offset_min(\at(a,Here)) <= \at(i_3,Here)) &&
-                                 (\offset_max(\at(a,Here)) >= \at(i_3,Here))) &&
-                                (\forall integer __framac_tmp1;
-                                  (((\at(i_3,Here) <= __framac_tmp1) &&
-                                     (__framac_tmp1 <= \at(i_3,Here))) ==>
-                                    true))),Here)))));
+             (_C_56 : \at((if (\at(0,Here) <=
+                                \at(((n_9 :> integer) - 1),Here)) then 
+                          (((\offset_min(\at(a,Here)) <= \at(0,Here)) &&
+                             (\offset_max(\at(a,Here)) >=
+                               \at(((n_9 :> integer) - 1),Here))) &&
+                            (\forall integer __framac_tmp1;
+                              (((\at(0,Here) <= __framac_tmp1) &&
+                                 (__framac_tmp1 <=
+                                   \at(((n_9 :> integer) - 1),Here))) ==>
+                                true))) else true),Here)));
 behavior default:
   ensures (_C_50 : ((_C_51 : ((count{Here}(\at(a,Old), 0,
                                            (\at(n_9,Old) :> integer),
@@ -102,7 +102,7 @@ behavior default:
       (_C_6 : (c_x = (0 :> int32)));
       (_C_7 : (c_y = (0 :> int32)));
       (_C_8 : (i = (0 :> int32)));
-      
+      (LoopEntry : 
       loop 
       behavior default:
         invariant (_C_12 : ((_C_13 : ((0 :> int32) <= i)) &&
@@ -116,8 +116,8 @@ behavior default:
       variant (_C_9 : ((n_9 :> integer) - (i :> integer)));
       while (true)
       {  
-         {  (if (_C_15 : (i < n_9)) then () else 
-            (goto while_0_break));
+         {  (LoopCurrent : (if (_C_15 : (i < n_9)) then () else 
+                           (goto while_0_break)));
             
             {  (if (_C_27 : ((_C_26 : (_C_25 : (a + i)).intM) == x)) then 
                (_C_24 : (c_x = (_C_23 : ((_C_22 : (c_x + (1 :> int32))) :> int32)))) else 
@@ -150,7 +150,7 @@ behavior default:
             };
             (_C_46 : (i = (_C_45 : ((_C_44 : (i + (1 :> int32))) :> int32))))
          }
-      };
+      });
       (while_0_break : ());
       (_C_49 : (__retres = (_C_48 : ((_C_47 : (c_x - c_y)) :> int32))));
       (return_label : 
