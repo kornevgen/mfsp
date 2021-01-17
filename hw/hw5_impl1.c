@@ -22,8 +22,8 @@ int defragment(int *a, int n, int *from, int *to)
         return 0;
     }
     i -= 2;
-    if (to) *to = f;
-    if (from) *from = i;
+    *to = f;
+    *from = i;
     int r = (a[f] = a[i]);
     a[i] = 0;
     return r;
