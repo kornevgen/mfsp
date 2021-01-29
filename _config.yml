@@ -1,6 +1,2 @@
 # theme: jekyll-theme-minimal
-
-#plugins:
-#  - jekyll-remote-theme
-
-remote_theme: poole/lanyon
+remote_theme: barryclark/jekyll-now
