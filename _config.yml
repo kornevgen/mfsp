@@ -1,3 +1,7 @@
 # theme: jekyll-theme-minimal
-# remote_theme: barryclark/jekyll-now
 remote_theme: jekyll/minima
+
+title: Формальная спецификация Си-программ 
+
+header_pages:
+  - Ejudge: "https://ejudge.cs.msu.ru/ej/client?contest_id=156"
