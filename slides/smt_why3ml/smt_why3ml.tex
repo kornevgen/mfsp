@@ -1,0 +1,193 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 7. WhyML, автоматизация построения условий верификации}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Познакомиться с языком WhyML и
+    научиться использовать его для
+    автоматизации дедуктивной верификации.
+    \end{frame}
+
+    \section{Основные конструкции WhyML}
+
+    \begin{frame}{Общая характеристика}
+    \begin{itemize}
+    \item
+    Инфраструктура Why3 умеет генерировать
+    условия верификации (\texttt{why3 ide file}).
+    \item
+    \textsl{WhyML} -- функциональный язык
+    со средствами формальной спецификации и
+    дедуктивной верификации.
+    \item
+    Обычно выполняет роль промежуточного языка
+    между языком программирования и средствами
+    верификации.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Типы данных}
+    \begin{itemize}
+    \item
+    Целые числа: \texttt{use import int.Int}
+    \item
+    Пустой тип \texttt{unit}
+    \item
+    Структуры, поля которых можно делать изменяемыми --
+    единственный способ реализовать переменные и операцию
+    присваивания \texttt{type S = \{ mutable v: T \}}
+    \item
+    Поле структуры -- это еще и функция, поэтому его имя
+    входит в глобальную область видимости
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Операции и выражения}
+    \begin{itemize}
+    \item
+    Любое вычисление -- это выражение
+    \item
+    \texttt{e1 ; e2 } -- последовательность вычислений выражений
+    \item
+    \texttt{s.v <- e } -- присваивание в изменяемое поле
+    \texttt{v} структуры \texttt{s}
+    \item
+    \texttt{()} -- пустое вычисление (выражение типа \texttt{unit})
+    \item
+    \texttt{\{v = 3\}} -- новое значение типа структуры, у которого
+    есть поле \texttt{v} (такой тип единственный)
+    \item
+    условие \texttt{if-then-else}, циклы \texttt{while, for}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Функции и локальные переменные}
+    \begin{itemize}
+    \item
+    Локальная переменная: \texttt{let var = ... in ... }
+    \item
+    Неанонимная функция:
+    \texttt{let function (arguments) : returntype = expr}
+    \item
+    Можно указать только заголовок функции, тогда вместо \texttt{let}
+    надо написать \texttt{val}. Заголовок заканчивается перед
+    символом равно.
+    \item
+    Если эта функция нужна только для доказательства, после \texttt{let}
+    надо написать \texttt{ghost}
+    \item
+    Если нужна рекурсия, то надо приписать после \texttt{let}
+    слово \texttt{rec}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Запись спецификации}
+    \begin{itemize}
+    \item
+    Предусловие и постусловие пишется
+    между заголовком функции и символом равно.
+    \item
+    Предусловие состоит из 1 или более
+    конструкций \texttt{requires \{...\} }
+    \item
+    Постусловие состоит из 1 или более
+    конструкций \texttt{ensures \{...\} }
+    \item
+    Возвращаемое значение записывается как \texttt{result}.
+    \item
+    Несколько requires означает их конъюнкцию. Аналогично с ensures.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Методы Флойда}
+    \begin{itemize}
+    \item
+    Точки сечения выбраны жестко: перед проверкой
+    условий циклов
+    \item
+    Индуктивное утверждение записывается так: \texttt{invariant \{...\}}
+    и пишется после слова \texttt{do}, если речь о цикле \texttt{while}
+    \item
+    Несколько \texttt{invariant} возможно, это означает их конъюнкцию
+    \item
+    Фундированно множество выбрано жестко: целые числа и сравнение меньше
+    \item
+    Оценочная функция цикла записывается так: \texttt{variant \{...\}}
+    и пишется там же, где \texttt{invariant}.
+    \item
+    Оценочная функция рекурсии записывается так же, но после предусловия.
+    \end{itemize}
+    \end{frame}
+
+    \section{Дополнительные конструкции}
+
+    \begin{frame}{Доказательство примера}
+    \begin{itemize}
+    \item
+    Перепишите блок-схему вычисления квадратного корня в виде функции
+    на языке \textsl{WhyML}. Напишите спецификацию и всё необходимое
+    для методов Флойда.
+    \item
+    Завершите доказательство полной корректности: укажите недостающие
+    леммы, докажите леммы по индукции или через последовательность
+    других лемм, используйте вместо лемм вызов ghost-функции.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{assert}
+    \begin{itemize}
+    \item
+    Вместо написания отдельной ghost-функции с пустым телом для
+    доказательства некоторого утверждения удобнее воспользоваться
+    конструкцией assert и не писать эту функцию.
+    \item
+    Синтаксис такой: \texttt{assert \{ condition \}}
+    \item
+    Это аналогично ghost-функции с пустым телом и постусловием
+    \texttt{condition}. Предусловие собрано из всех условий, которые
+    находятся перед assert.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{ghost-переменные}
+    \begin{itemize}
+    \item
+    Если надо доказывать много утверждений про квантор существования,
+    может быть проще завести переменную только для целей доказательства
+    и нужным образом ее инициализировать или даже изменять прямо
+    в функции. Такие переменные называются ghost-переменными.
+    \item
+    Синтаксис такой: \texttt{let ghost var = ... in ...}
+    \end{itemize}
+    \end{frame}
+
+\end{document}

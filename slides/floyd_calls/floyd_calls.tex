@@ -1,0 +1,379 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 4. Методы Флойда для блок-схем с вызовами других блок-схем}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Добавить в блок-схемы возможность вызвать
+    другую блок-схему как подпрограмму.
+    Определить методы Флойда для таких блок-схем.
+    \end{frame}
+
+    \section{Синтаксис и семантика}
+
+    \begin{frame}{Подпрограммы в языках программирования}
+    \begin{itemize}
+    \item подпрограмма -- это модуль (белый ящик, черный ящик),
+            заголовок, прототип, сигнатура, интерфейс и реализация
+    \item процедурная абстракция -- годится любая реализация
+            вызываемой подпрограммы
+            из определенного множества реализаций
+    \item формальные и фактические параметры
+    \item способы передачи параметров в функцию (по значению,
+            по ссылке, по имени)
+    \item требуется этап сборки программы из подпрограмм
+    \end{itemize}
+    \end{frame}
+
+	\begin{frame}[fragile]{Пример блок-схемы}
+
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=2, texlbl="$\begin{matrix}START:\\(y_1,~y_2) \leftarrow (0,~0)\end{matrix}$"];
+        COND[style=rounded, width=2.5, texlbl="$x_1 \geq 0$"];
+		CALL1[width=4, texlbl="$\begin{matrix}CALL:\\(y_1,~y_2) \leftarrow DIV(x_1,~x_2)\end{matrix}$"];
+		CALL2[width=4, texlbl="$\begin{matrix}CALL:\\(y_1,~y_2) \leftarrow DIV(-x_1,~x_2)\end{matrix}$"];
+		ASSIGN[width=4, texlbl="$(y_1,~y_2) \leftarrow (-y_1-1,~x_2 - y_2)$"];
+        HALT[style=rounded, width=4, texlbl="$\begin{matrix}HALT:\\(z_1,~z_2) \leftarrow (y_1,~y_2)\end{matrix}$"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> COND [weight=8];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> CALL1 [weight=8];
+		p4 -> CALL2 [weight=8];
+		{ rank=same; CALL1; CALL2; }
+		CALL1 -> HALT [weight=8];
+		CALL2 -> ASSIGN [weight=8];
+		{ rank=same; rankdir="RL"; HALT -> ASSIGN; }
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $D_{x_1} = D_{x_2} = D_{y_1} = D_{y_2} = D_{z_1} = D_{z_2} = \mathbb{Z}$.
+    Как определить функцию, вычисляемую этой блок-схемой?
+	\end{frame}
+
+    \begin{frame}{Синтаксис и семантика}
+    \begin{itemize}
+    \item синтаксис: сигнатура блок-схемы, домены ее входных переменных и
+            домены ее выходных переменных
+    \item пример: сигнатура $DIV$ с
+          доменом входных переменных $\mathbb{Z} \times \mathbb{Z}$ и
+          доменом выходных переменных $\mathbb{Z} \times \mathbb{Z}$
+    \item вычисление требует предъявления блок-схемы, подходящей под сигнатуру
+    \item т.е. функция, вычисляемая блок-схемой, \emph{зависит}
+          от функции, вычисляемой вызываемыми блок-схемами
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример функции, вычисляемой блок-схемой}
+    \begin{table}[]
+    \begin{tabular}{|c|c|}
+    \hline
+    $M[DIV](a_1,~a_2) =$ & $M[P](x_1,~x_2) =$ \\
+    \hline
+    $(0,~0)$
+    &
+    $\begin{cases}
+            (0,~0) &, x_1 \geq 0 \\
+            (-1,~x_2) &, x_1 < 0\end{cases}$\\
+    \hline
+    $\begin{cases}
+            (0,~0) &, a_1 \geq 0 \\
+            (-1,~a_2) &, a_1 < 0\end{cases}$
+    &
+    $\begin{cases}
+            (0,~0) &, x_1 \geq 0 \\
+            (-1,~x_2) &, x_1 < 0\end{cases}$ \\
+    \hline
+    $\begin{cases}
+            \omega &, a_1 \geq 0 \\
+            (0, 0) &, a_1 < 0 \\ \end{cases}$
+    &
+    $\omega$ \\
+    \hline
+    $\begin{cases}
+            (a_1~/~a_2,~a_1~\%~a_2) &, a_1 \geq 0 \land a_2 > 0 \\
+            \omega &, \mbox{иначе}\end{cases}$
+    &
+    ?\\ \hline
+    \end{tabular}
+    \end{table}
+    \end{frame}
+
+    \begin{frame}{Модель требований для блок-схем с вызовами}
+    не требует изменений по сравнению с блок-схемами без вызовов
+    \end{frame}
+
+    \section{Полная корректность для нерекурсивного случая}
+
+    \begin{frame}{Соотношения корректности: рекурсии пока нет}
+    \begin{itemize}
+    \item Хотим модульности -- доказательство корректности не надо
+    переделывать при смене вызываемой блок-схемы, если она из
+    <<нужного>> множества.
+    \item Множество блок-схем, полностью корректных относительно
+          некоторой спецификации, вот пример <<нужного>> множества
+    \item Можно задать это множество при помощи пары предикатов --
+            предусловия и постусловия (спецификации сигнатуры)
+    \item Блок-схема с вызовами полностью корректна относительно
+            своей спецификации и спецификаций сигнатур, если
+            для всех блок-схем, полностью корректных относительно
+            спецификаций сигнатур, ... (далее определение полной
+                    корректности для блок-схем без вызовов)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы для полной корректности}
+    \begin{itemize}
+    \item Смотрим на наш пример с DIV. Пусть $(\varphi_D,~\psi_D)$ --
+        спецификация, сопоставленная сигнатуре DIV.
+    \item Полная корректность = частичная корректность + завершаемость
+    \item Завершаемость: если CALL с сигнатурой DIV зацикливается,
+                то зацикливается и Р. Пробуем выразить определение
+                полной корректности (завершаемости) без квантора по
+                функциям, вычисляемым блок-схемами, которые сопоставлены DIV.
+    \item Какова <<самая зацикливающаяся>> блок-схема, полностью
+            корректная относительно $(\varphi_D,~\psi_D)$? Та, которая
+            зацикливается на всех входах, где ложно $\varphi_D$, и
+            завершается на всех входах, где истинно $\varphi_D$.
+    \item Значит, Р завершается тогда, когда завершается DIV, т.е.
+            входы DIV удовлетворяют $\varphi_D$.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы для полной корректности}
+    \begin{itemize}
+    \item Частичная корректность: если DIV завершилась, то ее выходные
+            переменные удовлетворяют постусловию $\psi_D$. Надо доказать,
+            что при всех таких значениях переменных вычисления будут
+            приводить к HALT в блок-схеме Р с теми переменными, которые
+            удовлетворяют постусловию $\psi$.
+    \item Квантор по функциям, вычисляемым блок-схемами, которые
+            сопоставлены DIV, превращается в квантор по разным значениям
+            выходных переменных DIV, удовлетворяющих постусловию $\psi_D$.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы в примере}
+    Получаются следующие формулы для доказательства полной корректности
+    примера:
+
+    \begin{itemize}
+    \item завершаемость вызова DIV (путь START-T):
+        $\forall x_1, x_2 \in \mathbb{Z} \cdot
+                \varphi(x_1,~x_2) \land x_1 \geq 0
+                \Rightarrow \varphi_D(x_1,~x_2)$
+    \item завершаемость вызова DIV (путь START-F):
+        $\forall x_1, x_2 \in \mathbb{Z} \cdot
+                \varphi(x_1,~x_2) \land x_1 < 0
+                \Rightarrow \varphi_D(-x_1,~x_2)$
+    \item частичная корректность на пути (START-T-HALT):
+        $\forall x_1, x_2 \in \mathbb{Z} \forall r_1, r_2 \in \mathbb{Z} \cdot
+                \varphi(x_1,~x_2) \land x_1 \geq 0 \land
+                \psi_D(x_1,~x_2,~r_1,~r_2)
+                \Rightarrow \psi(x_1,~x_2,~r_1,~r_2)$
+    \item частичная корректность на пути (START-F-HALT):
+        $\forall x_1, x_2 \in \mathbb{Z} \forall r_1, r_2 \in \mathbb{Z} \cdot
+                \varphi(x_1,~x_2) \land x_1 < 0 \land
+                \psi_D(-x_1,~x_2,~r_1,~r_2)
+                \Rightarrow \psi(x_1,~x_2,~-r_1-1,~x_2 - r_2)$
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы для блок-схем с циклами и вызовами}
+    Составляем формулы по тому же принципу, но отсчитываем
+    базовые пути не только от START, но и от каждой точки сечения.
+    \end{frame}
+
+    \section{Полная корректность для рекурсии}
+
+    \begin{frame}{Рекурсия}
+    \begin{itemize}
+    \item Определение полной корректности такое же, как и для блок-схем
+            без вызовов (не требуется выбирать <<нужное>> множество).
+    \item Доказываем полную корректность по индукции по глубине рекурсии.
+    \item Базовый случай: глубина рекурсии равна 0 (выход из рекурсии).
+    \item Индуктивный переход: считаем, что доказали полную корректность
+    на тех значениях входных переменных, которые приводят к глубине рекурсии
+    не больше $n$. Тогда если все вызовы блок-схем такие, то можно
+    сделать индуктивный переход -- доказать полную корректность
+    для множества значений входных переменных, приводящих к глубине рекурсии
+    $n + 1$.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Завершаемость индукции}
+    \begin{itemize}
+    \item Надо доказать, что все рекурсивные вызовы приводят к
+            меньшей глубине рекурсии.
+    \item Можно формализовать это правило при помощи фундированного множества
+            и оценочной функции.
+    \item Оценочная функция сопоставляется блок-схеме. Ее область определения
+            -- входной домен блок-схемы. Ее область значений -- фундированное
+            множество.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы завершаемости}
+    \begin{itemize}
+    \item Надо доказать фундированность множества.
+    \item Надо доказать, что при всяком вызове блок-схемы
+            с входными переменными, удовлетворяющими предусловию,
+            значение оценочной функции принадлежит фундированному множеству.
+    \item Надо доказать, что при всяком базовом пути, приводящем к
+            рекурсивному вызову, оценочная функция на входных переменных
+            вызываемой блок-схемы меньше оценочной функции на входных
+            переменных вызывающей блок-схемы.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формулы полной корректности}
+    \begin{itemize}
+    \item Как только доказана завершаемость индукции, ее можно применять
+    для доказательства частичной корректности и завершаемости блок-схемы.
+    \item Применяем формулы для доказательства полной корректности
+        для нерекурсивного случая, сопоставив вызываемым блок-схемам
+        спецификацию вызывающей блок-схемы.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример}
+    Вычисление частного и остатка при делении
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=1];
+		START[style=rounded, width=2, texlbl="$\begin{matrix}START:\\(y_1,~y_2) \leftarrow (0,~0)\end{matrix}$"];
+        COND[style=rounded, width=2.5, texlbl="$x_1 < x_2$"];
+		HALT1[style=rounded, width=4, texlbl="$\begin{matrix}HALT:\\(z_1,~z_2) \leftarrow (0,~x_1)\end{matrix}$"];
+		CALL[width=4, texlbl="$\begin{matrix}CALL:\\(y_1,~y_2) \leftarrow P(x_1-x_2,~x_2)\end{matrix}$"];
+        HALT2[style=rounded, width=4, texlbl="$\begin{matrix}HALT:\\(z_1,~z_2) \leftarrow (y_1+1,~y_2)\end{matrix}$"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> COND [weight=8];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none]; COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> HALT1 [weight=8];
+		p4 -> CALL [weight=8];
+		{ rank=same; HALT1; CALL; }
+		CALL -> HALT2 [weight=8];
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $D_{x_1} = D_{x_2} = D_{y_1} = D_{y_2} = D_{z_1} = D_{z_2} = \mathbb{Z}$.
+	    \end{frame}
+% появится ли где-то, что <<нужное>> множество должно быть непусто?
+
+    \begin{frame}{Пример::схема доказательства}
+    \begin{enumerate}
+    \item
+    Надо доказать полную корректность блок-схемы Р относительно
+    спецификации: $\varphi(x_1,~x_2) = x_1 \geq 0 \land x_2 > 0$,
+    $\psi(x_1,~x_2,~z_1,~z_2) = (x_1 = z_1 * x_2 + z_2 \land 0 \leq z_2 < x_2)$.
+
+    \item
+    Доказываем возможность индукции по глубине рекурсии:
+    берем фундированное множество $(\{0, 1, 2, ...\}, <)$. Его фундированность
+    была доказана ранее. Берем оценочную функцию $u(x_1,~x_2) = x_1$.
+
+    \item
+    Составляем условия верификации.
+    \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Пример::условия верификации}
+    \begin{itemize}
+    \item корректность оценочной функции:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2)
+            \Rightarrow
+            u(x_1,~x_2) \geq 0$
+    \item завершаемость индукции:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2) \land x_1 \geq x_2
+            \Rightarrow
+            \varphi(x_1 - x_2,~x_2)$
+    \item частичная корректность (путь START-T-HALT):
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2) \land x_1 < x_2
+            \Rightarrow
+            \psi(x_1,~x_2,~0,~x_1)$
+    \item частичная корректность (путь START-F-HALT):
+            $\forall x_1,~x_2,~y_1,~y_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2) \land x_1 \geq x_2 \land
+            \psi(x_1 - x_2,~x_2,~y_1,~y_2)
+            \Rightarrow
+            \psi(x_1,~x_2,~y_1 + 1,~y_2)$
+    \item завершаемость: не требует условий верификации, т.к. нет циклов
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Подставляем формулы}
+    \begin{itemize}
+    \item корректность оценочной функции:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0
+            \Rightarrow
+            x_1 \geq 0$
+    \item завершаемость индукции:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2
+            \Rightarrow
+            x_1 - x_2 \geq 0 \land x_2 > 0$
+    \item частичная корректность (путь START-T-HALT):
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0 \land x_1 < x_2
+            \Rightarrow
+            x_1 = x_1 + 0 * x_2 \land 0 \leq x_1 < x_2$
+    \item частичная корректность (путь START-F-HALT):
+            $\forall x_1,~x_2,~y_1,~y_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2 \land
+            x_1 - x_2 = x_2 * y_1 + y_2 \land 0 \leq y_2 < x_2
+            \Rightarrow
+            x_1 = x_2 * (y_1 + 1) + y_2 \land 0 \leq y_2 < x_2$
+    \end{itemize}
+    \end{frame}
+
+\end{document}
+
