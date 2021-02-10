@@ -62,12 +62,16 @@
     \item
     Пустой тип \texttt{unit}
     \item
+    Декартово произведение \texttt{type T = (T1,T2)}
+    \item
     Структуры, поля которых можно делать изменяемыми --
     единственный способ реализовать переменные и операцию
     присваивания \texttt{type S = \{ mutable v: T \}}
     \item
     Поле структуры -- это еще и функция, поэтому его имя
     входит в глобальную область видимости
+    \item
+    Типы могут быть полиморфными \texttt{type array 't}
     \end{itemize}
     \end{frame}
 
@@ -83,6 +87,8 @@
     \item
     \texttt{()} -- пустое вычисление (выражение типа \texttt{unit})
     \item
+    \texttt{(expr,expr)} -- кортеж
+    \item
     \texttt{\{v = 3\}} -- новое значение типа структуры, у которого
     есть поле \texttt{v} (такой тип единственный)
     \item
@@ -93,7 +99,9 @@
     \begin{frame}{Функции и локальные переменные}
     \begin{itemize}
     \item
-    Локальная переменная: \texttt{let var = ... in ... }
+    Локальная переменная: \texttt{let var = expr in ... }
+    \item
+    Разбиение кортежа: \texttt{let (v1,v2) = expr in ... }
     \item
     Неанонимная функция:
     \texttt{let function (arguments) : returntype = expr}
@@ -125,6 +133,8 @@
     Возвращаемое значение записывается как \texttt{result}.
     \item
     Несколько requires означает их конъюнкцию. Аналогично с ensures.
+    \item
+    Ни одного requires означает истину. Аналогично с ensures.
     \end{itemize}
     \end{frame}
 
