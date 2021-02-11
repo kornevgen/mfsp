@@ -1,0 +1,157 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 11. Фрейм функции. Component-as-array.
+    Более простая аксиоматизация модели памяти.}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Обсудить ряд важных дополнительных вопросов
+    про аксиоматизацию блочной модели памяти.
+    \end{frame}
+
+    \section{Фрейм функции (footprint)}
+
+    \begin{frame}{Мотивация}
+    \begin{itemize}
+    \item
+    Вы уже написали функцию, заменяющую
+    одно значение на другое значение в массиве.
+    \item
+    Напишите еще одну функцию, чтобы проверить
+    спецификацию первой функции. Функция принимает
+    на вход массив (указатель на начало и размер)
+    и 3 значения \texttt{v0, v1, v2}. Размер массива
+    не должен быть меньше 2. Постусловие функции --
+    что 0-й элемент массива становится равным
+    \texttt{v0}, а 1-й элемент массива становится
+    равным \texttt{v2}. Функция сначала присваивает
+    в 0-й элемент массива значение \texttt{v0},
+    в 1-й элемент массива значение \texttt{v1},
+    затем вызывает первую функцию для части массива,
+    с 1-го элемента до его конца.
+    \item
+    Почему одно из условий постусловия не доказывается?
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Фрейм функции}
+    \begin{itemize}
+    \item
+    В спецификации первой функции не сказано, что
+    может делать функция за рамками переданного массива.
+    Значит, она может делать что угодно.
+    \item
+    Необходимо думать о границах области памяти (рамке,
+    фрейме, footprint), которую разрешено изменять функции.
+    \item
+    Добавьте соответствующее постусловие к первой функции.
+    \item
+    Проверьте, что если второй функции передать еще один массив
+    и с ним вторая функция ничего не делает, то этот факт
+    доказывается!
+    \end{itemize}
+    \end{frame}
+
+    \section{Component-as-array}
+
+    \begin{frame}{Цель}
+    \begin{itemize}
+    \item Как моделировать Си-структуры? Массивы Си-структур?
+    \item Первая идея -- использовать WhyML-структуры один-в-один,
+    те же поля, что и у Си-структур
+    \item В модели памяти блоки будут состоять из указателей на
+    структуру целиком
+    \item Можно улучшить этот принцип моделирования
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Component-as-array}
+    \begin{itemize}
+    \item Отдельные поля одной структуры не могут
+    находиться в одной области памяти (это не union).
+    \item Создадим отдельный \texttt{memory map} для
+    каждого поля структуры.
+    \item (+) Упрощение верификации
+    \item (-) Усложнение генерации модели программы (нужна
+            автоматизация)
+    \end{itemize}
+    \end{frame}
+
+    \section{Упрощение аксиоматизации модели памяти}
+
+    \begin{frame}{Убираем тип block}
+    \begin{itemize}
+    \item
+    Тип \texttt{block} отличается от других тем, что
+    его значения не меняются. Можно попробовать убрать
+    этот тип из аксиоматизации.
+    \item
+    Типы \texttt{pointer} и \texttt{alloc\_table}
+    становятся типами-символами, т.к. в их определении
+    использовался \texttt{block}. Тип \texttt{memory}
+    не меняется.
+    \item
+    \texttt{alloc\_table} был отображением блоков в их
+    <<размеры>>. Теперь вместо блоков у нас указатели.
+    И каждому указателю надо сопоставить тот же <<размер
+    блока>> и смещение. То есть размер блока и смещение
+    зависят от \texttt{alloc\_table} и \texttt{pointer}.
+    \item
+    Вместо размера блока и смещения можно использовать
+    два других числа, взаимно однозначно им соответствующих:
+    смещение от указателя к началу блока (\texttt{offset\_min})
+    и к концу блока (\texttt{offset\_max}).
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Символы}
+    Часть бывших не-символов становятся символами и наоборот:
+    \begin{lstlisting}
+type pointer 't
+type alloc_table 't
+function offset_min (a: alloc_table 't)
+                    (p: pointer 't): int
+function offset_max (a: alloc_table 't)
+                    (p: pointer 't): int
+function shiftP (p: pointer 't)(n: int): pointer 't
+function subP(p p2: pointer 't): int
+predicate same_block (p p2: pointer 't)
+predicate valid (a: alloc_table 't)(p: pointer 't)
+  = offset_min a p <= 0 <= offset_max a p
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Остальное}
+    Целиком аксиоматизацию можно посмотреть в
+    библиотеке инструмента \textsl{AstraVer} примерно тут:
+    \texttt{.opam/4.07.1/lib/astraver/why3/core.mlw}
+    \end{frame}
+\end{document}

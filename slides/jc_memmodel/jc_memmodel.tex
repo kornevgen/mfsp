@@ -1,0 +1,298 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 10. Моделирование памяти Си-программы}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Построить аксиоматику для памяти Си-программы.
+    \end{frame}
+
+    \section{Память в стандарте языка Си}
+
+    \begin{frame}{Указатели в языке Си}
+    \begin{itemize}
+    \item
+    Указатель содержит адрес некоторого <<объекта>>.
+    Операция разыменования (прочитать или
+    заменить <<объект>>).
+    \item
+    Разыменование невыравненного указателя --
+    неопределенное поведение (не может
+    проконтролировать компилятор).
+    \item
+    Разыменование невалидного указателя --
+    неопределенное поведение (не может
+    проконтролировать компилятор).
+    Валидный указатель -- тот, который можно
+    корректно разыменовать.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Классы памяти}
+    \begin{itemize}
+    \item
+    Статическая память -- распределяется до старта
+    программы, существует все время работы
+    (глобальные переменные всегда расположены в
+     статической памяти, локальные переменные
+     расположены в статической памяти, только если
+     они объявлены со словом static)
+    \item
+    Стековая память -- распределяется при
+    вызове функции, освобождается при возврате
+    из функции
+    \item
+    Динамическая память -- распределяется в функциях
+    \texttt{malloc}, \texttt{calloc}, \texttt{realloc},
+    освобождается в функции \texttt{free}.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Адресная арифметика}
+    \begin{itemize}
+    \item
+    Прибавление числа к указателю
+    \item
+    Вычитание указателей, сравнение указателей
+    -- возможны только для указателей, указывающих
+    на один блок памяти. Для остальных
+    указателей -- неопределенное поведение.
+    \item
+    Указатели привязаны к блокам памяти!
+    \item
+    Блоки памяти не сравнимы!
+    \item
+    Блоки бывают освобожденными (freed).
+    \item
+    Приведение указателя к другому типу возможно,
+    но результат стандартом не определяется.
+    \end{itemize}
+    \end{frame}
+
+    \section{Модели памяти}
+
+    \begin{frame}{Побайтовая модель памяти}
+    \begin{itemize}
+    \item Память -- это массив байтов, указатель --
+    это индекс в массиве и размер типа объекта указателя.
+    \item Как промоделировать освобождение блока?
+    \item
+    Как проконтролировать выход за границы одного блока,
+    если за ним идет другой блок?
+    \item Нужны дополнения
+    в эту модель! Слишком сложно для аксиоматизации.
+    \item Хотя и можно точно промоделировать конкретную
+    Си-платформу.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Блочная модель памяти}
+    \begin{itemize}
+    \item Предположим, что не используется приведение
+    типов указателей (и объединения), не сравниваются
+    указатели из разных блоков памяти
+    \item
+    Указатель имеет блок и смещение от начала блока.
+    \item
+    Память -- это 1) множество блоков, у каждого блока есть
+    число: если оно неотрицательное, то это размер блока,
+    если оно отрицательное, значит этот блок освобожден.
+    2) отображение из указателей в значения
+    \item
+    Указатели на объекты разных типов не лежат в одном блоке,
+    поэтому для каждого типа объекта делаем свою память.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Оценка блочной модели памяти}
+    \begin{itemize}
+    \item Более простая аксиоматика
+    \item Не моделируется ограниченность памяти
+    \item Не моделируется класс памяти
+    \item Не моделируется calloc и realloc
+    (нужно байтовое представление для заполнения)
+    \item Не моделируется malloc с
+    размером, не кратным размеру объекта указателя
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Нормализация кода}
+    Все остальное моделируется в такой модели памяти?
+    \begin{itemize}
+    \item Операция взятия адреса: да, ее можно устранить:
+    если есть \texttt{x} и \texttt{\&x}, то вместо \texttt{x}
+    вводим новую переменную \texttt{xP}, которая хранит адрес \texttt{x};
+    вместо \texttt{x} используем \texttt{*xP}, вместо
+    \texttt{\&x} используем \texttt{P}.
+    \item Переменные, на которые есть указатели: да,
+    вместо них выделяем память при помощи \texttt{malloc},
+    освобождаем при помощи \texttt{free}.
+    \end{itemize}
+    \end{frame}
+
+    \section{Аксиоматизация блочной модели памяти}
+
+    \begin{frame}[fragile]{Вспомогательная теория}
+    \begin{lstlisting}
+theory Map
+  type map 'a 'b
+  function get (m: map 'a 'b) (v: 'a): 'b
+  function set (m: map 'a 'b) (v: 'a) (v2: 'b)
+  axiom get_set: forall m: map 'a 'b,
+      a a2: 'a, b: 'b.
+      get (set m a b) a2 = (if a = a2 then b else
+        get m a2)
+end
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Основные символы}
+    \begin{lstlisting}
+type block
+type pointer 't = (block, int)
+type alloc_table 't = Map.map block int
+type memory 't = Map.map (pointer 't) 't
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Дополнительные символы}
+    \begin{lstlisting}
+function blockOf (p: pointer 't): block
+  = let (b, o) = p in b
+function offsetOf (p: pointer 't): int
+  = let (b, o) = p in o
+function getSz (a: alloc_table 't) (b: block): int
+  = Map.get a b
+function setSz (a: alloc_table 't) (b: block)
+ (sz: int): alloc_table 't = Map.set a b sz
+function getV (m: memory 't) (p: pointer 't): 't
+  = Map.get m p
+function setV (m: memory 't) (p: pointer 't)
+ (v: 't): memory 't = Map.set m p v
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Дополнительные символы}
+    \begin{lstlisting}
+function blockLen (a: alloc_table 't)
+   (p: pointer 't): int = getSz a (blockOf p)
+predicate valid (a: alloc_table 't) (p: pointer 't)
+    =  0 <= offsetOf p < blockLen a p
+predicate valid_range (a: alloc_table 't)
+                      (p: pointer 't) (n: int) =
+     0 <= offsetOf p < blockLen a p - n
+predicate same_block (p p2: pointer 't) =
+    blockOf p = blockOf p2
+function shiftP (p: pointer 't)(n: int): pointer 't
+ = let (b, o) = p in (b, o + n)
+function subP (p p2: pointer 't): int
+ = let (b, o) = p in let (b2, o2) = p2 in o - o2
+    \end{lstlisting}
+    \end{frame}
+\iffalse
+    \begin{frame}[fragile]{Аксиомы}
+    \begin{lstlisting}
+axiom get_set_alloc: forall a: alloc_table 't,
+      b b2: block, sz: int.
+      getSz (setSz a b sz) b2 = (if b = b2 then sz
+              else getSz a b2)
+axiom get_set_mem: forall m: memory 't,
+      p p2: pointer 't, v: 't.
+      getV (setV m p v) p2 = (if p = p2 then v
+              else getV m p2)
+    \end{lstlisting}
+    \end{frame}
+\fi
+    \begin{frame}[fragile]{Примитивы для операторов CALL}
+    \begin{lstlisting}
+val readPtr (a: alloc_table 't) (m: memory 't)
+            (p: pointer 't): 't
+    requires { valid a p }
+    ensures { result = getV m p }
+val writePtr (a: alloc_table 't) (m: memory 't)
+             (p: pointer 't) (v: 't): memory 't
+    requires { valid a p }
+    ensures { result = setV m p v }
+val shiftPtr (p: pointer 't) (n: int): pointer 't
+    ensures { same_block p result }
+    ensures { offsetOf result = offsetOf p + n }
+val subPtr (p: pointer 't) (p2: pointer 't): int
+    requires { same_block p p2 }
+    ensures { result = offsetOf p - offsetOf p2 }
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Примитивы (2)}
+    \begin{lstlisting}
+val malloc (m: memory 't): (memory 't, pointer 't)
+    ensures { let (m2, p) = result in
+        blockOf p was deallocated
+        blockOf p was not used earlier (??????)
+        blockOf p is allocated
+        offsetOf p is 0
+        sizes of other blocks are not changed
+    }
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Примитивы (3)}
+    \begin{lstlisting}
+val free (m: memory 't) (p: pointer 't): memory 't
+    requires { offset p is 0 }
+    requires { blockOf p is allocated }
+    ensures {
+        blockOf p is deallocated
+        sizes of other blocks are not changed }
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Пример}
+    Проверьте эффективность этой аксиоматизации
+    модели памяти. Для этого решите следующие задания.
+    \begin{itemize}
+    \item Напишите на языке Си задачу прошлой лекции
+    с массивом и заменой там одного значения на другое.
+    Напишите модель программы. Напишите спецификацию.
+    Докажите полную корректность модели программы
+    относительно этой спецификации.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Вопросы}
+    \begin{itemize}
+    \item Как промоделировать \texttt{null}?
+    \item Как промоделировать Си-структуры? Массивы
+    из Си-структур?
+    \item Как промоделировать неявное приведение
+    \texttt{void *} к любому указателю?
+    \end{itemize}
+    \end{frame}
+\end{document}

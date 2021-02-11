@@ -1,0 +1,141 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 9. Моделирование массивов}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Построить аксиоматику для массивов.
+    \end{frame}
+
+    \begin{frame}{Постановка задачи}
+    \begin{itemize}
+    \item
+    Назовем последовательность значений одного типа
+    логическим массивом. Домен массивов -- это множество
+    всех логических массивов.
+    \item
+    Элементы логического массива проиндексированы, начиная с 0.
+    \item
+    У переменной с доменом массивов можно читать элемент,
+    изменять элемент. При изменении элемента переменная получает
+    новое значение. При создании массива задается его размер
+    и начальное значение (одно) всех элементов.
+    \item
+    Нужно добавить домен массивов в блок-схемы.
+    Для этого нужно придумать типы-символы,
+    функциональные символы, предикатные символы и аксиомы.
+    Придумать операторы CALL для работы с массивами.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Символы}
+    \begin{itemize}
+    \item \texttt{type array 't} -- логический массив
+    \item \texttt{type arrayVar 't = \{ mutable items: array 't\}}
+    -- тип переменных в блок-схеме с доменом массивов
+    \item \texttt{function length (a: array 't)} -- длина массива,
+    это функциональный символ, значит можем его использовать только
+    в спецификациях
+    \item \texttt{predicate valid\_index (a: array 't) (i: int) =
+        0 <= i < length a}
+    \item \texttt{function get (a: array 't) (i: int)} -- получение
+    элемента с индексом \texttt{i}
+    \item \texttt{function set (a: array 't) (i: int) (v: 't): array 't}
+    -- изменение элемента с индексом \texttt{i}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Аксиомы}
+    \begin{lstlisting}
+    axiom get_set: forall a i j v.
+        get (set a i v) j =
+        (if i = j then v else get a j)
+    axiom len_set: forall a i v.
+        len (set a i v) = len a
+    axiom len_nonneg: forall a.
+        len a >= 0
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Примитивы для операторов CALL}
+    \begin{lstlisting}
+val ln (a: arrayVar 't): int
+    ensures { result = len a.items }
+val gt (a: arrayVar 't) (i: int) : 't
+    requires { valid_index a.items i }
+    ensures { result = get a.items i }
+val st (a: arrayVar 't) (i: int) (v: 't): array 't
+    requires { valid_index a.items i }
+    ensures { result = set a.items i }
+val make (sz: int) (v: 't): array 't
+    requires { sz >= 0 }
+    ensures { len result = sz }
+    ensures { forall i. 0 <= i < sz ->
+        get result i = v }
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Пример}
+    \begin{itemize}
+    \item
+    На языке WhyML напишите модель программы,
+    решающей следующую задачу: на вход подается
+    массив и два значения; нужно заменить в массиве все
+    вхождения первого значения на второе.
+    В этой модели входные переменные не должны
+    изменяться.
+    \item
+    Напишите спецификацию задачи на языке Why.
+    \item
+    При помощи методов Флойда докажите полную
+    корректность модели программы относительно
+    этой спецификации.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Конструкции old, at. Метки}
+    \begin{itemize}
+    \item
+    Разрешим изменять входные переменные, т.е.
+    сделаем типом входной переменной тип \texttt{arrayVar}.
+    \item
+    Теперь в спецификациях нужно обращаться
+    к значению переменной-массива, которое было
+    у нее при вызове функции. Для этого нужны следующие конструкции:
+    \item
+    \texttt{old expr} -- это для постусловия
+    \item
+    \texttt{at expr 'label} -- это для спецификаций внутри функции,
+    надо создать метку в коде функции (\texttt{'label: expr})
+    \end{itemize}
+    \end{frame}
+
+\end{document}
