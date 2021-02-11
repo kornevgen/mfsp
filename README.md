@@ -14,12 +14,7 @@
 современных солверов (Alt-Ergo, CVC4,
 Z3).
 
-## План курса
-
-Курс состоит из цикла лекций,
-семинаров, практикума и экзамена.
-Далее приведена программа лекций
-и учебные материалы к лекциям.
+## Лекции и семинары
 
 1. Блок-схемы, определение частичной
    и полной корректности
@@ -71,37 +66,24 @@ Z3).
    [(слайды)](slides/jc_regions/jc_regions.pdf)
 
 
+## Практикум
 
-Практикум включает самостоятельные
-задания по следующим блокам:
+В практикуме 5 заданий. В каждом обычно 3 подзадания.
+У заданий есть дедлайны.
+Условия заданий и сервер сдачи
+[находятся по этой ссылке](ejudge.md).
 
+Задания 1-3 -- это упражнения к лекциям.
+Задания 4-5 -- это реализация на языке Си,
+формальная спецификация и формальная верификация
+реалистичного примера кода.
 
-1. Дедуктивная верификация:
-   одиночные блок-схемы, переменные
-   только целочисленные
-
-2. Дедуктивная верификация:
-   более сложные типы данных, более
-   сложные блок-схемы
-
-3. Дедуктивная верификация:
-   программы с памятью
-
-4. Реализация и формальная спецификация
-   реалистичного примера на языке Си
-
-5. Дедуктивная верификация
-   реалистичного примера на языке Си
-
-
-У заданий есть сроки выполнения и требования к
-оформлению. Условия заданий и сервер сдачи
-[находятся по этой ссылке](https://ejudge.cs.msu.ru/ej/client?contest_id=156).
+[Инструкция по установке инструментов для практикума](https://forge.ispras.ru/projects/astraver/wiki)
 
 
 ## Оценивание
 
-Оценка выставляется на основе оценки
+Итоговая оценка выставляется на основе оценки
 за практиум и оценки за экзамен.
 Оценка за практикум выставляется
 на основе суммы баллов за задания.
@@ -154,9 +136,3 @@ Z3).
 1. [Grigoriy Volkov, Mikhail Mandrykin, Denis Efremov (2018) Lemma Functions for Frama-C: C Programs as Proofs. In: 2018 Ivannikov ISPRAS Open Conference](https://arxiv.org/abs/1811.05879)
 1. [Blanchard A., Loulergue F., Kosmatov N. (2019) Towards Full Proof Automation in Frama-C Using Auto-active Verification. In: Badger J., Rozier K. (eds) NASA Formal Methods. NFM 2019. Lecture Notes in Computer Science, vol 11460. Springer, Cham](https://allan-blanchard.fr/publis/blk_nfm_2019.pdf)
 1. [Becker N., Müller P., Summers A.J. (2019) The Axiom Profiler: Understanding and Debugging SMT Quantifier Instantiations. In: Vojnar T., Zhang L. (eds) Tools and Algorithms for the Construction and Analysis of Systems. TACAS 2019. Lecture Notes in Computer Science, vol 11427. Springer, Cham](https://link.springer.com/chapter/10.1007/978-3-030-17462-0_6)
-
-## Старый Практикум
-
-* [Инструкция по установке инструментов Frama-C, Why3, AstraVer](https://forge.ispras.ru/projects/astraver/wiki)
-* [Домашние задания](hw/statement.md)
-* [Практическое задание](project/statement.md)
