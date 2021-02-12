@@ -3,6 +3,6 @@ remote_theme: jekyll/minima
 
 title: Формальная верификация Си-программ
 
-header_pages:
-  - ejudge.md
-  - astraver.md
+#header_pages:
+#  - ejudge.md
+#  - astraver.md
