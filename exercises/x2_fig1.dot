@@ -2,7 +2,7 @@ digraph G{
 
 /* nodes by levels */
 node[shape=rectangle];
-START[style=rounded, label=<START:<br/>(<i>y</i><sub>1</sub>,<i>y</i><sub>2</sub>,<i>y</i><sub>3</sub>) &larr; (0, 1, <i>x</i><sub>1</sub> + <i>x</i><sub>2</sub>)>];
+START[style=rounded, label=<START:<br/>(<i>y</i><sub>1</sub>,<i>y</i><sub>2</sub>,<i>y</i><sub>3</sub>) &larr; (<i>x</i><sub>1</sub> + <i>x</i><sub>2</sub> + 1, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>)>];
 ASSIGN1[label=<<i>y</i><sub>3</sub> &larr; <i>y</i><sub>3</sub> + 1>];
 TEST[style=rounded, width=2, label=<<i>y</i><sub>3</sub> = <i>x</i><sub>1</sub>>];
 ASSIGN2[label=<(<i>y</i><sub>1</sub>, <i>y</i><sub>2</sub>) &larr; (<i>y</i><sub>1</sub> + <i>y</i><sub>3</sub>, <i>y</i><sub>2</sub> + <i>y</i><sub>3</sub> + 1)>];
