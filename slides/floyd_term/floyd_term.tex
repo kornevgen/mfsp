@@ -35,6 +35,203 @@
     Определить метод доказательства завершимости.
     \end{frame}
 
+    \section{Поиск парадигмы}
+
+    \begin{frame}[fragile]{Пример 1}
+    \begin{multicols}{2}
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=0.7];
+		START[style=rounded, height=1, width=2, texlbl="$\begin{matrix}START\\ y \leftarrow 0\end{matrix}$"];
+		JOIN;
+        COND[style=rounded, width=2.5, texlbl="$y < x$"];
+		INCR[width=2, texlbl="$y \leftarrow y + 1$"];
+        HALT[style=rounded, width=2, label="HALT"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN -> COND [weight=8];
+		{ rank=same; p1 -> JOIN; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="T", arrowhead=none];
+                     COND -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $\begin{matrix}
+    D_x = D_y = \mathbb{Z}\\
+    \varphi(x) \equiv x > 0\\
+    \end{matrix}$
+
+    Очевидно, что эта блок-схема завершается? Постараемся
+    сформулировать, почему это очевидно. Для этого
+    сравним свой ответ на этот вопрос для нескольких блок-схем.
+    \end{multicols}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 2}
+    \begin{multicols}{2}
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=0.7];
+		START[style=rounded, height=1, width=2, texlbl="$\begin{matrix}START\\ y \leftarrow x_1\end{matrix}$"];
+		JOIN;
+        COND1[style=rounded, width=2.5, texlbl="$y_1 \geq x_1$"];
+        COND2[style=rounded, width=2.5, texlbl="$y_1 \leq x_2$"];
+		INCR1[width=2, texlbl="$y_1 \leftarrow y_1 + 1$"];
+		INCR2[width=2, texlbl="$y_1 \leftarrow -y_1$"];
+        HALT[style=rounded, width=2, label="HALT"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN -> COND1 [weight=8];
+        COND1 -> COND2 [label="T", weight=8];
+		{ rank=same; p1 -> JOIN; }
+        { rank=same; COND1 -> HALT [label="F"]; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND2 [label="T", arrowhead=none]; COND2 -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR1 [weight=8];
+		p4 -> INCR2 [weight=8];
+		{ rank=same; INCR1; INCR2; }
+		INCR1 -> p6 [weight=8, arrowhead=none];
+		INCR2 -> p7 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; p6 -> p7 [arrowhead=none]; }
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $\begin{matrix}
+    D_{x_1} = D_{x_2} = D_{y_1} = \mathbb{Z}\\
+    \varphi(x_1, x_2) \equiv 0 \leq x_1 \leq x_2\\
+    \end{matrix}$
+
+    Эта блок-схема завершается?
+    \end{multicols}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 3}
+    \begin{multicols}{2}
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=0.7];
+		START[style=rounded, height=1, width=2, texlbl="$\begin{matrix}START\\ y \leftarrow x_1\end{matrix}$"];
+		JOIN;
+        COND1[style=rounded, width=2.5, texlbl="$y_1 \geq x_1$"];
+        COND2[style=rounded, width=2.5, texlbl="$y_1 \leq x_2$"];
+		INCR1[width=2, texlbl="$y_1 \leftarrow y_1 + 1$"];
+		INCR2[width=2, texlbl="$y_1 \leftarrow x_1$"];
+        HALT[style=rounded, width=2, label="HALT"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN -> COND1 [weight=8];
+        COND1 -> COND2 [label="T", weight=8];
+		{ rank=same; p1 -> JOIN; }
+        { rank=same; COND1 -> HALT [label="F"]; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND2 [label="T", arrowhead=none]; COND2 -> p4 [label="F", arrowhead=none]; }
+		p3 -> INCR1 [weight=8];
+		p4 -> INCR2 [weight=8];
+		{ rank=same; INCR1; INCR2; }
+		INCR1 -> p6 [weight=8, arrowhead=none];
+		INCR2 -> p7 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; p6 -> p7 [arrowhead=none]; }
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $\begin{matrix}
+    D_{x_1} = D_{x_2} = D_{y_1} = \mathbb{Z}\\
+    \varphi(x_1, x_2) \equiv 0 \leq x_1 \leq x_2\\
+    \end{matrix}$
+
+    Эта блок-схема завершается?
+    \end{multicols}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 4}
+    \begin{multicols}{2}
+	\huge
+	\begin{dot2tex}[options=-traw]
+	digraph G{
+		d2tgraphstyle="scale=0.4, transform shape";
+
+		/* nodes by levels */
+		node[shape=rectangle, height=0.7];
+		START[style=rounded, height=1, width=2, texlbl="$\begin{matrix}START\\ y \leftarrow x\end{matrix}$"];
+		JOIN;
+        COND[style=rounded, width=2.5, texlbl="$y = 1$"];
+		INCR[width=2, texlbl="$y \leftarrow f(y)$"];
+        HALT[style=rounded, width=2, label="HALT"];
+
+		/* edges */
+		node [shape=point, width=0, label=""];
+		START -> JOIN -> COND [weight=8];
+		{ rank=same; p1 -> JOIN; }
+		p1 -> p5 [weight=8, arrowhead=none];
+		{ rank=same; p3 -> COND [label="F", arrowhead=none];
+                     COND -> p4 [label="T", arrowhead=none]; }
+		p3 -> INCR [weight=8];
+		p4 -> HALT [weight=8];
+		{ rank=same; INCR; HALT; }
+		INCR -> p6 [weight=8, arrowhead=none];
+		{ rank=same; p5 -> p6 [arrowhead=none]; }
+        }
+	\end{dot2tex}
+
+	\normalsize
+
+    $\begin{matrix}
+    D_x = D_y = \mathbb{Z}\\
+    \varphi(x) \equiv x > 0\\
+    f(x) \equiv \begin{cases}x/2 &, 2|x\\
+                             3x + 1 &, \neg(2|x)
+                \end{cases}\\
+    \end{matrix}$
+
+    Эта блок-схема завершается?
+    \end{multicols}
+    \end{frame}
+
+    \begin{frame}{Выводы из примеров}
+    \begin{itemize}
+    \item
+    Чтобы доказывать завершаемость, нужно иметь ответ на вопрос,
+    почему блок-схема завершается.
+    \item
+    Направление мысли: завершение блок-схемы -- значит <<выполнение
+    своей задачи полностью>>. <<Завершимый процесс работы блок-схемы>>
+    -- это постепенное выполнение задачи, приближение к ее
+    полному выполнению.
+    \item
+    Что-то похожее для метода индуктивных утверждений: нужно
+    иметь ответ на вопрос, почему блок-схема частично корректна,
+    чтобы получить доказательство. Доказательство -- это лишь
+    подтверждение мысли, ее выражение в определенном виде.
+    \end{itemize}
+    \end{frame}
+
     \section{Доказательство на примере}
 
 	\begin{frame}[fragile]{Пример для доказательства}
@@ -43,19 +240,19 @@
 	\huge
 	\begin{dot2tex}[options=-traw]
 	digraph G{
-		d2tgraphstyle="scale=0.3, transform shape";
+		d2tgraphstyle="scale=0.4, transform shape";
 
 		/* nodes by levels */
-		node[shape=rectangle, height=1];
-		START[style=rounded, width=2, texlbl="$\begin{matrix}START:\\ y \leftarrow 0\end{matrix}$"];
+		node[shape=rectangle, height=0.7];
+		START[style=rounded, height=1, width=2, texlbl="$\begin{matrix}START\\ y \leftarrow 0\end{matrix}$"];
 		JOIN;
-        COND[style=rounded, width=2.5, texlbl="$y = x \lor y = x + 1$"];
+        COND[style=rounded, width=2.5, texlbl="$y = x$"];
 		INCR[width=2, texlbl="$y \leftarrow y + 2$"];
-        HALT[style=rounded, width=2, texlbl="$\begin{matrix}HALT:\\  z \leftarrow y\end{matrix}$"];
+        HALT[style=rounded, width=2, texlbl="$HALT$"];
 
 		/* edges */
 		node [shape=point, width=0, label=""];
-		START -> JOIN [arrowhead=none]; JOIN -> COND [weight=8];
+		START -> JOIN -> COND [weight=8];
 		{ rank=same; p1 -> JOIN; }
 		p1 -> p5 [weight=8, arrowhead=none];
 		{ rank=same; p3 -> COND [label="F", arrowhead=none]; COND -> p4 [label="T", arrowhead=none]; }
@@ -70,48 +267,84 @@
 	\normalsize
 
     $\begin{matrix}
-    D_x = \mathbb{Z}\\
-    D_y = \mathbb{Z}\\
-    D_z = \mathbb{Z}\\
-    \varphi(x) \geq 0\\
+    D_x = D_y = \mathbb{Z}\\
+    \varphi(x) \equiv x \geq 0 \land 2 | x\\
     \end{matrix}$
 
+    Какова <<работа, которую должна выполнить блок-схема>>?
+    Каждый оператор <<выполняет часть работы>>
+    и <<приближает к выполнению полностью>>.
+    Когда эта <<работа выполнена полностью>>?
+    Формально доказать завершаемость блок-схемы на $\varphi$.
 	\end{multicols}
-
-    Доказать, что блок-схема завершается при всех значениях входных переменных из указанного предусловия. Метод доказательства должен быть <<автоматизируемым>>.
 	\end{frame}
 
-
     \begin{frame}{Поиск доказательства}
-    Осознаем, что надо доказать: что все вычисления при значениях входных переменных таких, что $\varphi(x)$ (все нижеперечисленное эквивалентно друг другу):
     \begin{itemize}
-    \item завершаются
-    \item достигают связки перед оператором HALT
-    \item содержат конфигурацию перед оператором TEST, в которой его предикат истинен. Если же такой конфигурации нет, то вычисление будет бесконечным.
+    \item
+    Чем больше значение переменной $y$, тем мы ближе к
+    завершению, к выполнению <<работы полностью>>.
+    \item
+    Математически: рассмотрим произвольное вычисление,
+    отметим конфигурации перед оператором TEST,
+    получили последовательность конфигураций.
+    \item
+    Обозначим $y_i$ -- последовательность значений
+    переменной $y$ в этой последовательности.
+    \item
+    Докажем, что последовательность $y_i$ возрастает
+    и ограничена сверху. Значит, она конечна.
     \end{itemize}
-
-    Достижение чего-либо -- это словно приближение. Если есть некоторое определение расстояния до чего-то, которое на каждом шаге уменьшается, то рано или поздно мы остановимся.
     \end{frame}
 
-    \begin{frame}{Поиск доказательства}
-    Есть ли такое <<расстояние>> в нашем случае? Надо откуда-то догадаться, как можно определить расстояние. Например, так: $|x + 1 - y|$. Оно неотрицательно. Каждая конфигурация на связке перед оператором TEST с ложным предикатом на ней вынуждает выполнить итерацию цикла. Будет ли при этом уменьшаться расстояние -- проверим при помощи формул.
-
-    $\forall x, y \in \mathbb{Z} ~ x \geq 0 \land y \neq x \land y \neq x + 1 \Rightarrow |x + 1 - (y + 2)| < |x + 1 - y|$.
-
-    Это условие ложно. Строим контрпример: оно ложно при $y = 3, x = 1$. Но этот контрпример невозможен, т.к. он не соответствует оператору START. Как его учесть? Дополнительно доказать, что на каждой конфигурации перед TEST выполнено индуктивное утверждение $y \leq x + 1$.
+    \begin{frame}{Формулы}
+    \begin{itemize}
+    \item
+    Возрастание: $\forall i \cdot~ y_{i} + 2 > y_{i}$ -- истинно
+    \item
+    Ограниченность (предполагаем, что верхняя граница
+    равна $x + 1$): $\forall x \forall i\cdot x \geq 0 \land
+    (2|x) \Rightarrow y_{i} \leq x$ -- ложно! Контрпример: $x = 0$,
+    $y_i = 2$. Но он невозможен. Не хватает дополнительного
+    условия в посылке импликации: о том, что $y_i \leq x$.
+    \item
+    Можно ли доказать, что на каждой конфигурации
+    перед TEST выполнено утверждение $y \leq x$?
+    \end{itemize}
     \end{frame}
 
     \begin{frame}{Индуктивное утверждение}
-    Базовый путь из псевдосвязки перед START в точку сечения: $\forall x \in \mathbb{Z} ~ x \geq 0 \Rightarrow 0 \leq x + 1$
-
-    Базовый путь из точки сечения в точку сечения: $\forall x, y \in \mathbb{Z} ~ x \geq 0 \land y \neq x \land y \neq x + 1 \land y \leq x + 1 \Rightarrow y + 2 \leq x + 1$
-
-    Наконец, доказываем уменьшение расстояния:
-    $\forall x, y \in \mathbb{Z} ~ x \geq 0 \land y \neq x \land y \neq x + 1 \land y \leq x + 1 \Rightarrow |x + 1 - (y + 2)| < |x + 1 - y|$.
+    \begin{itemize}
+    \item
+    Обозначим А -- нашу точку сечения.
+    Обозначим $q$ -- индуктивное утверждение. Составим
+    условия верификации.
+    \item
+    Путь S-A (1): $\forall x \in \mathbb{Z} ~ x \geq 0 \land (2|x)
+    \Rightarrow q(x, 0)$
+    \item
+    Путь A-F-A (2): $\forall x, y \in \mathbb{Z} ~ x \geq 0
+    \land (2|x) \land q(x, y) \land y \neq x \Rightarrow q(x, y + 2)$
+    \item
+    (3) $\forall x, y \in \mathbb{Z} ~ x \geq 0
+    \land (2|x) \land q(x, y) \Rightarrow y \leq x$
+    \item
+    Первая прикидка: $q(x, y) = (y \leq x)$. Но (2) не выполнено.
+    Контрпример: $x = 2, y = 1$. Исправляем: $q(x, y) = (y \leq x
+            \land (2|y))$. Теперь все истинно!
+    \end{itemize}
     \end{frame}
 
     \begin{frame}{Доказательство}
-    Итак, мы рассматривали конфигурации на связке перед оператором TEST (т.к. это точка сечения). Мы ввели <<расстояние>> от произвольной конфигурации этого множества до конфигурации, в которой истинен предикат в операторе TEST. Мы показали, что на всех путях между точками сечения (а такой путь один) расстояние уменьшается. То есть мы показали, что всякая конфигурация с ложными предикатом в TEST приводит к базовому пути, на котором расстояние уменьшается. Но т.к. расстояние неотрицательно, то оно не может уменьшаться бесконечно, значит в вычислении не могут бесконечно встречаться конфигурации, в которых предикат в операторе TEST ложен. Завершимость доказана.
+    Итак, мы рассматривали конфигурации на связке перед
+    оператором TEST (т.к. это точка сечения). Мы доказали, что
+    в каждой конфигурации в точке сечения истинно
+    индуктивное утверждение $q(x, y) = (y \leq x \land (2|y))$.
+    Оно позволяет доказать, что в этих конфигурациях значение
+    переменной $y$ не больше значения переменной $x$ и строго
+    возрастает в каждой следующей конфигурации вычисления.
+    Значит, последовательность конфигураций не может быть
+    бесконечной. Завершимость доказана.
     \end{frame}
 
     \section{Метод фундированных множеств}
