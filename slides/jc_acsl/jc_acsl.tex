@@ -222,6 +222,22 @@
     \end{itemize}
     \end{frame}
 
+    \begin{frame}[fragile]{Лемма-функции}
+    Пример:
+
+    \begin{lstlisting}
+/*@ ghost
+     /@ lemma
+          requires ....
+          ensures ....
+     @/
+     void lemmafunction(....) {
+      ....
+     }
+*/
+    \end{lstlisting}
+    \end{frame}
+
     \begin{frame}{Построение теорий WhyML и их зависимости}
     \begin{itemize}
     \item
