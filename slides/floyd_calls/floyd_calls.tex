@@ -78,7 +78,7 @@
 		{ rank=same; CALL1; CALL2; }
 		CALL1 -> HALT [weight=8];
 		CALL2 -> ASSIGN [weight=8];
-		{ rank=same; rankdir="RL"; HALT -> ASSIGN; }
+		{ rank=same; HALT -> ASSIGN [dir=back]; }
         }
 	\end{dot2tex}
 
@@ -204,12 +204,12 @@
                 \varphi(x_1,~x_2) \land x_1 < 0
                 \Rightarrow \varphi_D(-x_1,~x_2)$
     \item частичная корректность на пути (START-T-HALT):
-        $\forall x_1, x_2 \in \mathbb{Z} \forall r_1, r_2 \in \mathbb{Z} \cdot
+        $\forall x_1, x_2 \in \mathbb{Z} ~ \forall r_1, r_2 \in \mathbb{Z} \cdot
                 \varphi(x_1,~x_2) \land x_1 \geq 0 \land
                 \psi_D(x_1,~x_2,~r_1,~r_2)
                 \Rightarrow \psi(x_1,~x_2,~r_1,~r_2)$
     \item частичная корректность на пути (START-F-HALT):
-        $\forall x_1, x_2 \in \mathbb{Z} \forall r_1, r_2 \in \mathbb{Z} \cdot
+        $\forall x_1, x_2 \in \mathbb{Z} ~ \forall r_1, r_2 \in \mathbb{Z} \cdot
                 \varphi(x_1,~x_2) \land x_1 < 0 \land
                 \psi_D(-x_1,~x_2,~r_1,~r_2)
                 \Rightarrow \psi(x_1,~x_2,~-r_1-1,~x_2 - r_2)$
@@ -282,7 +282,7 @@
 
 		/* nodes by levels */
 		node[shape=rectangle, height=1];
-		START[style=rounded, width=2, texlbl="$\begin{matrix}START:\\(y_1,~y_2) \leftarrow (0,~0)\end{matrix}$"];
+		START[style=rounded, width=3, texlbl="$\begin{matrix}START:\\(y_1,~y_2) \leftarrow (0,~0)\end{matrix}$"];
         COND[style=rounded, width=2.5, texlbl="$x_1 < x_2$"];
 		HALT1[style=rounded, width=4, texlbl="$\begin{matrix}HALT:\\(z_1,~z_2) \leftarrow (0,~x_1)\end{matrix}$"];
 		CALL[width=4, texlbl="$\begin{matrix}CALL:\\(y_1,~y_2) \leftarrow P(x_1-x_2,~x_2)\end{matrix}$"];
