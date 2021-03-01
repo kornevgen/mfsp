@@ -1,0 +1,19 @@
+digraph G{
+
+/* nodes by levels */
+node[shape=rectangle];
+START[style=rounded, label=<START:<br/><i>y</i><sub>1</sub> &larr; 0>];
+TEST[style=rounded, width=2, label=<<i>x</i><sub>1</sub> = 0>];
+CALL[label=<CALL:<br/><i>y</i><sub>1</sub> &larr; P(<i>x</i><sub>1</sub> - 1, <i>x</i><sub>2</sub>)>];
+HALT1[style=rounded, label=<HALT:<br/><i>z</i><sub>1</sub> &larr; 0>];
+HALT2[style=rounded, label=<HALT:<br/><i>z</i><sub>1</sub> &larr; <i>y</i><sub>1</sub> + <i>x</i><sub>2</sub>>];
+
+/* edges */
+node [shape=point, width=0, label=""];
+START -> TEST[weight=8];
+{ rank=same; p3 -> TEST [label="F", arrowhead=none]; TEST -> p4 [label="T", arrowhead=none]; }
+p3 -> CALL [weight=8];
+p4 -> HALT1 [weight=8];
+{ rank=same; CALL; HALT1; }
+CALL -> HALT2 [weight=8];
+}
