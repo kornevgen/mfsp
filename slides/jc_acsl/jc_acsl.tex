@@ -208,6 +208,20 @@
     \end{itemize}
     \end{frame}
 
+    \begin{frame}{Но есть предикаты, входящие в язык}
+    \begin{itemize}
+    \item
+    \texttt{$\backslash$valid} -- валидность указателя
+    \item
+    \texttt{$\backslash$offset\_min}, \texttt{$\backslash$offset\_max}
+    \item
+    \texttt{$\backslash$base\_addr} -- только для выражения, что два
+    указателя находятся в одном блоке (совпадают базовые адреса)
+    \item
+    \texttt{$\backslash$allocable}, \texttt{$\backslash$freeable}
+    \end{itemize}
+    \end{frame}
+
     \begin{frame}{Аннотации для верификации}
     \begin{itemize}
     \item
@@ -218,7 +232,23 @@
     в Frama-C фронтенд кода принимает только Си-код (не ghost-аннотация
     анализируется фронтендом отдельно, поэтому с ней нет этих проблем)
     \item
+    \texttt{ghost}-функции
+    \item
     \texttt{lemma} -- леммы
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Behavior}
+    \begin{itemize}
+    \item
+    Можно указать у assert, что он нужен для доказательства
+    определенной аннотации ensures
+    \item
+    То же можно сделать с loop invariant
+    \item
+    Ensures надо поместить в behavior
+    \item
+    Синтаксис смотрите в документации по ACSL
     \end{itemize}
     \end{frame}
 
