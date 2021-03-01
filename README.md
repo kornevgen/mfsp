@@ -32,6 +32,7 @@ Z3).
 4. Методы Флойда для блок-схем
    с вызовами других блок-схем, рекурсия
    [(слайды)](slides/floyd_calls/floyd_calls.pdf)
+   [(упражнения)](exercises/x4.md)
 
 5. Триггеры
    [(слайды)](slides/smt_triggers/smt_triggers.pdf)
