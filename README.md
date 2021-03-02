@@ -36,6 +36,7 @@ Z3).
 
 5. Триггеры
    [(слайды)](slides/smt_triggers/smt_triggers.pdf)
+   [(упражнения)](exercises/x5.md)
 
 6. Леммы, ghost-блок-схемы,
    auto-active verification
