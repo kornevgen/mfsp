@@ -41,6 +41,7 @@ Z3).
 6. Леммы, ghost-блок-схемы,
    auto-active verification
    [(слайды)](slides/smt_lemmas/smt_lemmas.pdf)
+   [(упражнения)](exercises/x6.md)
 
 7. WhyML, автоматизация построения
    условий верификации
