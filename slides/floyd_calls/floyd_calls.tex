@@ -333,7 +333,7 @@
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             \varphi(x_1,~x_2) \land x_1 \geq x_2
             \Rightarrow
-            \varphi(x_1 - x_2,~x_2)$
+            u(x_1 - x_2,~x_2) < u(x_1,~x_2)$
     \item частичная корректность (путь START-T-HALT):
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             \varphi(x_1,~x_2) \land x_1 < x_2
@@ -345,7 +345,11 @@
             \psi(x_1 - x_2,~x_2,~y_1,~y_2)
             \Rightarrow
             \psi(x_1,~x_2,~y_1 + 1,~y_2)$
-    \item завершаемость: не требует условий верификации, т.к. нет циклов
+    \item завершаемость:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2) \land x_1 \geq x_2
+            \Rightarrow
+            \varphi(x_1 - x_2,~x_2)$
     \end{itemize}
     \end{frame}
 
@@ -360,7 +364,7 @@
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2
             \Rightarrow
-            x_1 - x_2 \geq 0 \land x_2 > 0$
+            x_1 - x_2 < x_1$
     \item частичная корректность (путь START-T-HALT):
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             x_1 \geq 0 \land x_2 > 0 \land x_1 < x_2
@@ -372,6 +376,11 @@
             x_1 - x_2 = x_2 * y_1 + y_2 \land 0 \leq y_2 < x_2
             \Rightarrow
             x_1 = x_2 * (y_1 + 1) + y_2 \land 0 \leq y_2 < x_2$
+    \item завершаемость:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2
+            \Rightarrow
+            x_1 - x_2 \geq 0 \land x_2 > 0$
     \end{itemize}
     \end{frame}
 
