@@ -50,7 +50,8 @@ Z3).
 
 8. Добавление новых типов и функций.
    Алгебраическая аксиоматизация.
-   [(сайды)](slides/smt_unintfn/smt_unintfn.pdf)
+   [(слайды)](slides/smt_unintfn/smt_unintfn.pdf)
+   [(упражнения)](exercises/x8.md)
 
 9. Моделирование массивов
    [(слайды)](slides/jc_array/jc_array.pdf)
@@ -134,6 +135,7 @@ Z3).
 
 1. [Корныхин Е., Петренко А., Хорошилов А. (2020) Дедуктивная верификация блок-схем](floyd_book/Deductive-Verification-2020.pdf)
 1. [Bobot, F., Filliâtre, J., Marché, C. et al. (2015) Let’s verify this with Why3. In: International Journal on Software Tools Technology Transfer 17, 709–727.](https://link.springer.com/article/10.1007/s10009-014-0314-5)
+1. [Why3 Documentation, версия 0.88.2](https://web.archive.org/web/20171208230848/http://why3.lri.fr/manual.pdf)
 1. [ACSL: ANSI/ISO C Specification Language](https://frama-c.com/download/acsl.pdf)
 1. [Claude Marché, Yannick Moy (2018) The Jessie pluginfor Deductive Verification in Frama-C.](http://krakatoa.lri.fr/jessie.pdf)
 1. [Hubert T., Marche C. (2007) Separation analysis for deductive verification. In: Heap Analysis and Verification (HAV'07). Braga, Portugal : March, 2007, p.81-93.](https://www.lri.fr/~marche/hubert07hav.pdf)
