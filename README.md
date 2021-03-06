@@ -55,6 +55,7 @@ Z3).
 
 9. Моделирование массивов
    [(слайды)](slides/jc_array/jc_array.pdf)
+   [(упражнения)](exercises/x9.md)
 
 10. Моделирование памяти Си-программы
    [(слайды)](slides/jc_memmodel/jc_memmodel.pdf)
