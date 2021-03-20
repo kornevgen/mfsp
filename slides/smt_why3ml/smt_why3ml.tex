@@ -55,6 +55,23 @@
     \end{itemize}
     \end{frame}
 
+    \begin{frame}{Теории и модули}
+    \begin{itemize}
+    \item
+    Теории -- набор определений и явных целей доказательства
+    \item
+    Модули -- набор определений и моделей программ, для моделей программ надо
+    доказать полную корректность, т.е. сгенерировать условия верификации
+    \item
+    Синтаксис теории: \texttt{theory Name ... end}
+    \item
+    Синтаксис модуля: \texttt{module Name ... end}
+    \item
+    Файл \texttt{*.why} не может содержать модули,
+    с модулями файл должен называться \texttt{*.mlw}
+    \end{itemize}
+    \end{frame}
+
     \begin{frame}{Типы данных}
     \begin{itemize}
     \item
@@ -103,7 +120,7 @@
     \item
     Разбиение кортежа: \texttt{let (v1,v2) = expr in ... }
     \item
-    Неанонимная функция:
+    Неанонимная функция -- модель программы:
     \texttt{let function (arguments) : returntype = expr}
     \item
     Можно указать только заголовок функции, тогда вместо \texttt{let}
