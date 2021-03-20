@@ -138,6 +138,26 @@
     \end{itemize}
     \end{frame}
 
+    \begin{frame}[fragile]{Пример модуля с функцией}
+    \begin{lstlisting}
+module Factorial
+use import int.Int
+let rec fact_rec (n: int): int =
+    if n = 0 then 1 else n * fact_rec (n - 1)
+type intVar = { mutable v: int; }
+let fact_loop (n: int): int =
+    let i = { v = 1; } in
+    let r = { v = 1; } in
+        while i.v <= n do
+            r.v <- r.v * i.v;
+            i.v <- i.v + 1
+        done;
+        r.v
+end
+    \end{lstlisting}
+    \end{frame}
+
+
     \begin{frame}{Исключения}
     \begin{itemize}
     \item
@@ -171,6 +191,22 @@
     \end{itemize}
     \end{frame}
 
+    \begin{frame}[fragile]{Пример спецификаций}
+    \begin{lstlisting}
+module SqrtExample
+use import int.Int
+val sqrt (n: int) : int
+    requires { n >= 0 }
+    ensures { result * result <= n <
+    (result + 1) * (result + 1) }
+let foo (n: int) : int
+    requires { n >= 0 }
+    ensures { result >= 0 }
+= sqrt n
+end
+    \end{lstlisting}
+    \end{frame}
+
     \begin{frame}{Методы Флойда}
     \begin{itemize}
     \item
@@ -189,6 +225,25 @@
     \item
     Оценочная функция рекурсии записывается так же, но после предусловия.
     \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример спецификации цикла}
+    \begin{lstlisting}
+module MultLoop
+use import int.Int
+type intVar = { mutable v: int; }
+let loop_test (a b: int): int
+    requires { a >= 0 }
+    ensures { result = a * b }
+= let i = { v = 1; } in
+  let r = { v = 0; } in
+    while i.v <= a do
+        invariant { i.v <= a + 1 }
+        invariant { r.v = (i.v - 1) * b }
+        variant { a + 1 - i.v }
+        r.v <- r.v + b; i.v <- i.v + 1
+    done; r.v  end
+    \end{lstlisting}
     \end{frame}
 
     \section{Дополнительные конструкции}
@@ -219,6 +274,23 @@
     \texttt{condition}. Предусловие собрано из всех условий, которые
     находятся перед assert.
     \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример с assert}
+    \begin{lstlisting}
+module Theorems
+
+use import int.Int
+
+let theorem (x: int)
+    requires { x > 0 }
+    ensures { exists t. t > 0 /\ x * t <> x }
+=
+    assert { forall u. u * 2 = u + u };
+    ()
+
+end
+    \end{lstlisting}
     \end{frame}
 
     \begin{frame}{ghost-переменные}
