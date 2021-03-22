@@ -35,24 +35,286 @@
     Построить аксиоматику для памяти Си-программы.
     \end{frame}
 
-    \section{Память в стандарте языка Си}
+    \section{Вспоминаем указатели}
 
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+void print__intar(const int *v, size_t n)
+{
+    for (int i = 0; i < n; ++i) {
+        printf("%d ", v[i]);
+    }
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+int vector__init(vector *v, size_t n)
+{
+    v->capacity = v->size = n;
+    v->data = malloc(n * sizeof *v);
+    return v->data ? 0 : 1;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+int *a1 = malloc(10 * sizeof *a1);
+int *a2 = (int *)malloc(10 * sizeof *a2);
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+char *strcpy(char *d, const char *s)
+{
+    char *r = d;
+    while (*r++ = *s++) ;
+    return d;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+char *memmove(void *d, const void *s, size_t n)
+{
+    if (d + n < s || s + n < d) {
+        return memcpy(d, s, n);
+    } else {
+        void *t = malloc(n);
+        memcpy(t, s, n);
+        memcpy(d, t, n);
+        free(t);
+        return d;
+    }
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+typedef struct node {
+    struct node *next;
+    int data;
+} Node;
+void push(Node **list, int v)
+{
+    Node *head = malloc(sizeof *head);
+    head->next = *list;
+    head->data = v;
+    *list = head;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+...
+int fd[2];
+pipe(fd);
+...
+struct { int a, b; } msg = {1, 2};
+write(fd[1], &msg, sizeof msg);
+...
+    \end{lstlisting}
+    \end{frame}
+\iffalse
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+...
+int fd[2];
+pipe(fd);
+...
+struct { short a; int b; } msg = {1, 2};
+write(fd[1], &msg, sizeof msg);
+...
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+...
+int fd[2];
+char buf[1024];
+pipe(fd);
+...
+struct { short a; int b; } msg;
+read(fd[0], &buf, sizeof buf);
+char n = buf[0];
+msg = *(msg *)(buf + 1);
+printf("%s %d\n", msg.a, msg.b);
+...
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+int anint;
+void foo(long *lptr)
+{
+    anint=1;
+    *lptr=3;
+    printf("%d", anint);
+}
+... foo((long *)&anint);
+    \end{lstlisting}
+Печать зависит от опций компилятора...
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+uint32_t swaphalves(uint32_t a)
+{
+    uint32_t acopy = a;
+    uint16_t *ptr = (uint16_t*)&acopy;
+    uint16_t tmp = ptr[0];
+    ptr[0] = ptr[1];
+    ptr[1] = tmp;
+    return acopy;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+uint32_t swaphalves(uint32_t a)
+{
+    union {
+        uint32_t as32bit;
+        uint16_t as16bit[2];
+    } s = { a };
+    uint16_t tmp = s.as16bit[0];
+    s.as16bit[0] = s.as16bit[1];
+    s.as16bit[1] = tmp;
+    return s.as32bit;
+}
+\end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Зачем нужны указатели?}
+    Правильно ли здесь используются указатели?
+    Что делает этот код?
+    \begin{lstlisting}
+struct sockaddr_in sa = {0};
+int sockfd = ...;
+sa.sin_family = AF_INET;
+sa.sin_port = htons(port);
+bind(sockfd, (struct sockaddr *)&sa, sizeof sa);
+    \end{lstlisting}
+    \end{frame}
+\fi
+    \section{Вырабатываем интуицию в модели памяти}
+
+    \begin{frame}{Примеры}
+    Попробуйте придумать алгоритм построения модели
+    программы, подходящий для всех следующих примеров.
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 1}
+    \begin{lstlisting}
+void f1(int *a, int n) { ... }
+void f() {
+    int mm[10];
+    f1(&mm[3], 4);
+}
+    \end{lstlisting}
+    Всегда ли параметр-указатель означает начало массива?
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 2}
+    \begin{lstlisting}
+void f2(int *a, int n, int *v) { ... }
+    \end{lstlisting}
+    Всегда ли параметр-указатель означает, что функция
+    получает массив (отдельный блок памяти)?
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 3}
+    \begin{lstlisting}
+void f3(int *a1, int n1, int *a2, int n2) { ... }
+    \end{lstlisting}
+    Всегда ли эта функция получает два массива
+    (отдельных блока памяти)?
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 4}
+    \begin{lstlisting}
+int Vector__resize(struct Vector *v, int newsize) {
+    ... realloc ...
+}
+    \end{lstlisting}
+    Как записать постусловие, что эта функция может
+    аллоцировать новый блок памяти? (1 - что блок
+    аллоцируется, 2 - что блока не было раньше)
+    Какие входные данные нужны, чтобы записать это
+    постусловие?
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 5}
+    \begin{lstlisting}
+int main(int argc, char *argv[]) { ... }
+    \end{lstlisting}
+    Сколько массивов (отдельных блоков памяти) нужно
+    передать как входные данные этой функции?
+    \end{frame}
+
+    \begin{frame}{Выводы из примеров}
+    \begin{itemize}
+    \item
+    Кроме своих аргументов, функции получают неявно
+    еще входные данные - блоки памяти.
+    \item
+    Количество блоков памяти иногда трудно, а иногда
+    невозможно определить по тексту программы.
+    \end{itemize}
+    \end{frame}
+
+\iffalse
     \begin{frame}{Указатели в языке Си}
     \begin{itemize}
     \item
     Указатель содержит адрес некоторого <<объекта>>.
+    \item
     Операция разыменования (прочитать или
-    заменить <<объект>>).
+    заменить <<объект>>), функции malloc, free
     \item
-    Разыменование невыравненного указателя --
-    неопределенное поведение (не может
-    проконтролировать компилятор).
-    \item
-    Разыменование невалидного указателя --
-    неопределенное поведение (не может
-    проконтролировать компилятор).
-    Валидный указатель -- тот, который можно
-    корректно разыменовать.
+    Ошибки при работе с указателями:
+        \begin{itemize}
+        \item разыменование невыравненного указателя
+        \item разыменование невалидного указателя
+        (указатель в еще не выделенную область памяти
+        или в уже освобожденную область памяти)
+        \item сравнение указателей из разных <<объектов>>
+        \item наличие указателей несовместимых типов
+        на один и тот же <<объект>>
+        \end{itemize}
     \end{itemize}
     \end{frame}
 
@@ -92,13 +354,14 @@
     \item
     Блоки бывают освобожденными (freed).
     \item
-    Приведение указателя к другому типу возможно,
-    но результат стандартом не определяется.
+    Приведение указателя к другому типу указателя возможно
+    только если старый и новый типы совместимы.
     \end{itemize}
     \end{frame}
-
+\fi
     \section{Модели памяти}
 
+\iffalse
     \begin{frame}{Побайтовая модель памяти}
     \begin{itemize}
     \item Память -- это массив байтов, указатель --
@@ -159,8 +422,73 @@
     \end{frame}
 
     \section{Аксиоматизация блочной модели памяти}
+\fi
 
-    \begin{frame}[fragile]{Вспомогательная теория}
+    \begin{frame}{Состав модели памяти}
+    \begin{itemize}
+    \item
+    массив -- типизированный, поэтому блок -- тоже типизированный
+    \item
+    поэтому для каждого типа нужна целиком отдельная модель памяти
+    \item
+    тип-символ memory - вся модель памяти
+    \item
+    тип-символ block - блок
+    \item
+    тип-символ pointer - указатель
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Соотношения}
+    \begin{itemize}
+    \item
+    каждый memory -- множество из block-ов
+    \item
+    каждый block имеет массив array
+    \item
+    любой block может быть allocated или не allocated (allocable)
+    \item
+    любой pointer имеет block и индекс в его массиве
+    \item
+    любой pointer может быть равен NULL
+    \item
+    любые два pointer из разных block-ов не сравнимы
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Предикатные и функциональные символы, примитивы}
+    \begin{itemize}
+    \item
+    любой pointer является valid (валидным, корректно разыменуемым), если
+    он указывает внутрь block, который allocated
+    \item
+    адресная арифметика: shift pointer, sub pointers
+    \item
+    примитивы для блоков: malloc, free
+    \item
+    примитивы для указателей (разыменование): write, read
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Первые определения - первые проблемы}
+    \begin{itemize}
+    \item
+    Попробуйте определить спецификацию для read - должна нормально получиться
+    \item
+    Попробуйте определить спецификацию для write - получится слишком
+    много кванторов! Как их уменьшить? Переделать модель памяти.
+    \item
+    Надо иметь всего один массив (для значений по указателям).
+    Как тогда определить индексы и адреса начала блока? Массив надо заменить
+    просто на отображение указателей в значения.
+    \item
+    И отделить множество блоков от этого отображения. Получаются 2 отдельных
+    типа, совместно представляющих модель памяти: отображение и множество блоков
+    с их статусом.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Определяем отображения}
     \begin{lstlisting}
 theory Map
   type map 'a 'b
@@ -174,11 +502,14 @@ end
     \end{lstlisting}
     \end{frame}
 
-    \begin{frame}[fragile]{Основные символы}
+    \begin{frame}[fragile]{Типы}
     \begin{lstlisting}
 type block
 type pointer 't = (block, int)
 type alloc_table 't = Map.map block int
+(* alloc_table[block] >= 0 -- block is allocated
+   and here is its size;
+   alloc_table[block] < 0 -- block is allocable *)
 type memory 't = Map.map (pointer 't) 't
     \end{lstlisting}
     \end{frame}
@@ -204,6 +535,20 @@ function setV (m: memory 't) (p: pointer 't)
     \begin{lstlisting}
 function blockLen (a: alloc_table 't)
    (p: pointer 't): int = getSz a (blockOf p)
+predicate allocable (a: alloc_table 't)
+                    (p: pointer 't)
+    = blockLen a p < 0
+predicate allocated (a: alloc_table 't)
+                    (p: pointer 't)
+    = not (allocable a p)
+predicate freeable (a: alloc_table 't)
+                   (p: pointer 't)
+    = allocated a p /\ offsetOf p = 0
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Дополнительные символы}
+    \begin{lstlisting}
 predicate valid (a: alloc_table 't) (p: pointer 't)
     =  0 <= offsetOf p < blockLen a p
 predicate valid_range (a: alloc_table 't)
@@ -217,20 +562,7 @@ function subP (p p2: pointer 't): int
  = let (b, o) = p in let (b2, o2) = p2 in o - o2
     \end{lstlisting}
     \end{frame}
-\iffalse
-    \begin{frame}[fragile]{Аксиомы}
-    \begin{lstlisting}
-axiom get_set_alloc: forall a: alloc_table 't,
-      b b2: block, sz: int.
-      getSz (setSz a b sz) b2 = (if b = b2 then sz
-              else getSz a b2)
-axiom get_set_mem: forall m: memory 't,
-      p p2: pointer 't, v: 't.
-      getV (setV m p v) p2 = (if p = p2 then v
-              else getV m p2)
-    \end{lstlisting}
-    \end{frame}
-\fi
+
     \begin{frame}[fragile]{Примитивы для операторов CALL}
     \begin{lstlisting}
 val readPtr (a: alloc_table 't) (m: memory 't)
@@ -252,25 +584,31 @@ val subPtr (p: pointer 't) (p2: pointer 't): int
 
     \begin{frame}[fragile]{Примитивы (2)}
     \begin{lstlisting}
-val malloc (m: memory 't): (memory 't, pointer 't)
-    ensures { let (m2, p) = result in
-        blockOf p was deallocated
-        blockOf p was not used earlier (??????)
-        blockOf p is allocated
-        offsetOf p is 0
+val malloc (a: alloc_table 't) (m: memory 't)
+    (sz: int): (alloc_table 't, pointer 't)
+    requires { sz >= 0 }
+    ensures { let (a2, p) = result in
+        blockOf p was allocable
+        p is freeable
+        blockLen p = sz
         sizes of other blocks are not changed
+        allocation statuses of other blocks
+              are not changed
     }
     \end{lstlisting}
     \end{frame}
 
     \begin{frame}[fragile]{Примитивы (3)}
     \begin{lstlisting}
-val free (m: memory 't) (p: pointer 't): memory 't
-    requires { offset p is 0 }
-    requires { blockOf p is allocated }
+val free (a: alloc_table 't) (m: memory 't)
+    (p: pointer 't): alloc_table 't
+    requires { p is freeable }
     ensures {
-        blockOf p is deallocated
-        sizes of other blocks are not changed }
+        blockOf p is allocable
+        sizes of other blocks are not changed
+        allocation statuses of other blocks
+              are not changed
+    }
     \end{lstlisting}
     \end{frame}
 
