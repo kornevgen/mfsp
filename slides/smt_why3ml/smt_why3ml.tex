@@ -305,4 +305,50 @@ end
     \end{itemize}
     \end{frame}
 
+    \section{Модуль ref.Ref}
+
+    \begin{frame}{Мотивация}
+    \begin{itemize}
+    \item
+    Для каждого типа изменяемой переменной приходится писать
+    тип с единственным mutable полем, причем имя поля должно
+    быть уникально, это неудобно
+    \item
+    Можно решить проблему с уникальностью имени поля, сделав
+    тип полиморфным, т.е. имеющим типовой параметр
+    \item
+    тем самым, уникальность будет обеспечивать
+    значение типового параметра
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Полиморфный тип}
+    Это может выглядеть примерно так:
+    \begin{lstlisting}
+type s (* only small letters! *)
+type ref 't = { mutable contents: 't; }
+let prog (x: int) (sv: s) =
+    let y = { contents = 0 } in
+        (* type of y is ref int *)
+    let z = { contents = sv } in
+        (* type of z is ref s *)
+        ()
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{ref.Ref}
+    \begin{itemize}
+    \item
+    В стандартной библиотеке why3 есть модуль \texttt{ref.Ref}.
+    \item
+    Он экспортирует такой же тип и функции для удобной работы
+    с изменяемыми переменными.
+    \item
+    \texttt{let y = ref 0 in} -- создание переменной
+    \item
+    \texttt{y := !y + 1 } -- чтение переменной через
+    восклицательный знак, изменение как в паскале
+    \end{itemize}
+    \end{frame}
+
 \end{document}
