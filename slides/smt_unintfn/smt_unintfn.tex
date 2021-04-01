@@ -462,7 +462,7 @@ type stack 't
 function empty: stack 't
 function push (s: stack 't) (t: 't): stack 't
 function top (s: stack 't): 't
-axiom top_push: forall s: stack 't, t: 't:
+axiom top_push: forall s: stack 't, t: 't.
     top (push s t) = t
     \end{lstlisting}
     \end{frame}
