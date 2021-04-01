@@ -49,7 +49,6 @@ Z3).
    [(упражнения)](exercises/x7.md)
 
 8. Добавление новых типов и функций.
-   Алгебраическая аксиоматизация.
    [(слайды)](slides/smt_unintfn/smt_unintfn.pdf)
    [(упражнения)](exercises/x8.md)
 
@@ -61,16 +60,12 @@ Z3).
    [(слайды)](slides/jc_memmodel/jc_memmodel.pdf)
    [(упражнения)](exercises/xA.md)
 
-11. Фрейм функции. Component-as-array.
-    Более простая аксиоматизация модели памяти.
-   [(слайды)](slides/jc_mmadv/jc_mmadv.pdf)
+11. Фрейм функции. Язык спецификации ACSL
+   [(слайды)](slides/acsl/acsl.pdf)
+   [(упражнения)](exercises/xB.md)
 
-12. Язык ACSL. Особенности дедуктивной
-    верификации в системе Frama-C
-   [(слайды)](slides/jc_acsl/jc_acsl.pdf)
-
-13. Спецификация синонимии указателей. Анализ регионов
-   [(слайды)](slides/jc_regions/jc_regions.pdf)
+12. Инструмент AstraVer
+   [(слайды)](slides/astraver/astraver.pdf)
 
 
 ## Практикум
