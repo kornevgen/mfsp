@@ -524,9 +524,9 @@ function getSz (a: alloc_table 't) (b: block): int
   = Map.get a b
 function setSz (a: alloc_table 't) (b: block)
  (sz: int): alloc_table 't = Map.set a b sz
-function getV (m: memory 't) (p: pointer 't): 't
+function select (m: memory 't) (p: pointer 't): 't
   = Map.get m p
-function setV (m: memory 't) (p: pointer 't)
+function store (m: memory 't) (p: pointer 't)
  (v: 't): memory 't = Map.set m p v
     \end{lstlisting}
     \end{frame}
@@ -568,11 +568,11 @@ function subP (p p2: pointer 't): int
 val readPtr (a: alloc_table 't) (m: memory 't)
             (p: pointer 't): 't
     requires { valid a p }
-    ensures { result = getV m p }
+    ensures { result = select m p }
 val writePtr (a: alloc_table 't) (m: memory 't)
              (p: pointer 't) (v: 't): memory 't
     requires { valid a p }
-    ensures { result = setV m p v }
+    ensures { result = store m p v }
 val shiftPtr (p: pointer 't) (n: int): pointer 't
     ensures { same_block p result }
     ensures { offsetOf result = offsetOf p + n }
