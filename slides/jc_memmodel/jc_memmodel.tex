@@ -33,6 +33,46 @@
 
     \begin{frame}{Цель лекции}
     Построить аксиоматику для памяти Си-программы.
+    Оценить допущения, на которые приходится идти
+    для получения аксиоматики, допускающей
+    эффективное разрешение солверами условий верификации.
+    \end{frame}
+
+    \begin{frame}{Язык Си: инфраструктурные особенности}
+    \begin{itemize}
+    \item
+    Язык Си имеет разные версии (C90, C99, C11, C17,...)
+    \item
+    Язык Си имеет разные диалекты (ANSI C, GCC C,...)
+    \item
+    Семантика Стандарта языка Си не фиксирована:
+        \begin{itemize}
+        \item поведение, определяемое платформой (компилятором
+        + архитектурой компьютера)
+        \item неопределенное поведение
+        \end{itemize}
+    \item
+    При компиляции Си-программы допустимы оптимизации, при
+    которых поведение программы может измениться
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Язык Си: как поставить задачу верификации?}
+    \begin{itemize}
+    \item
+    Если многое в языке Си зависит от того, чего нет в программе,
+    как можно строго поставить задачу о верификации программы?
+    \item
+    Можно ли это сделать так, чтобы не пришлось передоказывать
+    правильность той же программы, если до этого у нас были
+    неверные предположения о платформе? о ключах компиляции?
+    \item
+    Решение №1: дополнить задачу верификации спецификацией
+    платформы? Какие плюсы и минусы?
+    \item
+    Решение №2: запретить использовать платформо-зависимые
+    особенности языка Си при верификации? Какие плюсы и минусы?
+    \end{itemize}
     \end{frame}
 
     \section{Вспоминаем указатели}
@@ -285,11 +325,26 @@ int main(int argc, char *argv[]) { ... }
     передать как входные данные этой функции?
     \end{frame}
 
+    \begin{frame}[fragile]{Пример 6}
+    \begin{lstlisting}
+void fff(int *a, int n) {
+    ...
+}
+
+char buf[1024];
+fff((int *)buf, m);
+buf[2] = 'A';
+    \end{lstlisting}
+    \end{frame}
+
     \begin{frame}{Выводы из примеров}
     \begin{itemize}
     \item
     Кроме своих аргументов, функции получают неявно
     еще входные данные - блоки памяти.
+    \item
+    Блоки памяти - это массивы фиксированного размера
+    (такие были на прошлой лекции).
     \item
     Количество блоков памяти иногда трудно, а иногда
     невозможно определить по тексту программы.
@@ -359,7 +414,7 @@ int main(int argc, char *argv[]) { ... }
     \end{itemize}
     \end{frame}
 \fi
-    \section{Модели памяти}
+    \section{Модель памяти}
 
 \iffalse
     \begin{frame}{Побайтовая модель памяти}
@@ -424,12 +479,68 @@ int main(int argc, char *argv[]) { ... }
     \section{Аксиоматизация блочной модели памяти}
 \fi
 
-    \begin{frame}{Состав модели памяти}
+    \begin{frame}[fragile]{Блоки}
+    Блок -- это массив, как выбрать тип элемента массива?
+    Всегда ли ответ на этот вопрос однозначный?
+
+    \begin{lstlisting}
+void replace(int *data, size_t sz)
+{
+    ...
+}
+...
+char buf[1024];
+replace((int *)buf, n);
+...
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Множество блоков}
     \begin{itemize}
     \item
-    массив -- типизированный, поэтому блок -- тоже типизированный
+    Модель памяти -- это множество блоков. Что делать,
+    если нужны блоки с разным типом элемента массива?
     \item
-    поэтому для каждого типа нужна целиком отдельная модель памяти
+    Решение №1: все массивы должны быть из байтов
+    -- какие плюсы и минусы этого решения?
+    \item
+    Решение №2: для каждого типа элемента
+    иметь отдельное множество блоков
+    -- какие плюсы и минусы этого решения?
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Указатели}
+    \begin{itemize}
+    \item
+    В Си указатели привязаны к блокам. Прибавление
+    числа к указателю не меняет блок указателя.
+    \item
+    Какие указатели можно сравнивать на больше-меньше?
+    Только указатели из одного блока.
+    \item
+    Какие указатели можно сравнивать на равенство?
+    (ответ не такой очевидный из-за возможных
+    оптимизаций в компиляторе!) -- 3 случая!
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Типы указателя}
+    \begin{itemize}
+    \item
+    Могут ли у одного блока имется указатели
+    разных типов?
+    \item
+    Ответ не такой очевидный, т.к. приходится
+    учитывать возможные оптимизации в компиляторе.
+    \item
+    Каким должен быть тип указателя и тип блока
+    в Why3? (с учетом ответа на предыдущий вопрос)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Состав модели памяти: типы-символы}
+    \begin{itemize}
     \item
     тип-символ memory - вся модель памяти
     \item
@@ -505,8 +616,9 @@ end
     \begin{frame}[fragile]{Типы}
     \begin{lstlisting}
 type block
-type pointer 't = (block, int)
-type alloc_table 't = Map.map block int
+type pointer 't = (block, int) (* 't is necessary
+because pointers shift saves the type of pointer *)
+type alloc_table = Map.map block int
 (* alloc_table[block] >= 0 -- block is allocated
    and here is its size;
    alloc_table[block] < 0 -- block is allocable *)
@@ -520,10 +632,10 @@ function blockOf (p: pointer 't): block
   = let (b, o) = p in b
 function offsetOf (p: pointer 't): int
   = let (b, o) = p in o
-function getSz (a: alloc_table 't) (b: block): int
+function getSz (a: alloc_table) (b: block): int
   = Map.get a b
-function setSz (a: alloc_table 't) (b: block)
- (sz: int): alloc_table 't = Map.set a b sz
+function setSz (a: alloc_table) (b: block)
+ (sz: int): alloc_table = Map.set a b sz
 function select (m: memory 't) (p: pointer 't): 't
   = Map.get m p
 function store (m: memory 't) (p: pointer 't)
@@ -533,15 +645,15 @@ function store (m: memory 't) (p: pointer 't)
 
     \begin{frame}[fragile]{Дополнительные символы}
     \begin{lstlisting}
-function blockLen (a: alloc_table 't)
+function blockLen (a: alloc_table)
    (p: pointer 't): int = getSz a (blockOf p)
-predicate allocable (a: alloc_table 't)
+predicate allocable (a: alloc_table)
                     (p: pointer 't)
     = blockLen a p < 0
-predicate allocated (a: alloc_table 't)
+predicate allocated (a: alloc_table)
                     (p: pointer 't)
     = not (allocable a p)
-predicate freeable (a: alloc_table 't)
+predicate freeable (a: alloc_table)
                    (p: pointer 't)
     = allocated a p /\ offsetOf p = 0
     \end{lstlisting}
@@ -549,9 +661,9 @@ predicate freeable (a: alloc_table 't)
 
     \begin{frame}[fragile]{Дополнительные символы}
     \begin{lstlisting}
-predicate valid (a: alloc_table 't) (p: pointer 't)
+predicate valid (a: alloc_table) (p: pointer 't)
     =  0 <= offsetOf p < blockLen a p
-predicate valid_range (a: alloc_table 't)
+predicate valid_range (a: alloc_table)
                       (p: pointer 't) (n: int) =
      0 <= offsetOf p < blockLen a p - n
 predicate same_block (p p2: pointer 't) =
@@ -563,13 +675,13 @@ function subP (p p2: pointer 't): int
     \end{lstlisting}
     \end{frame}
 
-    \begin{frame}[fragile]{Примитивы для операторов CALL}
+    \begin{frame}[fragile]{val-примитивы}
     \begin{lstlisting}
-val readPtr (a: alloc_table 't) (m: memory 't)
+val readPtr (a: alloc_table) (m: memory 't)
             (p: pointer 't): 't
     requires { valid a p }
     ensures { result = select m p }
-val writePtr (a: alloc_table 't) (m: memory 't)
+val writePtr (a: alloc_table) (m: memory 't)
              (p: pointer 't) (v: 't): memory 't
     requires { valid a p }
     ensures { result = store m p v }
@@ -582,15 +694,15 @@ val subPtr (p: pointer 't) (p2: pointer 't): int
     \end{lstlisting}
     \end{frame}
 
-    \begin{frame}[fragile]{Примитивы (2)}
+    \begin{frame}[fragile]{val-примитивы (2)}
     \begin{lstlisting}
-val malloc (a: alloc_table 't) (m: memory 't)
-    (sz: int): (alloc_table 't, pointer 't)
+val malloc (a: ref alloc_table) (m: memory 't)
+    (sz: int): pointer 't
     requires { sz >= 0 }
-    ensures { let (a2, p) = result in
-        blockOf p was allocable
-        p is freeable
-        blockLen p = sz
+    ensures {
+        blockOf result was allocable
+        result is freeable
+        blockLen result = sz
         sizes of other blocks are not changed
         allocation statuses of other blocks
               are not changed
@@ -598,10 +710,10 @@ val malloc (a: alloc_table 't) (m: memory 't)
     \end{lstlisting}
     \end{frame}
 
-    \begin{frame}[fragile]{Примитивы (3)}
+    \begin{frame}[fragile]{val-примитивы (3)}
     \begin{lstlisting}
-val free (a: alloc_table 't) (m: memory 't)
-    (p: pointer 't): alloc_table 't
+val free (a: ref alloc_table) (m: memory 't)
+    (p: pointer 't): unit
     requires { p is freeable }
     ensures {
         blockOf p is allocable
@@ -630,7 +742,10 @@ val free (a: alloc_table 't) (m: memory 't)
     \item Как промоделировать Си-структуры? Массивы
     из Си-структур?
     \item Как промоделировать неявное приведение
-    \texttt{void *} к любому указателю?
+    \texttt{void *} к любому указателю? Должен ли
+    этот указатель реально указывать на какой-то
+    определенный тип (допустима ли переинтерпретация
+    памяти)?
     \end{itemize}
     \end{frame}
 \end{document}
