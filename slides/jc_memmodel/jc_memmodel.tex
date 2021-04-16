@@ -337,6 +337,56 @@ buf[2] = 'A';
     \end{lstlisting}
     \end{frame}
 
+    \begin{frame}[fragile]{Пример 7}
+    Память -- это просто массив из байтов?
+    Указатель -- это просто число (индекс
+    в этом массиве)?
+
+    \begin{lstlisting}
+int x, y;
+int *p = &x;
+++p;
+*p = 42;
+if (y == 42) {
+    printf("yes\n");
+} else {
+    printf("no\n");
+}
+    \end{lstlisting}
+    \end{frame}
+
+
+    \begin{frame}[fragile]{Пример 8}
+    Память -- это просто массив из байтов?
+    Указатель -- это просто число (индекс
+    в этом массиве)?
+
+    \begin{lstlisting}
+int x, y;
+int *p = &x;
+++p;
+if (p == &y) {
+    printf("equal\n");
+} else {
+    printf("not equal\n");
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример 9}
+    Память -- это просто массив из байтов?
+    Указатель -- это просто число (индекс
+    в этом массиве)?
+
+    \begin{lstlisting}
+int *p = malloc(1 * sizeof *p);
+*p = 20;
+free(p);
+*p = 30;
+printf("%d\n", *p);
+    \end{lstlisting}
+    \end{frame}
+
     \begin{frame}{Выводы из примеров}
     \begin{itemize}
     \item
