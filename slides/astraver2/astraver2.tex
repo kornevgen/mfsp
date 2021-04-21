@@ -1,0 +1,490 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 14. Инструмент AstraVer: приведение
+типов указателей, noembed, итоги}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Обсудить некоторые проблемы построения модели
+    Си-программ и их решения, реализованные
+    в инструменте AstraVer
+    \end{frame}
+
+    \begin{frame}[fragile]{Типы для примеров}
+    Далее будут использоваться следующие типы (из
+    практического задания):
+    \begin{lstlisting}{C}
+typedef struct {
+    int a, b;
+} Key;
+typedef struct {
+    int c, d;
+} Value;
+typedef struct {
+    Key key;
+    Value value;
+} Item;
+    \end{lstlisting}
+    \end{frame}
+
+    \section{Приведение типов указателей}
+
+    \begin{frame}{Иерархии типов указателей в Си}
+    \begin{itemize}
+    \item \texttt{void *} -- чем не аналог типа-предка
+    для любого типа-указателя?
+    \item еще примеры <<наследования>> типов в Си?
+    (первым полем структуры является другая структура)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Модель Си-программы с наследованием}
+    \begin{itemize}
+    \item
+    Когда надо применять правила моделирования типа
+    как потомка?
+    Вспомните эти правила из предыдущей лекции.
+    \item
+    Решение AstraVer: только если в исходном коде или
+    спецификации встречается операция приведения
+    \item
+    NB! Приведение между \texttt{void *} и остальными
+    типами указателей может быть неявным!
+    \item
+    Если в условии верификации нет ничего про subtag
+    нужных типов или генерируются условия верификации
+    про приведение к \texttt{char *}, значит, возможно,
+    в коде не хватает выражения с нужным приведением типа!
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Еще пример неявного приведения типа}
+    Изучите модель программы, которую сгенерирует AstraVer:
+    \begin{lstlisting}
+//@ ensures \result == 0;
+int main(void) {
+    int m[10];
+    int n;
+    //@ assert &n != &m[0];
+    return 0;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Операция взятия адреса и массивы}
+    \begin{itemize}
+    \item
+    Определение массива превращается в malloc и в конце блока кода,
+    где объявлена переменная, в free
+    \item
+    Переменная, от которой берется адрес, превращается в массив
+    размера 1 (а он в malloc)
+    \item
+    Если адрес от переменной не берется, то она не превращается
+    в массив (в этом превращении нет необходимости)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Корректность приведения типов указателей}
+    \begin{itemize}
+    \item когда приведение \texttt{void *} к
+    типу \texttt{T *} корректно? (последующее разыменование
+    полученного указателя будет корректно)
+    \item когда это приведение и не потребует переинтерпретации
+    памяти?
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Аналог instanceof в AstraVer}
+    \begin{itemize}
+    \item
+    Чтобы доказать корректность приведения \texttt{void *p}
+    к некоторому типу \texttt{T *}, надо доказать, что
+    \texttt{p} на самом деле указывает на \texttt{T} (или
+    его потока) -- в Java это называется instanceof
+    \item
+    AstraVer поддерживает такой синтаксис в спецификациях,
+    означающий instanceof:
+    \texttt{\textbackslash{}typeof(p) <: \textbackslash{}type(T)}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{\texttt{void *} в стандартной библиотеке}
+    \begin{itemize}
+    \item
+    \texttt{void *} часто используется в стандартной библиотеке
+    языка Си (как тип формального параметра функции, чтобы
+    ее можно было применять к различным типам указателей)
+    \item
+    Для некоторых функций стандартной библиотеки
+    AstraVer содержит шаблонные спецификации: надо сказать,
+    какой динамический тип указателя, тогда будет сгенерирована
+    спецификация с этим типом указателя
+    \end{itemize}
+    \end{frame}
+
+    \section{Вложенные типы}
+
+    \begin{frame}{Component-as-array: тип поля - скалярный}
+    \begin{itemize}
+    \item
+    Вспомним идею о том, что изменение одного поля структуры
+    не влияет на остальные поля структуры. Иначе говоря,
+    указатели на разные поля одной структуры не являются синонимами.
+    Это используется для разделения модели памяти на независимые
+    части.
+    \item
+    Для типа \texttt{Value} будут построены такие типы и переменные:
+        \begin{itemize}
+        \item \texttt{type Value}
+        \item \texttt{constant cFieldMemory: memory (pointer Value) int}
+        \item \texttt{constant dFieldMemory: memory (pointer Value) int}
+        \end{itemize}
+    \item
+    Зачем тут pointer? (две отдельные переменные типа \texttt{Value *},
+    изменяем значение по одному указателю, другой указатель не трогали,
+    но значение по второму указателю тоже должно измениться - как это
+    промоделировать без pointer?)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Component-as-array: нескалярный тип поля}
+    \begin{itemize}
+    \item
+    Теперь строим переменные и типы для \texttt{Item}. Вот так правильно?
+        \begin{itemize}
+        \item \texttt{type Item}
+        \item \texttt{type Key}
+        \item \texttt{type Value}
+        \item \texttt{constant keyFieldMemory: memory (pointer Item) Key}
+        \item \texttt{constant valueFieldMemory: memory (pointer Item) Value}
+        \end{itemize}
+    \item
+    Если да, то как промоделировать \texttt{item->value.c}? Вот так
+    правильно?
+    \texttt{(select cFieldMemory (select valueFieldMemory item))}
+    Откуда взять там \texttt{pointer}?
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Выводы}
+    \begin{itemize}
+    \item
+    Чтобы повысить эффективность солверов, при моделировании программы
+    можно применить подход \texttt{component-as-array}.
+    \item
+    Тем не менее, синонимы могут быть (два указателя на одно и то же поле).
+    Поэтому при моделировании частей нескалярных типов не получается
+    выразить их вложение в объемлющий тип. Каждое нескалярное поле структуры
+    моделируется указателем на отдельную область памяти.
+    \item
+    Например, следующее утверждение (верное по стандарту языка Си)
+    не докажется: \texttt{assert (void *)\&key->a < (void *)\&key->b;}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Иногда это может создать трудности}
+    Почему assert не доказывается?
+    \begin{lstlisting}{C}
+//@ requires \valid(items + (0 .. 1));
+void prog(Item *items)
+{
+    items[0].value.c = 0;
+    items[1].value.d = 1;
+    //@ assert items[0].value.c == 0;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{container\_of}
+    \begin{itemize}
+    \item
+    assert не доказывается, потому что нет предусловия, что
+    \texttt{\&items[0].value} и \texttt{\&items[1].value}
+    не являются синонимами (они находятся в одном регионе,
+    т.к. в одном регионе находятся \texttt{\&items[0]} и
+    \texttt{\&items[1]}).
+    \item
+    У каждого item есть свой value. Это можно записать?
+    \item
+    \texttt{axiom value\_in\_item: \textbackslash{}forall Item *item1, *item2;
+    item1 != item2 ==> \&item1->value != \&item2->value;}
+    \end{itemize}
+    \end{frame}
+
+    \section{Особая трансляция обращения к первому полю}
+
+    \begin{frame}{Обращение к не первому полю}
+    \begin{itemize}
+    \item
+    Пусть \texttt{item} имеет тип \texttt{Item *}.
+    \item
+    Тогда чтение \texttt{item->value.c} будет моделироваться
+    так: \texttt{(select cFieldMemory (select valueFieldMemory item))}.
+    \item
+    Типы \texttt{Item} и \texttt{Value} не находятся
+    в отношении наследования, переменная \texttt{item}
+    будет иметь тип \texttt{pointer Item}, переменная
+    \texttt{valueFieldMemory} будет иметь тип
+    \texttt{memory (pointer Item) (pointer Value)},
+    переменная \texttt{cFieldMemory} будет иметь тип
+    \texttt{memory (pointer Value) int}.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Обращение к первому полю}
+    \begin{itemize}
+    \item
+    Чтение \texttt{item->key.a} можно моделировать так же
+    (через два select и два memory), но можно учесть
+    наследование и использовать более простое выражение:
+    \texttt{(select aFieldMemory item)}. Это совпадает
+    с чтением \texttt{((Key *)item)->a}.
+    \item
+    Иными словами,
+    выражение \texttt{\& item->key} можно моделировать так же,
+    как и \texttt{(Key *)item}, а (из-за наследования)
+    последнее выражение можно моделировать просто как \texttt{item}.
+    \item
+    Переменная \texttt{item} теперь будет иметь тип
+    \texttt{pointer Key} (а не \texttt{pointer Item},
+    т.к. здесь нужно иметь возможность привести
+    указатель на потомка к указателю на предка). Переменная
+    \texttt{aFieldMemory} будет иметь тип
+    \texttt{memory (pointer Key) int}.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Хитрость с адресной арифметикой}
+    \begin{itemize}
+    \item
+    Пусть \texttt{items} имеет тип \texttt{Item [2]}.
+    \item
+    Какова модель для \texttt{items[1].key.a}?
+    Какова модель для \texttt{(\& items->key)[1].a}?
+    \item
+    Они совпадают! \texttt{(items + 1)->a}
+    Но оба ли исходных выражения корректны? Только первое
+    (почему?).
+    Как научить модель запрещать некорректное выражение?
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Модели всё же немного отличаются}
+    \begin{itemize}
+    \item
+    Можно увидеть отличие моделей, если рассмотреть их
+    вот так:
+        \begin{itemize}
+        \item первое выражение: \texttt{((Key *)(items + 1))->a}
+        \item второе выражение: \texttt{((Key *) items + 1 )-> a}
+        \end{itemize}
+    \item
+    Чтобы запретить второе, можно добавить еще одно предусловие
+    для операции обращения к полю от указателя, полученного
+    сдвига другого указателя: что тип блока этих указателей
+    должен быть ровно таким, где определено поле а.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Как это сделано в AstraVer}
+    \begin{itemize}
+    \item
+    Чтобы увидеть, как эта идея реализована в аксиоматике памяти
+    AstraVer, надо открыть файл \texttt{core.mlw}. Найти там
+    модуль \texttt{Acc\_offset\_safe} и смотреть val-примитив
+    \texttt{acc\_offset}.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Но идея работает не всегда}
+    Идея оказывается слишком жесткой, т.к. в таком коде возникает
+    обращение к полю после сдвига и обращение безопасно, но оно
+    тоже будет воспринято как некорректное (не докажется одно из
+    условий верификации):
+    \begin{lstlisting}{C}
+//@ requires \valid(items + (0 .. 1));
+int prog(Item *items) {
+    int offs = 1;
+    return (& items->key + 1 - offs)->a;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Наконец, noembed}
+    \begin{itemize}
+    \item
+    Поэтому моделирование первого поля как предка некорректно.
+    \item
+    Чтобы это отменить, надо указать у первого поля атрибут
+    noembed (тогда модель станет несколько сложнее, зато
+    корректнее):
+    \end{itemize}
+
+    \begin{lstlisting}{C}
+typedef struct {
+    Key key __attribute__((noembed));
+    Value value;
+} Item;
+    \end{lstlisting}
+    \end{frame}
+
+    \section{Итоги}
+
+    \begin{frame}{AstraVer на практике}
+    \begin{itemize}
+    \item
+    Цель проекта ИСП РАН -- применять дедуктивную
+    верификацию для исходного кода отдельных модулей
+    ядра Linux.
+    \item
+    При этом оказалось, что:
+        \begin{enumerate}
+        \item
+        ядро написано под определенный набор расширений
+        языка Си (gcc)
+        \item
+        ядро использует переинтерпретацию памяти
+        \end{enumerate}
+    \item
+    За основу AstraVer был взят инструмент Jessie. AstraVer
+    исправил часть модели памяти Jessie, добавил некоторые
+    новые возможности (
+    \url{http://astraver.linuxtesting.org/manuals/features/}).
+    Но суть модели памяти не поменялась. Ограничения модели
+    остались.
+    \item
+    Плюс проблема с тем, что модель памяти недоступна на
+    уровне ACSL.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Новый инструмент}
+    \begin{itemize}
+    \item
+    Поэтому сейчас разрабатывается новый инструмент
+    дедуктивной верификации.
+    \item
+    Он основан на интерактивном прувере Isabelle/HOL,
+    чтобы можно было управлять процессом доказательства.
+    Причем для спецификации требований и для доказательства
+    условий верификации можно было бы использовать
+    один и тот же язык.
+    \item
+    И не менее важное, что в новом инструменте будет
+    поддерживаться настоящая модель памяти языка Си.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Другие проекты по дедуктивной верификации}
+    \begin{itemize}
+    \item
+    Есть игрушечные проекты, их много, но мы их не рассматриваем.
+    Обычно они требуют особой подготовки пользователя и не все
+    готовы тратить время на получение этой подготовки.
+    \item
+    \texttt{VCC} -- проект Microsoft по дедуктивной верификации
+    исходного кода гипервизора Hyper-V (исходники на Си).
+    Архитектура инструмента та же, что у AstraVer, но
+    используется другая модель памяти.
+    \item
+    \texttt{SPARK} -- дедуктивная верификация Ada. Используется
+    много где (например, при создании авионики, например, А350)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формальные методы на практике}
+    \begin{itemize}
+    \item
+    Основная проблема формальных методов -- это большой объем
+    спецификаций (их надо написать), большие трудозатраты
+    на формальную верификацию, специфические навыки по
+    спецификации и по верификации.
+    \item
+    Опыт показывает, что одно только написание формальных
+    спецификаций дает очень много:
+        \begin{itemize}
+        \item
+        это позволяет систематизировать требования к
+        создаваемой программе
+        \item
+        это требует продумывания поведения во всех
+        ситуациях, даже в тех, о которых раньше не
+        задумывались
+        \end{itemize}
+    \item
+    Иногда выписывание формальной спецификации приводит
+    к пониманию того, что в дизайне системы есть ошибка,
+    и эта ошибка исправляется до того, как система
+    уже реализована!
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формальные методы на практике}
+    \begin{itemize}
+    \item
+    Еще одно направление в практике -- это комбинация
+    формальных спецификаций и легковесной верификации
+    (формального тестирования). Формальная спецификация
+    позволяет не пропустить важные тестовые случаи.
+    \item
+    Еще одно направление в практике -- это
+    многоуровневая формальная спецификация и верификация.
+    То есть пишется сначала очень абстрактная спецификация,
+    но описывающая свой уровень подробно. Затем
+    абстрактные понятия уточняются и доказывается корректность
+    уточнения.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Формальные методы в России}
+    \begin{itemize}
+    \item
+    Многоуровневые спецификации используются в следующих
+    организациях:
+        \begin{itemize}
+        \item РусБИТех -- спецификация отдельных модулей
+        безопасности в операционной системе AstraLinux,
+        доказательство соответствия уровней (Event-B, Pro-B),
+        тестирование
+        реализаций и дедуктивная верификация (AstraVer)
+        \item МЦСТ -- спецификация отдельных модулей
+        безопасности в операционной системе Эльбрус
+        \end{itemize}
+    \item
+    По заказу ГосНИИАС разрабатывается ОСРВ с открытым
+    кодом JetOS, удовлетворяющая стандарту ARINC653. ОС
+    проектируется так, чтобы как можно быстрее пройти
+    сертификацию.
+    \end{itemize}
+    \end{frame}
+
+\end{document}

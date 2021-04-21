@@ -1,0 +1,356 @@
+\documentclass[hyperref={unicode=true}]{beamer}
+\usepackage[utf8]{inputenx}
+\usepackage[russian]{babel}
+
+\usepackage{multicol}
+
+\usepackage[pgf]{dot2texi}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows}
+
+\usepackage{listings}
+\usepackage{graphicx}
+
+\usepackage{comment}
+
+\title{Лекция 12. Инструмент AstraVer: модель памяти,
+статическое разрешение синонимии указателей}
+\author{}
+\date{}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[] {
+	\begin{frame}{Содержание}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+%\overfullrule=5pt
+
+\begin{document}
+	\begin{frame}{}
+		\titlepage
+	\end{frame}
+
+    \begin{frame}{Цель лекции}
+    Обсудить некоторые проблемы дедуктивной верификации
+    Си-программ и их решения, реализованные
+    в инструменте AstraVer
+    \end{frame}
+
+    \section{Модель памяти в инструменте AstraVer}
+
+    \begin{frame}{Убран тип block}
+    \begin{itemize}
+    \item
+    Тип \texttt{block} отличается от других тем, что
+    его значения не меняются. Можно попробовать убрать
+    этот тип из аксиоматизации.
+    \item
+    Типы \texttt{pointer} и \texttt{alloc\_table}
+    становятся типами-символами, т.к. в их определении
+    использовался \texttt{block}. Тип \texttt{memory}
+    не меняется.
+    \item
+    \texttt{alloc\_table} был отображением блоков в их
+    <<размеры>>. Теперь вместо блоков у нас указатели.
+    И каждому указателю надо сопоставить тот же <<размер
+    блока>> и смещение. То есть размер блока и смещение
+    зависят от \texttt{alloc\_table} и \texttt{pointer}.
+    \item
+    Вместо размера блока и смещения можно использовать
+    два других числа, взаимно однозначно им соответствующих:
+    смещение от указателя к началу блока (\texttt{offset\_min})
+    и к концу блока (\texttt{offset\_max}).
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Символы}
+    Часть бывших не-символов становятся символами и наоборот:
+    \begin{lstlisting}
+type pointer 't
+type alloc_table 't
+function offset_min (a: alloc_table 't)
+                    (p: pointer 't): int
+function offset_max (a: alloc_table 't)
+                    (p: pointer 't): int
+function shiftP (p: pointer 't)(n: int): pointer 't
+function subP(p p2: pointer 't): int
+predicate same_block (p p2: pointer 't)
+predicate valid (a: alloc_table 't)(p: pointer 't)
+  = offset_min a p <= 0 <= offset_max a p
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Остальное}
+    Целиком аксиоматизацию можно посмотреть в
+    библиотеке инструмента \textsl{AstraVer} примерно тут:
+    \texttt{.opam/4.07.1/lib/astraver/why3/core.mlw}
+    \end{frame}
+
+    \begin{frame}[fragile]{Изучите сгенерированную модель программы}
+    Запустите AstraVer на этом примере
+    и изучите модель программы:
+    \begin{lstlisting}
+//@ requires \valid(v) && \valid(i);
+void at(int *v, int n, int *i) {
+    if (i - v > 2) {
+        *v = *++i;
+    }
+}    \end{lstlisting}
+    \end{frame}
+
+    \section{Component-as-array}
+
+    \begin{frame}{Формулировка проблемы}
+    \begin{itemize}
+    \item Как моделировать Си-структуры? Массивы Си-структур?
+    \item В WhyML есть структуры, но их нет в солверах
+    \item Значит, тип структуры будет типом-символом, поля будут
+    функциональными символами
+    \item Но при изменении внутреннего элемента массива / поля
+    получаются очень объемные условия верификации (проверьте!)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Component-as-array}
+    \begin{itemize}
+    \item Заметим, что отдельные поля одной структуры не могут
+    находиться в одной области памяти (это не union).
+    \item Решение проблемы: отдельный \texttt{memory map} для
+    каждого поля структуры.
+    \item (+) Упрощение верификации
+    \item (-) Усложнение генерации модели программы (нужна
+            автоматизация)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Изучите сгенерированную модель программы}
+    Запустите AstraVer на этом примере
+    и изучите, как он разделил структуру
+    по полям:
+    \begin{lstlisting}
+typedef struct {
+    int capacity, size, *data;
+} Vector;
+//@ requires \valid(v) && \valid(v->data);
+void at(Vector *v, int i) {
+    if (v->size < v->capacity &&
+        0 <= i < v->size) {
+        v->data[i] = 0;
+        ++ v->size;
+    }
+}    \end{lstlisting}
+    \end{frame}
+
+    \section{Статическое разрешение синонимии указателей}
+
+    \begin{frame}{Синонимия указателей}
+    \begin{itemize}
+    \item
+    Два указателя являются синонимами (алиасами), если
+    изменение памяти по одному указателю влияет на
+    память по другому указателю
+    \item
+    Проблема разрешения синонимии -- определение того, какие
+    указатели в тексте программы не являются синонимами.
+    \item
+    Это позволяет генерировать более эффективный код компилятору
+    (запоминать считанные значения и не считывать их повторно)
+    \item
+    Известная исследовательская проблема в компиляторных
+    технологиях
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Синонимия указателей в дедуктивной верификации}
+    \begin{itemize}
+    \item
+    Важно разрешать синонимию и для дедуктивной верификации
+    \item
+    Если указатели не являются синонимами, то можно использовать
+    для них разные переменные для модели памяти: <<изменение>>
+    одной переменной не повлияет на другую переменную
+    \item
+    То есть это повышает эффективность разрешения условий верификации
+    \item
+    Постановка задачи: сопоставить каждому разыменованию каждого
+    указателя некоторую переменную - модель памяти, чтобы у заведома
+    несинонимов были разные модели памяти
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Регионы}
+    \begin{itemize}
+    \item
+    Разделяем все указатели на классы эквивалентности (\emph{регионы}),
+    в одном классе находятся указатели, которые могут совпадать
+    \item
+    Изменение памяти по указателю из одного региона не
+    изменяет память по указателям всех остальных регионов
+    \item
+    Поэтому для региона делаем отдельные переменные
+    \texttt{alloc\_table} и \texttt{memory}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Один класс эквивалентности}
+    Когда два указателя должны находиться в одном регионе:
+    \begin{itemize}
+    \item
+    когда они сравниваются в коде \emph{даже на неравенство}
+    \item
+    когда они сравниваются в спецификации
+    \item
+    когда какой-то указатель из региона одного
+    указателя сравнивается с каким-то указателем
+    из региона второго указателя
+    \item
+    когда один получен из другого прибавлением числа,
+    \emph{каким бы оно ни было} (иначе алгоритм расстановки
+    регионов по указателям не будет статическим)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример}
+    Расставьте регионы в следующем примере кода:
+    \begin{lstlisting}
+    int *a, *q, *r; ...
+    int *p = a;
+    while (p < q - 1) {
+        if (*p == *r) ++*p;
+        ++p;
+    }
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Регионы для функций}
+    \begin{itemize}
+    \item
+    Нужны дополнительные неявные параметры для региона
+    \item
+    Для каждого явного параметра-указателя нужен
+    параметр-регион, но некоторые параметры-указатели
+    могут использовать один и тот же параметр-регион
+    \item
+    Связь между использованием параметра-указателя
+    и использованием параметра-региона делается
+    статически
+    \item
+    Если есть вызов этой функции, где у двух
+    параметров-указателей один регион, то них
+    будет общий параметр-регион
+    \item
+    Иначе у параметров-указателей будут разные
+    параметры-регионы
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример -- отдельные регионы}
+    В этом примере у a и b будут свои отдельные параметры-регионы
+    \begin{lstlisting}
+void f(int *a, int *b)
+{
+    *a = 0;
+    *b = 0;
+}
+void g()
+{
+    int m[10];
+    int n;
+    f(&m[2], &n);
+}    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример -- совместный регион}
+    В этом примере у a и b будет один параметр-регион
+    \begin{lstlisting}
+void f(int *a, int *b)
+{
+    *a = 0;
+    *b = 0;
+}
+void g()
+{
+    int m[10];
+    int n;
+    f(&m[2], &m[3]);
+}    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Упражнение}
+    Почему не доказывается assert и что надо сделать
+    для его доказательства?
+    \begin{lstlisting}
+/*@ requires \offset_min(s) == 0;
+    requires \offset_max(s) == 0;
+    ensures \base_addr(s) != \base_addr(\result);
+*/
+void *f(void *s)
+{
+    void *u = malloc(10);
+    return u;
+}
+    \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Упражнение}
+    Почему возникает ошибка при построении модели тут?
+    Исправьте ее (метка памяти -- не то же, что регион!).
+    \begin{lstlisting}
+/*@
+    axiomatic getValue {
+        logic int *value(int *ar, integer);
+    }
+
+    predicate test1(int *ar, integer i) =
+        *value(ar, i) == 0;
+    predicate test2(int *ar, integer i) =
+        test1(ar, i);
+*/
+    \end{lstlisting}
+    \end{frame}
+
+    \section{Спецификация синонимии}
+
+    \begin{frame}{Решение в ACSL}
+    \begin{itemize}
+    \item
+    В ACSL есть предикат \texttt{\textbackslash{}separated}
+    от указателей. Он означает, что эти указатели не указывают
+    на одни и те же области памяти (их разыменования
+    независимы).
+    \item
+    Ответьте, почему этот предикат в общем случае не
+    выразим в модели памяти AstraVer
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Решение в AstraVer}
+    \begin{itemize}
+    \item
+    \texttt{\textbackslash{}base\_addr(p1) != \textbackslash{}base\_addr(p2)
+    } -- указатели не принадлежат одному блоку
+    \item
+    \texttt{p1 == p2 || p1 != p2} -- разместить указатели
+    в одном регионе
+    \item
+    Разделение по регионам вместо предиката \texttt{\textbackslash{}separated}
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Модульная верификация и разделение по регионам}
+    \begin{itemize}
+    \item
+    Вычисление регионов (т.е. переменные для модели памяти) требуют
+    наличия всего исходного кода. А если есть только заголовочный файл?
+    \item
+    Для каждого файла-реализации для заголовочного файла
+    придется верификацию всей программы делать сначала!
+    \item
+    AstraVer умеет делать некоторые предположения о регионах,
+    исходя из заголовка (например, (не)константность указателя)
+    \end{itemize}
+    \end{frame}
+
+\end{document}
