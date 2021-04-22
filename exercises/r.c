@@ -1,5 +1,6 @@
 struct Q {
     int *a;
+    int *b;
 };
 
 void f(int *a1, int *a2)
@@ -26,5 +27,6 @@ int main(void)
 
     *((q + 1)->a + 2) = 0;
     *((q + 2)->a + 3) = 9;
+    *((q + 3)->b - 2) = 50;
     return *((q + 3)->a + 4);
 }
