@@ -67,10 +67,11 @@ Z3).
 12. Инструмент AstraVer: модель памяти,
    статическое разрешение синонимии указателей
    [(слайды)](slides/astraver1/astraver1.pdf)
+   [(упражнения)](exercises/xC.md)
 
 13. Моделирование Java-программ
    [(слайды)](slides/java/java.pdf)
-   
+
 14. Инструмент AstraVer: приведение типов
    указателей, noembed, итоги
    [(слайды)](slides/astraver2/astraver2.pdf)
