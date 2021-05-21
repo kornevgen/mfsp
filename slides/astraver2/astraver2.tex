@@ -218,7 +218,7 @@ int main(void) {
 void prog(Item *items)
 {
     items[0].value.c = 0;
-    items[1].value.d = 1;
+    items[1].value.c = 1;
     //@ assert items[0].value.c == 0;
 }
     \end{lstlisting}
@@ -235,9 +235,60 @@ void prog(Item *items)
     \item
     У каждого item есть свой value. Это можно записать?
     \item
-    \texttt{axiom value\_in\_item: \textbackslash{}forall Item *item1, *item2;
-    item1 != item2 ==> \&item1->value != \&item2->value;}
+    \texttt{\textbackslash{}forall Item *item1, *item2;
+    item1 != item2 ==> \&item1->value != \&item2->value}
     \end{itemize}
+    \end{frame}
+
+    \begin{frame}{container\_of (2)}
+    Можно записать следующими способами:
+    \begin{itemize}
+    \item как предусловие функции, которой необходимо это
+    утверждение (как доказать корректность вызова этой
+    функции? В постусловии malloc() будет сгенерировано
+    это утверждение -- надо им воспользоваться)
+    \item как аксиому (описать ее в axiomatic, не забыть
+    про триггер квантора, если аксиома не будет применяться;
+    в axiomatic придется добавить фиктивный символ
+    и обратиться к нему в условии верификации, иначе
+    axiomatic не будет включен в условие верификации)
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Аксиомы двух видов}
+    Аксиому можно записать двумя способами:
+    \begin{itemize}
+    \item ровно так, как было написано выше
+    \item или с использованием аналога макроса
+    container\_of из исходного кода ядра Linux:
+    \texttt{\textbackslash{}forall Item *i; i ==
+    (Item *)((char *)\&i->value - 8);}
+    \item из этой аксиомы следует, что при равных
+    указателях на value равны указатели i (или,
+    если указатели i отличаются, то отличаются их
+    указатели на value)
+    \item в ядре Linux на Си используется ООП-стиль
+    программирования; структура-потомок содержит
+    структуру-предка как одно из полей
+    \item макрос container\_of по указателю на
+    структуру-предка дает указатель на структуру-потомка
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Пример с container\_of}
+    \begin{lstlisting}{C}
+/*@ axiomatic ContainerOf {
+    predicate id(integer x) = \true;
+    axiom container_of{L}: \forall Item *i;
+       i == (Item *)((char *)&i->value - 8); }*/
+//@ requires \valid(items + (0 .. 1));
+void prog(Item *items) {
+    items[0].value.c = 0; items[1].value.c = 1;
+    //@ assert id(0); // to add axiomatic
+    //@ assert (char *)&items[0].value !=
+    (char *)&items[1].value; // triggers for axiom
+    //@ assert items[0].value.c == 0 ;
+}   \end{lstlisting}
     \end{frame}
 
     \section{Особая трансляция обращения к первому полю}
