@@ -321,7 +321,8 @@
     \item
     Доказываем возможность индукции по глубине рекурсии:
     берем фундированное множество $(\{0, 1, 2, ...\}, <)$. Его фундированность
-    была доказана ранее. Берем оценочную функцию $u(x_1,~x_2) = x_1$.
+    была доказана ранее. Берем оценочную функцию $u(x_1,~x_2) = x_1$,
+    индуктивное утверждение совпадает с $\varphi$.
 
     \item
     Составляем условия верификации.
@@ -329,7 +330,13 @@
     \end{frame}
 
     \begin{frame}{Пример::условия верификации}
+    Доказываем возможность рассуждать по индукции:
     \begin{itemize}
+    \item корректность индуктивного утверждения:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            \varphi(x_1,~x_2) \land x_1 \geq x_2
+            \Rightarrow
+            \varphi(x_1 - x_2,~x_2)$
     \item корректность оценочной функции:
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             \varphi(x_1,~x_2)
@@ -340,6 +347,11 @@
             \varphi(x_1,~x_2) \land x_1 \geq x_2
             \Rightarrow
             u(x_1 - x_2,~x_2) < u(x_1,~x_2)$
+    \end{itemize}
+    
+    Теперь доказываем индукцией по глубине рекурсии,
+    в ней будут применяться следующие условия верификации:
+    \begin{itemize}
     \item частичная корректность (путь START-T-HALT):
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             \varphi(x_1,~x_2) \land x_1 < x_2
@@ -351,16 +363,17 @@
             \psi(x_1 - x_2,~x_2,~y_1,~y_2)
             \Rightarrow
             \psi(x_1,~x_2,~y_1 + 1,~y_2)$
-    \item завершаемость:
-            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
-            \varphi(x_1,~x_2) \land x_1 \geq x_2
-            \Rightarrow
-            \varphi(x_1 - x_2,~x_2)$
+    \item завершаемость не требует доказательства, т.к. нет циклов 
     \end{itemize}
     \end{frame}
 
     \begin{frame}{Подставляем формулы}
     \begin{itemize}
+    \item корректность индуктивного утверждения:
+            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
+            x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2
+            \Rightarrow
+            x_1 - x_2 \geq 0 \land x_2 > 0$
     \item корректность оценочной функции:
             $\forall x_1,~x_2 \in \mathbb{Z} \cdot
             x_1 \geq 0 \land x_2 > 0
@@ -382,11 +395,6 @@
             x_1 - x_2 = x_2 * y_1 + y_2 \land 0 \leq y_2 < x_2
             \Rightarrow
             x_1 = x_2 * (y_1 + 1) + y_2 \land 0 \leq y_2 < x_2$
-    \item завершаемость:
-            $\forall x_1,~x_2 \in \mathbb{Z} \cdot
-            x_1 \geq 0 \land x_2 > 0 \land x_1 \geq x_2
-            \Rightarrow
-            x_1 - x_2 \geq 0 \land x_2 > 0$
     \end{itemize}
     \end{frame}
 
