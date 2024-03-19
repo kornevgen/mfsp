@@ -4,4 +4,4 @@ isastraver: 1
 
 ---
 
-# AstraVer
+# Установка AstraVer
